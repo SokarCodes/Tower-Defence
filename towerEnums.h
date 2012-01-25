@@ -1,6 +1,6 @@
 /* 
  * File:   towerEnums.h
- * Author: juginabi
+ * Author: Jukka Vatjus-Anttila
  *
  * Created on January 23, 2012, 8:53 PM
  */

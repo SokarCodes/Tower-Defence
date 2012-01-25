@@ -12,8 +12,9 @@ public:
     enemyEntity();
     ~enemyEntity();
     void update();
+    std::string name();
 private:
-    
+    std::string entityName;
 
 };
 

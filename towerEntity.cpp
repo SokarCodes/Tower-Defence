@@ -3,17 +3,19 @@
 #include "gameEntity.h"
 #include "enemyEntity.h"
 #include "towerEntity.h"
+
  
 towerEntity::towerEntity() :
 damage(0),
 range(0),
-enemy(0)
+enemy(0),
+entityName("Tower")
 {
-    std::cout << "Hello from towerEntity constructor!" << std::endl;
+    std::cout << "TowerEntity constructor!" << "\n";
 }       
 
 towerEntity::~towerEntity() {
-    std::cout << "Lol form towerEntity destructor!" << std::endl;
+    std::cout << "TowerEntity destruction!" << "\n";
 }
 
 void towerEntity::update() {
@@ -21,12 +23,12 @@ void towerEntity::update() {
         fire();
     else
     {
-        std::cout << "Need to acquire target!" << std::endl;
+        std::cout << "Need to acquire target!" << "\n";
         acquireTarget();
     }
 }
 void towerEntity::fire() {
-    std::cout << "FIRE IN THE HOLE!" << std::endl;
+    std::cout << "FIRE IN THE HOLE!" << "\n";
 }
 
 void towerEntity::setDamage(const unsigned int dmg) {
@@ -42,5 +44,9 @@ void towerEntity::setTarget(gameEntity *newEnemy) {
 }
 
 void towerEntity::acquireTarget() {
-    std::cout << "Acquiring target!" << std::endl;
+    std::cout << "Acquiring target!" << "\n";
+}
+
+std::string towerEntity::name() {
+    return entityName;
 }

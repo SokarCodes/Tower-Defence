@@ -4,10 +4,11 @@
  *
  * Created on January 23, 2012, 8:51 PM
  */
-
+#include <string>
 #ifndef TOWERENTITY_H
 #define	TOWERENTITY_H
 class gameEntity;
+
 
 class towerEntity : public gameEntity
 {
@@ -22,6 +23,8 @@ public:
     void setTarget(gameEntity*);
     /// Update method for towerEntity
     void update();
+    /// Get entity name
+    std::string name();
 private:
     /// Fire method. Launches projectile towards enemy entity.
     void fire();
@@ -33,6 +36,8 @@ private:
     unsigned int damage;
     /// Tower maximum range
     unsigned int range;
+    /// Entity name
+    std::string entityName;
     
 }; // class towerEntity
 
