@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Tower Defence
+PROJECTNAME=Tower-Defence
 
 # Active Configuration
 DEFAULTCONF=Debug
