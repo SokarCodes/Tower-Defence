@@ -6,9 +6,9 @@
 
  
 towerEntity::towerEntity() :
+enemy(0),
 damage(0),
 range(0),
-enemy(0),
 entityName("Tower")
 {
     std::cout << "TowerEntity constructor!" << "\n";
