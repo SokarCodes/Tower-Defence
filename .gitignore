@@ -3,3 +3,6 @@ CMakeFiles/*
 cmake_install.cmake
 Makefile
 bin/Tower-Defence
+*.vcxproj
+*.vcxproj.filters
+*.sln
