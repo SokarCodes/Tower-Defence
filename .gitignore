@@ -2,7 +2,16 @@ CMakeCache.txt
 CMakeFiles/*
 cmake_install.cmake
 Makefile
-bin/Tower-Defence
+bin/*
 *.vcxproj
 *.vcxproj.filters
 *.sln
+*.opensdf
+*.sdf
+*.suo
+*.user
+Tower-Defence.dir/*
+Win32/*
+ipch/*
+Debug/*
+Release/*
