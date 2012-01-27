@@ -9,11 +9,16 @@
 #define	ENEMYENTITY_H
 class enemyEntity : public gameEntity {
 public:
+	// Constructor
     enemyEntity();
+	// Destructor
     ~enemyEntity();
+	// Update funktion to hide more complex behaviour logic
     void update();
+	// Return entity name
     std::string name();
 private:
+	// Entity name variable
     std::string entityName;
 
 };
