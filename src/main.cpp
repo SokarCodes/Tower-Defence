@@ -19,9 +19,20 @@ int main(int argc, char** argv) {
 
     /// Just testing classes
     cout << "Hello tower defense!" << endl;
-    gameEntity *tower = new towerEntity();
-    gameEntity *enemy = new enemyEntity();
-    cout << tower->name() << '\n';
+
+	gameEntity *tower;
+	gameEntity *enemy;
+
+	try {
+		tower = new towerEntity();
+		enemy = new enemyEntity();
+	}
+	catch (bad_alloc&)
+	{
+		return EXIT_FAILURE;
+	}
+
+	cout << tower->name() << '\n';
     cout << enemy->name() << '\n';
     tower->update();
     enemy->update();
