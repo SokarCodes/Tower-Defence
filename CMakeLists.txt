@@ -52,7 +52,7 @@ ADD_EXECUTABLE(Tower-Defence ${SourceFiles} ${HeaderFiles})
 set_target_properties(Tower-Defence PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if(WIN32)
-        TARGET_LINK_LIBRARIES(Tower-Defence SDL)
+        TARGET_LINK_LIBRARIES(Tower-Defence SDL opengl32 glu32)
 elseif (UNIX)
         TARGET_LINK_LIBRARIES(Tower-Defence)
 endif()
