@@ -10,6 +10,7 @@ bin/*
 *.sdf
 *.suo
 *.user
+*.cbp
 Tower-Defence.dir/*
 Win32/*
 ipch/*
