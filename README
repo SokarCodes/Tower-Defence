@@ -2,6 +2,13 @@ Tower-Defence By Jukka Vatjus-Anttila
 
 1st game engine build. 
 
+v0.0.3
+- cMapper class
+-> Is singleton
+-> stores all created entities. (atleast that is the plan)
+TODO
+- Integrate cMapper with global update.
+
 v0.0.2
 ------
 - Cmake integration
