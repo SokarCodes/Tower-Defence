@@ -6,9 +6,11 @@
  */
 //#include <iostream>
 #include <cstdlib>
+
 #include "gameEntity.h"
 #include "towerEntity.h"
 #include "enemyEntity.h"
+#include "cMapper.h"
 
 using namespace std;
 
@@ -22,10 +24,12 @@ int main(int argc, char** argv) {
 
 	gameEntity *tower;
 	gameEntity *enemy;
+    cMapper *mapper;
 
 	try {
 		tower = new towerEntity();
 		enemy = new enemyEntity();
+        mapper = cMapper::getInstance();
 	}
 	catch (bad_alloc&)
 	{
@@ -34,6 +38,8 @@ int main(int argc, char** argv) {
 
 	cout << tower->name() << '\n';
     cout << enemy->name() << '\n';
+    mapper->add(tower);
+    mapper->add(enemy);
     tower->update();
     enemy->update();
     tower->setDamage(6);
@@ -42,9 +48,11 @@ int main(int argc, char** argv) {
     tower->update();
     tower->setPosition(6,8);
     tower->getPosition();
-    
+    mapper->showEntities();
     delete tower;
     delete enemy;
+    delete mapper;
+    
     return EXIT_SUCCESS;
 }
 
