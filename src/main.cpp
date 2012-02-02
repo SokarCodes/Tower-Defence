@@ -30,8 +30,8 @@ int main(int argc, char** argv) {
    int delta = 0;           // timer test
 
 
-   for ( int i = 0; i < 100000; i++ )
-       cout << i << "\n";
+   for ( int i = 0; i < 100000; i++ )   // timer test
+       cout << i << "\n";               // timer test
 
     cMapper *mapper;
 
