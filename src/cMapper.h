@@ -22,6 +22,7 @@ public:
     void add(gameEntity*);
     void showEntities();
     void update();
+    void deleteInstance(gameEntity*);
     gameEntity* getTarget(
         //give asker coordinates as parameter?
         );

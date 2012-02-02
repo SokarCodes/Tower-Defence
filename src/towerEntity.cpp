@@ -6,12 +6,12 @@
 #include "cMapper.h"
 
  
-towerEntity::towerEntity(cMapper* newMapper) :
+towerEntity::towerEntity(cMapper* mapper) :
 enemy(0),
 damage(0),
 range(0),
 entityName("Tower"),
-mapper_(newMapper)
+mapper_(mapper)
 {
     std::cout << this->name() << ": Entity constructor!" << " --> ";
 }       

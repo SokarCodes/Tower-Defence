@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     try {
         mapper = cMapper::getInstance();
         tower = new towerEntity(mapper);
-        enemy = new enemyEntity();
+        enemy = new enemyEntity(mapper);
     }
     catch (bad_alloc&)
     {
@@ -43,9 +43,10 @@ int main(int argc, char** argv) {
     mapper->showEntities();
     // Target has been acquired on last update so now fire sequence initiates.
     mapper->update();
-
-    delete tower;
     delete enemy;
+    mapper->update();
+    mapper->showEntities();
+    delete tower;
     delete mapper;
     
     return EXIT_SUCCESS;

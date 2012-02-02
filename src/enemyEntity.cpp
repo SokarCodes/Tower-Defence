@@ -1,17 +1,20 @@
 #include "gameEntity.h"
 #include "enemyEntity.h"
+#include "cMapper.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
-enemyEntity::enemyEntity() : 
-entityName_("Enemy")
+enemyEntity::enemyEntity(cMapper *mapper) :
+entityName_("Enemy"),
+mapper_(mapper)
 {
     cout << this->name() << ": Entity created" << endl;
 }    
 
 enemyEntity::~enemyEntity() {
     std::cout << this->name() << ": Entity destruction!" << " --> ";
+    mapper_->deleteInstance(this);
 }
 
 void enemyEntity::update() {

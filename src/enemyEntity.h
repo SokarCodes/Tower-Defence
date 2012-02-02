@@ -7,11 +7,12 @@
 
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
+class cMapper;
 
 class enemyEntity : public gameEntity {
 public:
 	// Constructor
-    enemyEntity();
+    enemyEntity(cMapper *mapper);
 	// Destructor
     ~enemyEntity();
 	// Update funktion to hide more complex behaviour logic
@@ -21,6 +22,7 @@ public:
 private:
 	// Entity name variable
     std::string entityName_;
+    cMapper *mapper_;
 
 };
 

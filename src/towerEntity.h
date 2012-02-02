@@ -13,7 +13,7 @@ class cMapper;
 class towerEntity : public gameEntity
 {
 public:
-    towerEntity(cMapper*);
+    towerEntity(cMapper* mapper);
     ~towerEntity();
     /// Set damage output for tower
     void setDamage(const unsigned int);

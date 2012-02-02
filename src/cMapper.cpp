@@ -44,3 +44,10 @@ gameEntity* cMapper::getTarget() {
         if ((*iter)->name() == "Enemy")
             return (*iter);
 }
+
+void cMapper::deleteInstance(gameEntity *instance) {
+    std::vector<gameEntity*>::iterator iter = entityContainer.begin();
+    for (;iter < entityContainer.end();iter++)
+        if ((*iter) == instance)
+            entityContainer.erase(iter);
+}
