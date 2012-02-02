@@ -9,7 +9,7 @@ enemyEntity::enemyEntity(cMapper *mapper) :
 entityName_("Enemy"),
 mapper_(mapper)
 {
-    cout << this->name() << ": Entity created" << endl;
+    cout << this->name() << ": Entity constructor!" << " --> ";
 }    
 
 enemyEntity::~enemyEntity() {
