@@ -21,7 +21,8 @@ towerEntity::~towerEntity() {
     mapper_->deleteInstance(this);
 }
 
-void towerEntity::update() {
+void towerEntity::update(long frametime) {
+    std::cout << "Frametime: " << frametime << "\n";
     if (enemy)
         fire();
     else

@@ -16,7 +16,7 @@ public:
 	// Destructor
     ~enemyEntity();
 	// Update funktion to hide more complex behaviour logic
-    void update();
+    void update(long);
 	// Return entity name
     std::string name();
 private:

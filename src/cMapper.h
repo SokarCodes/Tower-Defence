@@ -21,7 +21,7 @@ public:
     static cMapper* getInstance();
     void add(gameEntity*);
     void showEntities();
-    void update();
+    void update(long);
     void deleteInstance(gameEntity*);
     gameEntity* getTarget(
         //give asker coordinates as parameter?

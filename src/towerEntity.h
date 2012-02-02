@@ -22,7 +22,7 @@ public:
     /// Set target entity for tower
     void setTarget(gameEntity*);
     /// Update method for towerEntity
-    void update();
+    void update(long);
     /// Get entity name
     std::string name();
 private:

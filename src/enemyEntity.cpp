@@ -17,8 +17,8 @@ enemyEntity::~enemyEntity() {
     mapper_->deleteInstance(this);
 }
 
-void enemyEntity::update() {
-    cout << this->name() << ": Entity running!" << endl;
+void enemyEntity::update(long frametime) {
+    cout << this->name() << ": Entity running! Frametime: " << frametime << endl;
 }
 
 std::string enemyEntity::name() {

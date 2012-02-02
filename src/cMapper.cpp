@@ -30,11 +30,11 @@ void cMapper::showEntities() {
     std::cout << "\n";
 }
 
-void cMapper::update() {
+void cMapper::update(long frametime) {
     std::vector<gameEntity*>::iterator iter = entityContainer.begin();
 
     for (;iter < entityContainer.end();iter++)
-        (*iter)->update();
+        (*iter)->update(frametime);
 }
 
 gameEntity* cMapper::getTarget() {
