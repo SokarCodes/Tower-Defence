@@ -47,6 +47,8 @@ int main(int argc, char** argv) {
     mapper->update();
     mapper->showEntities();
     delete tower;
+    mapper->update();
+    mapper->showEntities();
     delete mapper;
     
     return EXIT_SUCCESS;

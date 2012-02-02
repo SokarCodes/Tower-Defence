@@ -18,6 +18,7 @@ mapper_(mapper)
 
 towerEntity::~towerEntity() {
     std::cout << this->name() << ": Entity destruction!" << " --> ";
+    mapper_->deleteInstance(this);
 }
 
 void towerEntity::update() {
