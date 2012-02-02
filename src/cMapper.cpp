@@ -24,7 +24,23 @@ void cMapper::add(gameEntity *ent) {
 
 void cMapper::showEntities() {
     std::vector<gameEntity*>::iterator iter = entityContainer.begin();
+    std::cout << "mapper contains: ";
     for (;iter < entityContainer.end();iter++)
-        std::cout << "mapper contains: " << (*iter)->name() << "\n";
+        std::cout << (*iter)->name() << ", ";
+    std::cout << "\n";
 }
 
+void cMapper::update() {
+    std::vector<gameEntity*>::iterator iter = entityContainer.begin();
+
+    for (;iter < entityContainer.end();iter++)
+        (*iter)->update();
+}
+
+gameEntity* cMapper::getTarget() {
+    std::vector<gameEntity*>::iterator iter = entityContainer.begin();
+
+    for (;iter < entityContainer.end();iter++)
+        if ((*iter)->name() == "Enemy")
+            return (*iter);
+}

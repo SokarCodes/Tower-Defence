@@ -7,6 +7,7 @@
 
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
+
 class enemyEntity : public gameEntity {
 public:
 	// Constructor
@@ -19,7 +20,7 @@ public:
     std::string name();
 private:
 	// Entity name variable
-    std::string entityName;
+    std::string entityName_;
 
 };
 

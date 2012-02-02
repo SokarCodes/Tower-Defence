@@ -3,19 +3,21 @@
 #include "gameEntity.h"
 #include "enemyEntity.h"
 #include "towerEntity.h"
+#include "cMapper.h"
 
  
-towerEntity::towerEntity() :
+towerEntity::towerEntity(cMapper* newMapper) :
 enemy(0),
 damage(0),
 range(0),
-entityName("Tower")
+entityName("Tower"),
+mapper_(newMapper)
 {
-    std::cout << "TowerEntity constructor!" << "\n";
+    std::cout << this->name() << ": Entity constructor!" << " --> ";
 }       
 
 towerEntity::~towerEntity() {
-    std::cout << "TowerEntity destruction!" << "\n";
+    std::cout << this->name() << ": Entity destruction!" << " --> ";
 }
 
 void towerEntity::update() {
@@ -23,12 +25,12 @@ void towerEntity::update() {
         fire();
     else
     {
-        std::cout << "Need to acquire target!" << "\n";
+        std::cout << this->name() << ": Need to acquire target!" << "\n";
         acquireTarget();
     }
 }
 void towerEntity::fire() {
-    std::cout << "FIRE IN THE HOLE!" << "\n";
+    std::cout << this->name() <<  ": FIRE IN THE HOLE!" << "\n";
 }
 
 void towerEntity::setDamage(const unsigned int dmg) {
@@ -44,7 +46,8 @@ void towerEntity::setTarget(gameEntity *newEnemy) {
 }
 
 void towerEntity::acquireTarget() {
-    std::cout << "Acquiring target!" << "\n";
+    std::cout << this->name() << ": Acquiring target!" << "\n";
+    enemy = mapper_->getTarget();
 }
 
 std::string towerEntity::name() {

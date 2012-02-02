@@ -22,33 +22,28 @@ int main(int argc, char** argv) {
     /// Just testing classes
     cout << "Hello tower defense!" << endl;
 
-	gameEntity *tower;
-	gameEntity *enemy;
+    gameEntity *tower;
+    gameEntity *enemy;
     cMapper *mapper;
 
-	try {
-		tower = new towerEntity();
-		enemy = new enemyEntity();
+    try {
         mapper = cMapper::getInstance();
-	}
-	catch (bad_alloc&)
-	{
-		return EXIT_FAILURE;
-	}
+        tower = new towerEntity(mapper);
+        enemy = new enemyEntity();
+    }
+    catch (bad_alloc&)
+    {
+        return EXIT_FAILURE;
+    }
 
-	cout << tower->name() << '\n';
-    cout << enemy->name() << '\n';
     mapper->add(tower);
     mapper->add(enemy);
-    tower->update();
-    enemy->update();
-    tower->setDamage(6);
-    tower->setRange(10);
-    tower->setTarget(enemy);
-    tower->update();
-    tower->setPosition(6,8);
-    tower->getPosition();
+    // This update does not initiate fire sequence on tower entity.
+    mapper->update();
     mapper->showEntities();
+    // Target has been acquired on last update so now fire sequence initiates.
+    mapper->update();
+
     delete tower;
     delete enemy;
     delete mapper;

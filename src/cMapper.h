@@ -21,6 +21,10 @@ public:
     static cMapper* getInstance();
     void add(gameEntity*);
     void showEntities();
+    void update();
+    gameEntity* getTarget(
+        //give asker coordinates as parameter?
+        );
     
 };
 

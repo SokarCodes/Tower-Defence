@@ -5,19 +5,19 @@
 using namespace std;
 
 enemyEntity::enemyEntity() : 
-entityName("Enemy")
+entityName_("Enemy")
 {
-    cout << "Enemy entity created" << endl;
+    cout << this->name() << ": Entity created" << endl;
 }    
 
 enemyEntity::~enemyEntity() {
-    std::cout << "enemyEntity destruction!" << "\n";
+    std::cout << this->name() << ": Entity destruction!" << " --> ";
 }
 
 void enemyEntity::update() {
-    cout << "Enemy entity running!" << endl;
+    cout << this->name() << ": Entity running!" << endl;
 }
 
 std::string enemyEntity::name() {
-    return entityName;
+    return entityName_;
 }

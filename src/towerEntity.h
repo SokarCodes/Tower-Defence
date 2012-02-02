@@ -8,12 +8,12 @@
 #ifndef TOWERENTITY_H
 #define	TOWERENTITY_H
 class gameEntity;
-
+class cMapper;
 
 class towerEntity : public gameEntity
 {
 public:
-    towerEntity();
+    towerEntity(cMapper*);
     ~towerEntity();
     /// Set damage output for tower
     void setDamage(const unsigned int);
@@ -38,6 +38,8 @@ private:
     unsigned int range;
     /// Entity name
     std::string entityName;
+    /// cMapper pointer for target queries
+    cMapper* mapper_;
     
 }; // class towerEntity
 
