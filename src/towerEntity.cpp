@@ -10,6 +10,7 @@ towerEntity::towerEntity(cMapper* mapper) :
 enemy(0),
 damage(0),
 range(0),
+reloadTimeout_(-2),
 entityName("Tower"),
 mapper_(mapper)
 {
@@ -22,9 +23,17 @@ towerEntity::~towerEntity() {
 }
 
 void towerEntity::update(long frametime) {
-    std::cout << "Frametime: " << frametime << "\n";
+    //std::cout << this->name() << ": Frametime  " << frametime << "\n";
     if (enemy)
-        fire();
+    {
+        if((frametime - reloadTimeout_)<= 2)
+            std::cout << "Reloading cannon!\n";
+        else    
+        {
+            reloadTimeout_ = frametime;
+            fire();
+        }
+    }
     else
     {
         std::cout << this->name() << ": Need to acquire target!" << "\n";

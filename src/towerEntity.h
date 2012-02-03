@@ -36,6 +36,8 @@ private:
     unsigned int damage;
     /// Tower maximum range
     unsigned int range;
+    /// Reload timeout
+    int reloadTimeout_;
     /// Entity name
     std::string entityName;
     /// cMapper pointer for target queries
