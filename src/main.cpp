@@ -23,11 +23,12 @@ int main(int argc, char** argv) {
     
     // Initialize variables for gameloop timer logic
     sf::Clock clock;
-    const int framerate = 1;
+    const int framerate = 2;
     float framestartTime = 0;
     float difference = 0;
     float sleepTime = 0;
-    float frametime = 1/framerate;
+    float frametime = 1/(float)framerate;
+    cout << frametime;
     
     // Singleton mapper class which updates all gameEntities
     cMapper *mapper;
