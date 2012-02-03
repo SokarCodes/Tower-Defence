@@ -17,3 +17,4 @@ ipch/*
 Debug/*
 Release/*
 deps/*
+/nbproject/private/
