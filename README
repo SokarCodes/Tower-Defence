@@ -2,6 +2,13 @@ Tower-Defence By Jukka Vatjus-Anttila
 
 1st game engine build. 
 
+v0.0.5
+- Removed SDL and introduced Simple and Fast Multimedia Library - SFML
+- sf::Clock() now keeps track of frametimes
+-> gameloop now works realtime
+-> Framerate can be adjusted
+-> towerEntity now reloads ammunition for two seconds after every shot.
+
 v0.0.3
 - cMapper class
 -> Is singleton
