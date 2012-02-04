@@ -12,12 +12,16 @@ class enemyEntity : public gameEntity {
 public:
     /// Constructor
     enemyEntity();
+
     /// Destructor
     ~enemyEntity();
+
     /// Update function to hide more complex behaviour logic. Frametime as parameter.
     void update(float);
+
     /// Return entity name
     std::string name();
+
 private:
     /// Entity name variable
     std::string entityName_;
