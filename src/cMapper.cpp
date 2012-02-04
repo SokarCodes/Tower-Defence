@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include "gameEntity.h"
 #include "cMapper.h"
 
 cMapper* cMapper::thisPointer = NULL;
@@ -30,7 +32,7 @@ void cMapper::showEntities() {
     std::cout << "\n";
 }
 
-void cMapper::update(long frametime) {
+void cMapper::update(float frametime) {
     std::vector<gameEntity*>::iterator iter = entityContainer.begin();
 
     for (;iter < entityContainer.end();iter++)

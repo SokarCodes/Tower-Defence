@@ -4,16 +4,15 @@
  *
  * Created on January 23, 2012, 8:51 PM
  */
-#include <string>
 #ifndef TOWERENTITY_H
 #define	TOWERENTITY_H
+#include <string>
 class gameEntity;
-class cMapper;
 
 class towerEntity : public gameEntity
 {
 public:
-    towerEntity(cMapper* mapper);
+    towerEntity();
     ~towerEntity();
     /// Set damage output for tower
     void setDamage(const unsigned int);
@@ -22,7 +21,7 @@ public:
     /// Set target entity for tower
     void setTarget(gameEntity*);
     /// Update method for towerEntity
-    void update(long);
+    void update(float);
     /// Get entity name
     std::string name();
 private:
@@ -40,8 +39,6 @@ private:
     int reloadTimeout_;
     /// Entity name
     std::string entityName;
-    /// cMapper pointer for target queries
-    cMapper* mapper_;
     
 }; // class towerEntity
 

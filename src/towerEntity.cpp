@@ -6,23 +6,22 @@
 #include "cMapper.h"
 
  
-towerEntity::towerEntity(cMapper* mapper) :
+towerEntity::towerEntity() :
 enemy(0),
 damage(0),
 range(0),
 reloadTimeout_(-2),
-entityName("Tower"),
-mapper_(mapper)
+entityName("Tower")
 {
     std::cout << this->name() << ": Entity constructor!" << " --> ";
 }       
 
 towerEntity::~towerEntity() {
     std::cout << this->name() << ": Entity destruction!" << " --> ";
-    mapper_->deleteInstance(this);
+    getMapper()->deleteInstance(this);
 }
 
-void towerEntity::update(long frametime) {
+void towerEntity::update(float frametime) {
     //std::cout << this->name() << ": Frametime  " << frametime << "\n";
     if (enemy)
     {
@@ -58,7 +57,7 @@ void towerEntity::setTarget(gameEntity *newEnemy) {
 
 void towerEntity::acquireTarget() {
     std::cout << this->name() << ": Acquiring target!" << "\n";
-    enemy = mapper_->getTarget();
+    enemy = getMapper()->getTarget();
 }
 
 std::string towerEntity::name() {

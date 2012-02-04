@@ -5,22 +5,24 @@
 #include <string>
 using namespace std;
 
-enemyEntity::enemyEntity(cMapper *mapper) :
-entityName_("Enemy"),
-mapper_(mapper)
+enemyEntity::enemyEntity() :
+entityName_("Enemy")    // Hardcoded for now to distinquish tower and enemy entities with name
 {
     cout << this->name() << ": Entity constructor!" << " --> ";
 }    
 
-enemyEntity::~enemyEntity() {
+enemyEntity::~enemyEntity()
+{
     std::cout << this->name() << ": Entity destruction!" << " --> ";
-    mapper_->deleteInstance(this);
+    getMapper()->deleteInstance(this);
 }
 
-void enemyEntity::update(long frametime) {
+void enemyEntity::update(float frametime)
+{
     cout << this->name() << ": Entity running! Frametime: " << frametime << endl;
 }
 
-std::string enemyEntity::name() {
+std::string enemyEntity::name()
+{
     return entityName_;
 }

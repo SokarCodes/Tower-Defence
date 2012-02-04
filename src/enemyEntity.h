@@ -7,23 +7,20 @@
 
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
-class cMapper;
 
 class enemyEntity : public gameEntity {
 public:
-	// Constructor
-    enemyEntity(cMapper *mapper);
-	// Destructor
+    /// Constructor
+    enemyEntity();
+    /// Destructor
     ~enemyEntity();
-	// Update funktion to hide more complex behaviour logic
-    void update(long);
-	// Return entity name
+    /// Update function to hide more complex behaviour logic. Frametime as parameter.
+    void update(float);
+    /// Return entity name
     std::string name();
 private:
-	// Entity name variable
+    /// Entity name variable
     std::string entityName_;
-    cMapper *mapper_;
-
 };
 
 

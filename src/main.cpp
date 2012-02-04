@@ -27,8 +27,8 @@ int main(int argc, char** argv) {
     float framestartTime = 0;
     float difference = 0;
     float sleepTime = 0;
-    float frametime = 1/(float)framerate;
-    cout << frametime;
+    float frameBudget = 1/(float)framerate;
+    cout << "Framebudget = " << frameBudget << "\n";
     
     // Singleton mapper class which updates all gameEntities
     cMapper *mapper;
@@ -40,28 +40,31 @@ int main(int argc, char** argv) {
     }
 
     // Add couple gameEntities to mapper
-    mapper->add(dynamic_cast<gameEntity*> (new towerEntity(mapper)));
-    mapper->add(dynamic_cast<gameEntity*> (new enemyEntity(mapper)));
+    mapper->add(dynamic_cast<gameEntity*> (new towerEntity));
+    mapper->add(dynamic_cast<gameEntity*> (new enemyEntity));
 
+    // Start running the clock just before gameloop
+    clock.Reset();
     // Gameloop
     while(1)
     {
         // Get current framestart time
         framestartTime = clock.GetElapsedTime();
+        cout << "FramestartTime = " << framestartTime << "\n";
         // Update game logic. Here only mapper->update()
         mapper->update(framestartTime);
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;
         
         // If difference is smaller than budgeted, rest until next frame
-        if (difference < frametime)
+        if (difference < frameBudget)
         {
             // Rendering budgets:
             // 60fps = 16,667ms
             // 30fps = 33,333ms
             // 10fps = 100ms
             //  5fps = 200ms
-            sleepTime = frametime - difference;
+            sleepTime = frameBudget - difference;
             // Sleep for rest of the frame
             sf::Sleep(sleepTime);
         }
