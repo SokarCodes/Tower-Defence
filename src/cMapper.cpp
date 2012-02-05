@@ -27,7 +27,7 @@ void cMapper::add(cGameEntity *ent) {
     else
     {
         ent->setRange(3);
-        ent->setPosition(2,5);
+        ent->setPosition(3,4);
     }
     std::cout << "Added cGameEntity: " << ent->name() << " to container!\n";
 }
@@ -49,6 +49,9 @@ void cMapper::update(float frametime) {
 
 cGameEntity* cMapper::getTarget(int x, int y, int range)
 {
+    // Brute force approach. Iterate through every enemyEntities and
+    // calculate distance between querying tower and enemy.
+    // Return enemyEntity ptr if in range.
     cGameEntity *closestEntity = NULL;
     float closestRange = 999999;
 
@@ -67,9 +70,15 @@ cGameEntity* cMapper::getTarget(int x, int y, int range)
             }
         }
     if (closestRange <= range)
+    {
+        std::cout << "Closest enemy was " << closestRange << " distance away.\n";
         return closestEntity;
+    }
     else
+    {
+        std::cout << "No enemies in range! Closest enemy was " << closestRange << " distance away.\n";
         return NULL;
+    }
 }
 
 void cMapper::deleteInstance(cGameEntity *instance) {
