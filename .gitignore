@@ -16,3 +16,4 @@ ipch/*
 Debug/*
 Release/*
 deps/*
+x64/*
