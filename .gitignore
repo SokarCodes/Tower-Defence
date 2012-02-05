@@ -10,10 +10,11 @@ bin/*
 *.sdf
 *.suo
 *.user
+*.cbp
 Tower-Defence.dir/*
 Win32/*
 ipch/*
 Debug/*
 Release/*
 deps/*
-x64/*
+/nbproject/private/
