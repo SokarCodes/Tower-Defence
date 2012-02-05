@@ -32,9 +32,7 @@ public:
     void deleteInstance(cGameEntity*);
 
     /// Returns closest possible target for querying entity.
-    cGameEntity* getTarget(
-        //give asker coordinates as parameter?
-        );
+    cGameEntity* getTarget(int, int, int);
 private:
     /// Private constructor because singleton class pointer is get from getInstance()
     cMapper() {}

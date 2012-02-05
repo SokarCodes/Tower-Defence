@@ -17,7 +17,10 @@ public:
     void setPosition(int x, int y) { x_coord_ = x; y_coord_ = y; }
 
     /// Get derived class entity position in 2D space
-    void getPosition() { std::cout << "X: " << x_coord_ << " Y: " << y_coord_ << "\n"; }
+    int getXPosition() { return x_coord_; }
+
+    /// Get derived class entity position in 2D space
+    int getYPosition() { return y_coord_; }
 
     /// Return cMapper pointer to derived class.
     cMapper* getMapper() { return mapper_; }
@@ -41,7 +44,7 @@ public:
     /// Virtual destructor for proper derived/base chain dismantling.
     virtual ~cGameEntity() { std::cout << "cGameEntity destruction!" << "\n"; }
 
-private:
+protected:
     /// Entity X-coord in 2D space.
     int x_coord_;
 
@@ -51,6 +54,7 @@ private:
     /// Entity hitpoints. Entity removal when hitpoints <= 0
     int hitpoints_;
 
+private:
     /// cMapper pointer. Used in derived classes to inform cMapper of their destruction.
     static cMapper *mapper_;
 };

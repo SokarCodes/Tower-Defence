@@ -2,6 +2,7 @@
 #include <vector>
 #include "cGameEntity.h"
 #include "cMapper.h"
+#include <math.h>
 
 cMapper* cMapper::thisPointer_ = NULL;
 bool cMapper::instanceFlag_ = false;
@@ -21,6 +22,13 @@ cMapper* cMapper::getInstance() {
 
 void cMapper::add(cGameEntity *ent) {
     entityContainer_.push_back(ent);
+    if (ent->name() == "Enemy")
+        ent->setPosition(2,2);
+    else
+    {
+        ent->setRange(3);
+        ent->setPosition(2,5);
+    }
     std::cout << "Added cGameEntity: " << ent->name() << " to container!\n";
 }
 
@@ -39,13 +47,29 @@ void cMapper::update(float frametime) {
         (*iter)->update(frametime);
 }
 
-cGameEntity* cMapper::getTarget() {
+cGameEntity* cMapper::getTarget(int x, int y, int range)
+{
+    cGameEntity *closestEntity = NULL;
+    float closestRange = 999999;
+
     std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
 
     for (;iter < entityContainer_.end();iter++)
         if ((*iter)->name() == "Enemy")
-            return (*iter);
-    return NULL;
+        {
+            double diffX = x - (*iter)->getXPosition();
+            double diffY = y - (*iter)->getYPosition();
+            double range = sqrt(pow(diffX,2) + pow(diffY,2));
+            if (range < closestRange)
+            {
+                closestRange = range;
+                closestEntity = (*iter);
+            }
+        }
+    if (closestRange <= range)
+        return closestEntity;
+    else
+        return NULL;
 }
 
 void cMapper::deleteInstance(cGameEntity *instance) {

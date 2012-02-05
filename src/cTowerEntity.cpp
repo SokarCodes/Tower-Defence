@@ -57,7 +57,7 @@ void cTowerEntity::setTarget(cGameEntity *enemy) {
 
 void cTowerEntity::acquireTarget() {
     std::cout << this->name() << ": Acquiring target!" << "\n";
-    enemy_ = getMapper()->getTarget();
+    enemy_ = getMapper()->getTarget(x_coord_, y_coord_, range_);
 }
 
 std::string cTowerEntity::name() {
