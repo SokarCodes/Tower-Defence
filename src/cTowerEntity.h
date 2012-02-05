@@ -1,5 +1,5 @@
 /* 
- * File:   towerEntity.h
+ * File:   cTowerEntity.h
  * Author: Jukka Vatjus-Anttila
  *
  * Created on January 23, 2012, 8:51 PM
@@ -8,16 +8,16 @@
 #define	TOWERENTITY_H
 
 #include <string>
-class gameEntity;
+class cGameEntity;
 
-class towerEntity : public gameEntity
+class cTowerEntity : public cGameEntity
 {
 public:
     /// Constructor
-    towerEntity();
+    cTowerEntity();
 
     /// Destructor
-    ~towerEntity();
+    ~cTowerEntity();
 
     /// Set damage output for tower
     void setDamage(const unsigned int);
@@ -26,9 +26,9 @@ public:
     void setRange(const unsigned int);
 
     /// Set target entity for tower
-    void setTarget(gameEntity*);
+    void setTarget(cGameEntity*);
 
-    /// Update method for towerEntity
+    /// Update method for cTowerEntity
     void update(float);
 
     /// Get entity name
@@ -42,19 +42,19 @@ private:
     void acquireTarget();
 
     /// Target entity. NULL if no target acquired.
-    gameEntity* enemy;
+    cGameEntity* enemy_;
 
     /// Tower damage output
-    unsigned int damage;
+    unsigned int damage_;
 
     /// Tower maximum range
-    unsigned int range;
+    unsigned int range_;
 
     /// Reload timeout
     int reloadTimeout_;
 
     /// Entity name
-    std::string entityName;  
+    std::string entityName_;
 };
 
 #endif	/* TOWERENTITY_H */

@@ -1,56 +1,56 @@
 #include <iostream>
 #include <vector>
-#include "gameEntity.h"
+#include "cGameEntity.h"
 #include "cMapper.h"
 
-cMapper* cMapper::thisPointer = NULL;
-bool cMapper::instanceFlag = false;
+cMapper* cMapper::thisPointer_ = NULL;
+bool cMapper::instanceFlag_ = false;
 
 cMapper* cMapper::getInstance() {
-    if (!instanceFlag)
+    if (!instanceFlag_)
     {
-        thisPointer = new cMapper();
-        instanceFlag = true;
-        return thisPointer;
+        thisPointer_ = new cMapper();
+        instanceFlag_ = true;
+        return thisPointer_;
     }
     else
     {
-        return thisPointer;
+        return thisPointer_;
     }
 }
 
-void cMapper::add(gameEntity *ent) {
-    entityContainer.push_back(ent);
-    std::cout << "Added gameEntity: " << ent->name() << " to container!\n";
+void cMapper::add(cGameEntity *ent) {
+    entityContainer_.push_back(ent);
+    std::cout << "Added cGameEntity: " << ent->name() << " to container!\n";
 }
 
 void cMapper::showEntities() {
-    std::vector<gameEntity*>::iterator iter = entityContainer.begin();
+    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
     std::cout << "mapper contains: ";
-    for (;iter < entityContainer.end();iter++)
+    for (;iter < entityContainer_.end();iter++)
         std::cout << (*iter)->name() << ", ";
     std::cout << "\n";
 }
 
 void cMapper::update(float frametime) {
-    std::vector<gameEntity*>::iterator iter = entityContainer.begin();
+    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
 
-    for (;iter < entityContainer.end();iter++)
+    for (;iter < entityContainer_.end();iter++)
         (*iter)->update(frametime);
 }
 
-gameEntity* cMapper::getTarget() {
-    std::vector<gameEntity*>::iterator iter = entityContainer.begin();
+cGameEntity* cMapper::getTarget() {
+    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
 
-    for (;iter < entityContainer.end();iter++)
+    for (;iter < entityContainer_.end();iter++)
         if ((*iter)->name() == "Enemy")
             return (*iter);
     return NULL;
 }
 
-void cMapper::deleteInstance(gameEntity *instance) {
-    std::vector<gameEntity*>::iterator iter = entityContainer.begin();
-    for (;iter < entityContainer.end();iter++)
+void cMapper::deleteInstance(cGameEntity *instance) {
+    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
+    for (;iter < entityContainer_.end();iter++)
         if ((*iter) == instance)
-            entityContainer.erase(iter);
+            entityContainer_.erase(iter);
 }

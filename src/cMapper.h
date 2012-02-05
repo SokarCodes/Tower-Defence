@@ -9,18 +9,18 @@
 #define	CMAPPER_H
 
 #include <vector>
-class gameEntity;
+class cGameEntity;
 
 class cMapper {
 public:
     /// Destructor, sets instanceFlag to false so getInstance creates new on request
-    ~cMapper() { instanceFlag = false; }
+    ~cMapper() { instanceFlag_ = false; }
 
     /// Returns instance of this class
     static cMapper* getInstance();
 
-    /// Adds gameEntity to vector
-    void add(gameEntity*);
+    /// Adds cGameEntity to vector
+    void add(cGameEntity*);
 
     /// Shows names of gameEntities in vector. Obsolete.
     void showEntities();
@@ -28,11 +28,11 @@ public:
     /// Update method. Calls update methods of all gameEntities.
     void update(float);
 
-    /// deletes instance of gameEntity from vector
-    void deleteInstance(gameEntity*);
+    /// deletes instance of cGameEntity from vector
+    void deleteInstance(cGameEntity*);
 
     /// Returns closest possible target for querying entity.
-    gameEntity* getTarget(
+    cGameEntity* getTarget(
         //give asker coordinates as parameter?
         );
 private:
@@ -40,13 +40,13 @@ private:
     cMapper() {}
 
     /// Vector to store all entities in the map
-    std::vector<gameEntity*> entityContainer;
+    std::vector<cGameEntity*> entityContainer_;
 
     /// Singleton instance created flag
-    static bool instanceFlag;
+    static bool instanceFlag_;
 
     /// Pointer to store cMapper class if some class wants it.
-    static cMapper *thisPointer;
+    static cMapper *thisPointer_;
 };
 
 

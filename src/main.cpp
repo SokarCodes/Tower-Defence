@@ -6,9 +6,9 @@
  */
 #include <iostream>
 #include <cstdlib>
-#include "gameEntity.h"
-#include "towerEntity.h"
-#include "enemyEntity.h"
+#include "cGameEntity.h"
+#include "cTowerEntity.h"
+#include "cEnemyEntity.h"
 #include "cMapper.h"
 #include <SFML/System.hpp>
 
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     float difference = 0;
     float sleepTime = 0;
     float frameBudget = 1/(float)framerate;
-    cout << "Framebudget = " << frameBudget << "\n";
+    //cout << "Framebudget = " << frameBudget*1000 << "ms\n";
     
     // Singleton mapper class which updates all gameEntities
     cMapper *mapper;
@@ -40,8 +40,8 @@ int main(int argc, char** argv) {
     }
 
     // Add couple gameEntities to mapper
-    mapper->add(dynamic_cast<gameEntity*> (new towerEntity));
-    mapper->add(dynamic_cast<gameEntity*> (new enemyEntity));
+    mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity));
+    mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity));
 
     // Start running the clock just before gameloop
     clock.Reset();

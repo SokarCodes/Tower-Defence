@@ -1,5 +1,5 @@
 /* 
- * File:   gameEntity.h
+ * File:   cGameEntity.h
  * Author: Jukka Vatjus-Anttila
  *
  * Created on January 24, 2012, 8:25 PM
@@ -11,7 +11,7 @@
 #include <iostream>
 #include "cMapper.h"
 
-class gameEntity {
+class cGameEntity {
 public:
     /// Set derived class entity position in 2D space
     void setPosition(int x, int y) { x_coord_ = x; y_coord_ = y; }
@@ -33,13 +33,13 @@ public:
     virtual void setRange(const unsigned int) {}
 
     /// Virtual method to set target for attacking entity
-    virtual void setTarget(gameEntity*) {}
+    virtual void setTarget(cGameEntity*) {}
 
     /// Virtual method to set name of entity. Define in base class.
     virtual std::string name() = 0;
 
     /// Virtual destructor for proper derived/base chain dismantling.
-    virtual ~gameEntity() { std::cout << "gameEntity destruction!" << "\n"; }
+    virtual ~cGameEntity() { std::cout << "cGameEntity destruction!" << "\n"; }
 
 private:
     /// Entity X-coord in 2D space.

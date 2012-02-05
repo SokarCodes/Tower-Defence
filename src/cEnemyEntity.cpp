@@ -1,28 +1,28 @@
-#include "gameEntity.h"
-#include "enemyEntity.h"
+#include "cGameEntity.h"
+#include "cEnemyEntity.h"
 #include "cMapper.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
-enemyEntity::enemyEntity() :
+cEnemyEntity::cEnemyEntity() :
 entityName_("Enemy")    // Hardcoded for now to distinquish tower and enemy entities with name
 {
     cout << this->name() << ": Entity constructor!" << " --> ";
 }    
 
-enemyEntity::~enemyEntity()
+cEnemyEntity::~cEnemyEntity()
 {
     std::cout << this->name() << ": Entity destruction!" << " --> ";
     getMapper()->deleteInstance(this);
 }
 
-void enemyEntity::update(float frametime)
+void cEnemyEntity::update(float frametime)
 {
     cout << this->name() << ": Entity running! Frametime: " << frametime << endl;
 }
 
-std::string enemyEntity::name()
+std::string cEnemyEntity::name()
 {
     return entityName_;
 }
