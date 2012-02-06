@@ -7,6 +7,8 @@ ADD_DEFINITIONS(-Wall -g)
 file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
 
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/utils )
+
 set(SourceFiles ${SourceFiles})
 set(HeadereFiles ${HeaderFiles})
 
