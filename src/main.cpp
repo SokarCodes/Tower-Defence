@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
     {
         // Get current framestart time
         framestartTime = clock.GetElapsedTime();
-        cout << "FramestartTime = " << framestartTime << "\n";
+        cout << "----\nFramestartTime = " << framestartTime << "\n";
         // Update game logic. Here only mapper->update()
         mapper->update(framestartTime);
         // Get time elapsed in game logic update

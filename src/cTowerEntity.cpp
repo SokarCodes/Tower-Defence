@@ -26,7 +26,7 @@ void cTowerEntity::update(float frametime) {
     if (enemy_)
     {
         if((frametime - reloadTimeout_)<= 2)
-            std::cout << "Reloading cannon!\n";
+            std::cout << this->name() << ": Reloading cannon!\n";
         else    
         {
             reloadTimeout_ = frametime;
