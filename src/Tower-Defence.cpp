@@ -52,6 +52,7 @@ int main(int argc, char** argv) {
     mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity));
     mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity));
 
+    // Testing renderwindow drawText
     sf::String Text("DERP!");
     Text.SetFont(sf::Font::GetDefaultFont());
     Text.SetStyle(sf::String::Bold | sf::String::Italic | sf::String::Underlined);
@@ -66,8 +67,8 @@ int main(int argc, char** argv) {
     // Gameloop
     while(appRunning)
     {
-        window.Display();
         window.Draw(Text);
+        window.Display();
 
         // Get current framestart time
         framestartTime = clock.GetElapsedTime();
