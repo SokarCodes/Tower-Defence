@@ -22,10 +22,6 @@ public:
     /// Get derived class entity position in 2D space
     int getYPosition() { return y_coord_; }
 
-    /// Return cMapper pointer to derived class.
-    cMapper* getMapper() { return mapper_; }
-
-
     /// Virtual update method. Define in base class.
     virtual void update(float) = 0;
 
@@ -45,6 +41,9 @@ public:
     virtual ~cGameEntity() { std::cout << "cGameEntity destruction!" << "\n"; }
 
 protected:
+    /// Return cMapper pointer to derived class.
+    cMapper* getMapper() { return mapper_; }
+
     /// Entity X-coord in 2D space.
     int x_coord_;
 
