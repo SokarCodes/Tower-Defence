@@ -93,6 +93,8 @@ int main(int argc, char** argv) {
             // Sleep for rest of the frame
             sf::Sleep(sleepTime);
         }
+
+        // Event loop checker
         while (window.GetEvent(Event))
         {
             // Window closed
@@ -111,13 +113,13 @@ int main(int argc, char** argv) {
                 window.Close();
             }
 
+            // Mouse button pressed
             if (Event.Type == sf::Event::MouseButtonPressed)
             {
                 cout << "Mouse button pressed (" << Input.GetMouseX() << "," << Input.GetMouseY() << ")\n";
                 int X = Input.GetMouseX();
                 int Y = Input.GetMouseY();
                 Text.SetPosition(X,Y);
-
             }
         }
     }
