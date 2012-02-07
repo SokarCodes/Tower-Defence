@@ -8,7 +8,7 @@
  
 cTowerEntity::cTowerEntity(int x, int y) :
 enemy_(0),
-damage_(4),
+damage_(1),
 range_(100),
 reloadTimeout_(2),
 lastShotTime_(0.f),
@@ -22,7 +22,6 @@ entityName_("Tower")
 
 cTowerEntity::~cTowerEntity() {
     std::cout << this->name() << ": Entity destruction!" << " --> ";
-    //getMapper()->deleteEntity(this);
 }
 
 void cTowerEntity::update(float frametime) {

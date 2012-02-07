@@ -8,7 +8,7 @@ using namespace std;
 cEnemyEntity::cEnemyEntity(int x, int y) :
 entityName_("Enemy")    // Hardcoded for now to distinquish tower and enemy entities with name
 {
-    hitpoints_ = 10;
+    hitpoints_ = 10000;
     x_coord_ = x;
     y_coord_ = y;
     std::cout << this->name() << ": Entity constructor!" << " --> ";
@@ -22,9 +22,9 @@ cEnemyEntity::~cEnemyEntity()
 
 void cEnemyEntity::update(float frametime)
 {
+    // For now, only thing enemyEntity can do is die away.
     if (hitpoints_ <= 0)
         getMapper()->deleteEntity(this);
-    //cout << this->name() << ": Entity running!\n";
 }
 
 std::string cEnemyEntity::name()
