@@ -2,6 +2,18 @@ Tower-Defence By Jukka Vatjus-Anttila
 
 1st game engine build. 
 
+This is project aiming to replicate good'old TD action known from Warcraft3 custom maps.
+No breakthroughs planned as of yet to game mechanics or logic but hopes are high.
+
+Version history. (Not all details covered.)
+
+v0.0.6
+- Work has began with sfml renderwindow testing.
+- Currently renderwindow opens and left mouse places tower and right mouse enemy
+- No GFX yet. Logic still works. Towers acquire targets and enemies die. No one moves though.
+- Gonna fine tune gamelogic more before starting any visual presentation over OGL.
+- Soon propably moving to beta branch so master can be kept more stable with progression.
+
 v0.0.5
 - Removed SDL and introduced Simple and Fast Multimedia Library - SFML
 - sf::Clock() now keeps track of frametimes
