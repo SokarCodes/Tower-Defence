@@ -19,7 +19,7 @@ cEnemyEntity::~cEnemyEntity()
 
 void cEnemyEntity::update(float frametime)
 {
-    cout << this->name() << ": Entity running!\n";
+    //cout << this->name() << ": Entity running!\n";
 }
 
 std::string cEnemyEntity::name()

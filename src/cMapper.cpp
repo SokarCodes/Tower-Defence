@@ -1,8 +1,12 @@
+// Standard libraries
 #include <iostream>
 #include <vector>
+#include <math.h>
+#include <string>
+
+// project libraries
 #include "cGameEntity.h"
 #include "cMapper.h"
-#include <math.h>
 
 cMapper* cMapper::thisPointer_ = NULL;
 bool cMapper::instanceFlag_ = false;

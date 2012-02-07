@@ -22,15 +22,14 @@ cTowerEntity::~cTowerEntity() {
 }
 
 void cTowerEntity::update(float frametime) {
-    //std::cout << this->name() << ": Frametime  " << frametime << "\n";
     if (enemy_)
     {
-        if((frametime - reloadTimeout_)<= 2)
-            std::cout << this->name() << ": Reloading cannon!\n";
+        if((frametime - reloadTimeout_)<= 2);
         else    
         {
             reloadTimeout_ = frametime;
             fire();
+            std::cout << ". frametime: " << frametime << ".\n" <<this->name() << ": Reloading!\n";
         }
     }
     else
@@ -40,7 +39,7 @@ void cTowerEntity::update(float frametime) {
     }
 }
 void cTowerEntity::fire() {
-    std::cout << this->name() <<  ": FIRE IN THE HOLE!" << "\n";
+    std::cout << this->name() <<  ": FIRE IN THE HOLE!";
 }
 
 void cTowerEntity::setDamage(const unsigned int damage) {

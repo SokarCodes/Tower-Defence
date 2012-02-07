@@ -61,20 +61,23 @@ int main(int argc, char** argv) {
     Text.SetRotation(0.f);
     Text.SetScale(2.f, 2.f);
     Text.Move(100.f, 200.f);
+    const sf::Input& Input = window.GetInput();
 
     // Start running the clock just before gameloop
     clock.Reset();
     // Gameloop
     while(appRunning)
     {
+        window.Clear();
         window.Draw(Text);
         window.Display();
 
         // Get current framestart time
         framestartTime = clock.GetElapsedTime();
-        cout << "----\nFramestartTime = " << framestartTime << "\n";
+
         // Update game logic. Here only mapper->update()
         mapper->update(framestartTime);
+
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;
         
@@ -106,6 +109,15 @@ int main(int argc, char** argv) {
                 cout << "User interrupt ESC-key!\n";
                 appRunning = false;
                 window.Close();
+            }
+
+            if (Event.Type == sf::Event::MouseButtonPressed)
+            {
+                cout << "Mouse button pressed (" << Input.GetMouseX() << "," << Input.GetMouseY() << ")\n";
+                int X = Input.GetMouseX();
+                int Y = Input.GetMouseY();
+                Text.SetPosition(X,Y);
+
             }
         }
     }
