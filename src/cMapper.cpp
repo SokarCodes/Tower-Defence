@@ -26,14 +26,7 @@ cMapper* cMapper::getInstance() {
 
 void cMapper::add(cGameEntity *ent) {
     entityContainer_.push_back(ent);
-    if (ent->name() == "Enemy")
-        ent->setPosition(2,2);
-    else
-    {
-        ent->setRange(3);
-        ent->setPosition(3,4);
-    }
-    std::cout << "Added cGameEntity: " << ent->name() << " to container!\n";
+    std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
 }
 
 void cMapper::showEntities() {
@@ -80,7 +73,6 @@ cGameEntity* cMapper::getTarget(int x, int y, int range)
     }
     else
     {
-        std::cout << "No enemies in range! Closest enemy was " << closestRange << " distance away.\n";
         return NULL;
     }
 }

@@ -11,7 +11,7 @@
 class cEnemyEntity : public cGameEntity {
 public:
     /// Constructor
-    cEnemyEntity();
+    cEnemyEntity(int, int);
 
     /// Destructor
     ~cEnemyEntity();

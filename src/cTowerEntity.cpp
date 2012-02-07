@@ -6,13 +6,16 @@
 #include "cMapper.h"
 
  
-cTowerEntity::cTowerEntity() :
+cTowerEntity::cTowerEntity(int x, int y) :
 enemy_(0),
 damage_(0),
-range_(0),
-reloadTimeout_(-2),
+range_(10),
+reloadTimeout_(2),
+lastShotTime_(0.f),
 entityName_("Tower")
 {
+    x_coord_ = x;
+    y_coord_ = y;
     std::cout << this->name() << ": Entity constructor!" << " --> ";
 }       
 
@@ -24,17 +27,15 @@ cTowerEntity::~cTowerEntity() {
 void cTowerEntity::update(float frametime) {
     if (enemy_)
     {
-        if((frametime - reloadTimeout_)<= 2);
-        else    
+        if ( (frametime - lastShotTime_) >= reloadTimeout_ )
         {
-            reloadTimeout_ = frametime;
+            lastShotTime_ = frametime;
             fire();
             std::cout << ". frametime: " << frametime << ".\n" <<this->name() << ": Reloading!\n";
         }
     }
     else
     {
-        std::cout << this->name() << ": Need to acquire target!" << "\n";
         acquireTarget();
     }
 }
@@ -55,7 +56,6 @@ void cTowerEntity::setTarget(cGameEntity *enemy) {
 }
 
 void cTowerEntity::acquireTarget() {
-    std::cout << this->name() << ": Acquiring target!" << "\n";
     enemy_ = getMapper()->getTarget(x_coord_, y_coord_, range_);
 }
 

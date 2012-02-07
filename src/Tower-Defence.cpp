@@ -34,10 +34,17 @@ int main(int argc, char** argv) {
     float frameBudget = 1/(float)framerate;
 
     // Create SFML renderwindow
-    sf::RenderWindow window(sf::VideoMode(800,600,32), "Tower-Defence!");
+    sf::RenderWindow window(sf::VideoMode(800,600,32), "Tower-Defence!", sf::Style::Close);
 
     // Create event mapper
     sf::Event Event;
+
+    // Testing renderwindow drawText
+    //sf::String Text("DERP!");
+    //Text.SetFont(sf::Font::GetDefaultFont());
+
+    // Inputmapper
+    const sf::Input& Input = window.GetInput();
 
     // Singleton mapper class which updates all gameEntities
     cMapper *mapper;
@@ -49,27 +56,17 @@ int main(int argc, char** argv) {
     }
 
     // Add couple gameEntities to mapper
-    mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity));
-    mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity));
 
-    // Testing renderwindow drawText
-    sf::String Text("DERP!");
-    Text.SetFont(sf::Font::GetDefaultFont());
-    Text.SetStyle(sf::String::Bold | sf::String::Italic | sf::String::Underlined);
-    Text.SetStyle(sf::String::Regular);
-    Text.SetColor(sf::Color(128, 128, 0));
-    Text.SetRotation(0.f);
-    Text.SetScale(2.f, 2.f);
-    Text.Move(100.f, 200.f);
-    const sf::Input& Input = window.GetInput();
+    //mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity));
 
     // Start running the clock just before gameloop
     clock.Reset();
+
     // Gameloop
     while(appRunning)
     {
         window.Clear();
-        window.Draw(Text);
+        //window.Draw(Text);
         window.Display();
 
         // Get current framestart time
@@ -113,13 +110,18 @@ int main(int argc, char** argv) {
                 window.Close();
             }
 
-            // Mouse button pressed
-            if (Event.Type == sf::Event::MouseButtonPressed)
+            // Mouse button left pressed
+            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
             {
-                cout << "Mouse button pressed (" << Input.GetMouseX() << "," << Input.GetMouseY() << ")\n";
-                int X = Input.GetMouseX();
-                int Y = Input.GetMouseY();
-                Text.SetPosition(X,Y);
+                mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity(Input.GetMouseX(),Input.GetMouseY())));
+
+            }
+
+            // Mouse button right pressed
+            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
+            {
+                mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity(Input.GetMouseX(),Input.GetMouseY())));
+
             }
         }
     }

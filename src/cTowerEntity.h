@@ -14,7 +14,7 @@ class cTowerEntity : public cGameEntity
 {
 public:
     /// Constructor
-    cTowerEntity();
+    cTowerEntity(int x, int y);
 
     /// Destructor
     ~cTowerEntity();
@@ -52,6 +52,9 @@ private:
 
     /// Reload timeout
     int reloadTimeout_;
+
+    /// Last shot timestamp
+    float lastShotTime_;
 
     /// Entity name
     std::string entityName_;
