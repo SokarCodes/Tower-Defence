@@ -13,6 +13,7 @@
 
 class cGameEntity {
 public:
+    void inflictDamage(int);
     /// Set derived class entity position in 2D space
     void setPosition(int x, int y) { x_coord_ = x; y_coord_ = y; }
 
@@ -30,9 +31,6 @@ public:
 
     /// Virtual method to set damage output RANGE
     virtual void setRange(const unsigned int) {}
-
-    /// Virtual method to set target for attacking entity
-    virtual void setTarget(cGameEntity*) {}
 
     /// Virtual method to set name of entity. Define in base class.
     virtual std::string name() = 0;

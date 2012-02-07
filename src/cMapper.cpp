@@ -77,9 +77,24 @@ cGameEntity* cMapper::getTarget(int x, int y, int range)
     }
 }
 
-void cMapper::deleteInstance(cGameEntity *instance) {
+void cMapper::deleteEntity(cGameEntity *instance)
+{
     std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
     for (;iter < entityContainer_.end();iter++)
         if ((*iter) == instance)
+        {
+            delete (*iter);
             entityContainer_.erase(iter);
+        }
+}
+
+bool cMapper::entityExists(cGameEntity * ent)
+{
+    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
+    for (;iter < entityContainer_.end();iter++)
+        if ((*iter) == ent)
+        {
+            return true;
+        }
+    return false;
 }

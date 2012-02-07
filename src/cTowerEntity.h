@@ -25,9 +25,6 @@ public:
     /// Set maximum fire range for tower
     void setRange(const unsigned int);
 
-    /// Set target entity for tower
-    void setTarget(cGameEntity*);
-
     /// Update method for cTowerEntity
     void update(float);
 

@@ -8,12 +8,13 @@
  
 cTowerEntity::cTowerEntity(int x, int y) :
 enemy_(0),
-damage_(0),
-range_(10),
+damage_(4),
+range_(100),
 reloadTimeout_(2),
 lastShotTime_(0.f),
 entityName_("Tower")
 {
+    hitpoints_ = 10;
     x_coord_ = x;
     y_coord_ = y;
     std::cout << this->name() << ": Entity constructor!" << " --> ";
@@ -21,11 +22,11 @@ entityName_("Tower")
 
 cTowerEntity::~cTowerEntity() {
     std::cout << this->name() << ": Entity destruction!" << " --> ";
-    getMapper()->deleteInstance(this);
+    //getMapper()->deleteEntity(this);
 }
 
 void cTowerEntity::update(float frametime) {
-    if (enemy_)
+    if (enemy_ && getMapper()->entityExists(enemy_))
     {
         if ( (frametime - lastShotTime_) >= reloadTimeout_ )
         {
@@ -36,10 +37,12 @@ void cTowerEntity::update(float frametime) {
     }
     else
     {
+        enemy_ = 0;
         acquireTarget();
     }
 }
 void cTowerEntity::fire() {
+    enemy_->inflictDamage(damage_);
     std::cout << this->name() <<  ": FIRE IN THE HOLE!";
 }
 
@@ -49,10 +52,6 @@ void cTowerEntity::setDamage(const unsigned int damage) {
 
 void cTowerEntity::setRange(const unsigned int range) {
     range_ = range;
-}
-
-void cTowerEntity::setTarget(cGameEntity *enemy) {
-    enemy_ = enemy;
 }
 
 void cTowerEntity::acquireTarget() {

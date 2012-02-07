@@ -29,7 +29,10 @@ public:
     void update(float);
 
     /// deletes instance of cGameEntity from vector
-    void deleteInstance(cGameEntity*);
+    void deleteEntity(cGameEntity*);
+
+    /// Check if entity exists
+    bool entityExists(cGameEntity*);
 
     /// Returns closest possible target for querying entity.
     cGameEntity* getTarget(int, int, int);
