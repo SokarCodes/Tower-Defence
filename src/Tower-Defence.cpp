@@ -40,9 +40,7 @@ int main(int argc, char** argv) {
     // Create event mapper
     sf::Event Event;
 
-    // Testing renderwindow drawText
-    sf::String Text("DERP!");
-    Text.SetFont(sf::Font::GetDefaultFont());
+    // Testing renderwindow draw shapes
     sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
     sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
 
@@ -67,7 +65,6 @@ int main(int argc, char** argv) {
     while(appRunning)
     {
         window.Clear();
-        window.Draw(Text);
         std::vector<cGameEntity*> entityList = mapper->getEntities();
         std::vector<cGameEntity*>::iterator iter = entityList.begin();
         for (;iter < entityList.end(); iter++)
@@ -138,17 +135,6 @@ int main(int argc, char** argv) {
             {
                 mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity(Input.GetMouseX(),Input.GetMouseY())));
             }
-            // Check how many entities are there left on map.
-            int towers, enemies = 0;
-            std::string buffer;
-            towers = mapper->getTowerCount();
-            enemies = mapper->getEnemyCount();
-            std::ostringstream ostr;
-            std::ostringstream estr;
-            ostr << towers;
-            estr << enemies;
-            buffer.append("Towers: ").append(ostr.str()).append(" Enemies: ").append(estr.str());
-            Text.SetText(buffer);
         }
     }
     // Target has been acquired on last update so now fire sequence initiates.
