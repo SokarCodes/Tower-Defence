@@ -12,16 +12,14 @@
 #include "cEnemyEntity.h"
 #include "cMapper.h"
 #include <SFML/System.hpp>
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
 using namespace std;
 /*
  * 
  */
-int main(int argc, char** argv) {
-
-    /// Just testing classes
+int main(int argc, char** argv)
+{
     cout << "Hello tower defense!\n";
 
     bool appRunning = true;
@@ -40,7 +38,7 @@ int main(int argc, char** argv) {
     // Create event mapper
     sf::Event Event;
 
-    // Testing renderwindow draw shapes
+    // Testing renderwindow draw shapes and text
     sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
     sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
     sf::String text("Frametime");
@@ -57,8 +55,6 @@ int main(int argc, char** argv) {
     } catch (bad_alloc&) {
         return EXIT_FAILURE;
     }
-
-    //mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity));
 
     // Start running the clock just before gameloop
     clock.Reset();
@@ -148,7 +144,7 @@ int main(int argc, char** argv) {
             }
         }
     }
-    // Target has been acquired on last update so now fire sequence initiates.
+    // End of gameloop. Destroy mapper.
     delete mapper;
 
     return EXIT_SUCCESS;
