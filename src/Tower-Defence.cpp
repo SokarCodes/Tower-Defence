@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     // Initialize variables for gameloop timer logic
     sf::Clock clock;
     const int framerate = 60;
-    float framestartTime = 0;
+    float framestartTime = 0; //fix this
     float difference = 0;
     float sleepTime = 0;
     float frameBudget = 1/(float)framerate;
@@ -56,7 +56,8 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    // Add couple gameEntities to mapper
+    std::vector<sf::Shape> circleVector;
+    std::vector<sf::Shape> squareVector;
 
     //mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity));
 
@@ -68,7 +69,14 @@ int main(int argc, char** argv) {
     {
         window.Clear();
         window.Draw(Text);
+        std::vector<sf::Shape>::iterator iter1 = circleVector.begin();
+        for (;iter1 < circleVector.end(); iter1++)
+            window.Draw((*iter1));
+        std::vector<sf::Shape>::iterator iter2 = squareVector.begin();
+        for (;iter2 < squareVector.end(); iter2++)
+            window.Draw((*iter2));
         window.Display();
+
 
         // Get current framestart time
         framestartTime = clock.GetElapsedTime();
@@ -115,6 +123,9 @@ int main(int argc, char** argv) {
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
             {
                 mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity(Input.GetMouseX(),Input.GetMouseY())));
+                sf::Shape Circle = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
+                Circle.SetPosition(Input.GetMouseX(),Input.GetMouseY());
+                circleVector.push_back(Circle);
 
             }
 
@@ -122,6 +133,9 @@ int main(int argc, char** argv) {
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
             {
                 mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity(Input.GetMouseX(),Input.GetMouseY())));
+                sf::Shape Square = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
+                Square.SetPosition(Input.GetMouseX(),Input.GetMouseY());
+                circleVector.push_back(Square);
 
             }
             // Check how many entities are there left on map.
