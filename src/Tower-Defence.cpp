@@ -43,6 +43,8 @@ int main(int argc, char** argv) {
     // Testing renderwindow draw shapes
     sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
     sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
+    sf::String text("Frametime");
+
 
     // Inputmapper
     const sf::Input& Input = window.GetInput();
@@ -65,6 +67,13 @@ int main(int argc, char** argv) {
     while(appRunning)
     {
         window.Clear();
+
+        std::ostringstream frametimer;
+        frametimer << framestartTime;
+        std::string buffer;
+        buffer.append("Frametime: ").append(frametimer.str());
+        text.SetText(buffer);
+
         std::vector<cGameEntity*> entityList = mapper->getEntities();
         std::vector<cGameEntity*>::iterator iter = entityList.begin();
         for (;iter < entityList.end(); iter++)
@@ -80,6 +89,8 @@ int main(int argc, char** argv) {
                 window.Draw(towerShape);
             }
         }
+
+        window.Draw(text);
         window.Display();
 
 
