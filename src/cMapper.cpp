@@ -98,3 +98,27 @@ bool cMapper::entityExists(cGameEntity * ent)
         }
     return false;
 }
+
+int cMapper::getEnemyCount()
+{
+    int count = 0;
+    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
+    for (;iter < entityContainer_.end();iter++)
+        if ((*iter)->name() == "Enemy")
+        {
+            ++count;
+        }
+    return count;
+}
+
+int cMapper::getTowerCount()
+{
+    int count = 0;
+    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
+    for (;iter < entityContainer_.end();iter++)
+        if ((*iter)->name() == "Tower")
+        {
+            ++count;
+        }
+    return count;
+}

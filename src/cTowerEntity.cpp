@@ -8,7 +8,7 @@
  
 cTowerEntity::cTowerEntity(int x, int y) :
 enemy_(0),
-damage_(1),
+damage_(40),
 range_(100),
 reloadTimeout_(2),
 lastShotTime_(0.f),

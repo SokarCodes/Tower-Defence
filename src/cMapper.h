@@ -36,6 +36,13 @@ public:
 
     /// Returns closest possible target for querying entity.
     cGameEntity* getTarget(int, int, int);
+
+    /// Returns number of towers on map
+    int getTowerCount();
+
+    /// Returns number of enemies on map
+    int getEnemyCount();
+
 private:
     /// Private constructor because singleton class pointer is get from getInstance()
     cMapper() {}

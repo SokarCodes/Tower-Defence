@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <cstdlib>
+#include <sstream>
 #include "cGameEntity.h"
 #include "cTowerEntity.h"
 #include "cEnemyEntity.h"
@@ -40,8 +41,8 @@ int main(int argc, char** argv) {
     sf::Event Event;
 
     // Testing renderwindow drawText
-    //sf::String Text("DERP!");
-    //Text.SetFont(sf::Font::GetDefaultFont());
+    sf::String Text("DERP!");
+    Text.SetFont(sf::Font::GetDefaultFont());
 
     // Inputmapper
     const sf::Input& Input = window.GetInput();
@@ -66,7 +67,7 @@ int main(int argc, char** argv) {
     while(appRunning)
     {
         window.Clear();
-        //window.Draw(Text);
+        window.Draw(Text);
         window.Display();
 
         // Get current framestart time
@@ -123,6 +124,17 @@ int main(int argc, char** argv) {
                 mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity(Input.GetMouseX(),Input.GetMouseY())));
 
             }
+            // Check how many entities are there left on map.
+            int towers, enemies = 0;
+            std::string buffer;
+            towers = mapper->getTowerCount();
+            enemies = mapper->getEnemyCount();
+            std::ostringstream ostr;
+            std::ostringstream estr;
+            ostr << towers;
+            estr << enemies;
+            buffer.append("Towers: ").append(ostr.str()).append(" Enemies: ").append(estr.str());
+            Text.SetText(buffer);
         }
     }
     // Target has been acquired on last update so now fire sequence initiates.
