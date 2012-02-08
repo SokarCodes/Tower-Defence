@@ -29,12 +29,8 @@ void cMapper::add(cGameEntity *ent) {
     std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
 }
 
-void cMapper::showEntities() {
-    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
-    std::cout << "mapper contains: ";
-    for (;iter < entityContainer_.end();iter++)
-        std::cout << (*iter)->name() << ", ";
-    std::cout << "\n";
+std::vector<cGameEntity*> cMapper::getEntities() {
+    return entityContainer_;
 }
 
 void cMapper::update(float frametime) {

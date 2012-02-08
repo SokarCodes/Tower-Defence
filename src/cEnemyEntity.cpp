@@ -8,7 +8,7 @@ using namespace std;
 cEnemyEntity::cEnemyEntity(int x, int y) :
 entityName_("Enemy")    // Hardcoded for now to distinquish tower and enemy entities with name
 {
-    hitpoints_ = 10000;
+    hitpoints_ = 100;
     x_coord_ = x;
     y_coord_ = y;
     std::cout << this->name() << ": Entity constructor!" << " --> ";

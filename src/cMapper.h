@@ -23,7 +23,7 @@ public:
     void add(cGameEntity*);
 
     /// Shows names of gameEntities in vector. Obsolete.
-    void showEntities();
+    std::vector<cGameEntity*> getEntities();
 
     /// Update method. Calls update methods of all gameEntities.
     void update(float);

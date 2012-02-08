@@ -8,8 +8,8 @@
  
 cTowerEntity::cTowerEntity(int x, int y) :
 enemy_(0),
-damage_(40),
-range_(100),
+damage_(20),
+range_(200),
 reloadTimeout_(2),
 lastShotTime_(0.f),
 entityName_("Tower")

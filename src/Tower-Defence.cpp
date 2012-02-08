@@ -43,6 +43,8 @@ int main(int argc, char** argv) {
     // Testing renderwindow drawText
     sf::String Text("DERP!");
     Text.SetFont(sf::Font::GetDefaultFont());
+    sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
+    sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
 
     // Inputmapper
     const sf::Input& Input = window.GetInput();
@@ -56,9 +58,6 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    std::vector<sf::Shape> circleVector;
-    std::vector<sf::Shape> squareVector;
-
     //mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity));
 
     // Start running the clock just before gameloop
@@ -69,12 +68,21 @@ int main(int argc, char** argv) {
     {
         window.Clear();
         window.Draw(Text);
-        std::vector<sf::Shape>::iterator iter1 = circleVector.begin();
-        for (;iter1 < circleVector.end(); iter1++)
-            window.Draw((*iter1));
-        std::vector<sf::Shape>::iterator iter2 = squareVector.begin();
-        for (;iter2 < squareVector.end(); iter2++)
-            window.Draw((*iter2));
+        std::vector<cGameEntity*> entityList = mapper->getEntities();
+        std::vector<cGameEntity*>::iterator iter = entityList.begin();
+        for (;iter < entityList.end(); iter++)
+        {
+            if ((*iter)->name() == "Enemy")
+            {
+                enemyShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+                window.Draw(enemyShape);
+            }
+            else
+            {
+                towerShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+                window.Draw(towerShape);
+            }
+        }
         window.Display();
 
 
@@ -123,20 +131,12 @@ int main(int argc, char** argv) {
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
             {
                 mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity(Input.GetMouseX(),Input.GetMouseY())));
-                sf::Shape Circle = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
-                Circle.SetPosition(Input.GetMouseX(),Input.GetMouseY());
-                circleVector.push_back(Circle);
-
             }
 
             // Mouse button right pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
             {
                 mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity(Input.GetMouseX(),Input.GetMouseY())));
-                sf::Shape Square = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
-                Square.SetPosition(Input.GetMouseX(),Input.GetMouseY());
-                circleVector.push_back(Square);
-
             }
             // Check how many entities are there left on map.
             int towers, enemies = 0;
