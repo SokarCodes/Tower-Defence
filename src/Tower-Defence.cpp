@@ -7,10 +7,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <sstream>
-#include "cGameEntity.h"
-#include "cTowerEntity.h"
-#include "cEnemyEntity.h"
-#include "cMapper.h"
+#include "GameLogic/cGameEntity.h"
+#include "GameLogic/cTowerEntity.h"
+#include "GameLogic/cEnemyEntity.h"
+#include "GameLogic/cMapper.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 

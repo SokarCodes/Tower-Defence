@@ -7,10 +7,14 @@ ADD_DEFINITIONS(-Wall -g)
 file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
 
+# Gamelogic
+file(GLOB GameLogicSourceFiles ${CMAKE_SOURCE_DIR}/src/GameLogic/*.cpp)
+file(GLOB GameLogicHeaderFiles ${CMAKE_SOURCE_DIR}/src/GameLogic/*.h)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/utils )
 
-set(SourceFiles ${SourceFiles})
-set(HeadereFiles ${HeaderFiles})
+set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} )
+set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} )
 
 find_package ( SFML REQUIRED )
 
