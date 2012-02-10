@@ -20,7 +20,7 @@ using namespace std;
  */
 int main(int argc, char** argv)
 {
-    cout << "Hello tower defense!\n";
+    cout << "Hello tower defense - master branch!\n";
 
     bool appRunning = true;
     
