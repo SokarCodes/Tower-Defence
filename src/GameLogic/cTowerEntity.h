@@ -8,6 +8,8 @@
 #define	TOWERENTITY_H
 
 #include <string>
+
+namespace gamelogic {
 class cGameEntity;
 
 class cTowerEntity : public cGameEntity
@@ -24,6 +26,9 @@ public:
 
     /// Set maximum fire range for tower
     void setRange(const unsigned int);
+
+    /// getRange
+    int getRange();
 
     /// Update method for cTowerEntity
     void update(float);
@@ -55,7 +60,9 @@ private:
 
     /// Entity name
     std::string entityName_;
+
 };
+} // namespace gamelogic
 
 #endif	/* TOWERENTITY_H */
 

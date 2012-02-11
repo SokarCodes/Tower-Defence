@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   main.cpp
  * Author: Jukka Vatjus-Anttila
  *
@@ -8,9 +8,8 @@
 #include <cstdlib>
 #include <sstream>
 #include "GameLogic/cGameEntity.h"
-#include "GameLogic/cTowerEntity.h"
-#include "GameLogic/cEnemyEntity.h"
 #include "GameLogic/cMapper.h"
+#include "GameLogic/towerEnums.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -41,6 +40,7 @@ int main(int argc, char** argv)
     // Testing renderwindow draw shapes and text
     sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
     sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
+    sf::Shape Line   = sf::Shape::Line(0, 1, 0, 2, 1, sf::Color::Red);
     sf::String text("Frametime");
 
 
@@ -48,10 +48,10 @@ int main(int argc, char** argv)
     const sf::Input& Input = window.GetInput();
 
     // Singleton mapper class which updates all gameEntities
-    cMapper *mapper;
+    gamelogic::cMapper *mapper;
 
     try {
-        mapper = cMapper::getInstance();
+        mapper = gamelogic::cMapper::getInstance();
     } catch (bad_alloc&) {
         return EXIT_FAILURE;
     }
@@ -70,8 +70,8 @@ int main(int argc, char** argv)
         buffer.append("Frametime: ").append(frametimer.str());
         text.SetText(buffer);
 
-        std::vector<cGameEntity*> entityList = mapper->getEntities();
-        std::vector<cGameEntity*>::iterator iter = entityList.begin();
+        std::vector<gamelogic::cGameEntity*> entityList = mapper->getEntities();
+        std::vector<gamelogic::cGameEntity*>::iterator iter = entityList.begin();
         for (;iter < entityList.end(); iter++)
         {
             if ((*iter)->name() == "Enemy")
@@ -134,13 +134,13 @@ int main(int argc, char** argv)
             // Mouse button left pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
             {
-                mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity(Input.GetMouseX(),Input.GetMouseY())));
+                mapper->addTower(gamelogic::AIR, Input.GetMouseX(), Input.GetMouseY());
             }
 
             // Mouse button right pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
             {
-                mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity(Input.GetMouseX(),Input.GetMouseY())));
+                mapper->addTower(gamelogic::GROUND, Input.GetMouseX(), Input.GetMouseY());
             }
         }
     }

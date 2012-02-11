@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   cEnemyEntity.h
  * Author: Jukka Vatjus-Anttila
  *
@@ -7,6 +7,8 @@
 
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
+#include <string>
+namespace gamelogic {
 
 class cEnemyEntity : public cGameEntity {
 public:
@@ -25,8 +27,11 @@ public:
 private:
     /// Entity name variable
     std::string entityName_;
+
+    /// Entity move speed
+    unsigned short int movespeed_;
 };
 
-
+} // namespace gamelogic
 #endif	/* ENEMYENTITY_H */
 

@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "cMapper.h"
+namespace gamelogic {
 
 class cGameEntity {
 public:
@@ -22,6 +23,9 @@ public:
 
     /// Get derived class entity position in 2D space
     int getYPosition() { return y_coord_; }
+
+    /// Get maximum fire range for tower
+    virtual int getRange() {}
 
     /// Virtual update method. Define in base class.
     virtual void update(float) = 0;
@@ -55,6 +59,6 @@ private:
     /// cMapper pointer. Used in derived classes to inform cMapper of their destruction.
     static cMapper *mapper_;
 };
-
+} // namespace gamelogic
 #endif	/* GAMEENTITY_H */
 

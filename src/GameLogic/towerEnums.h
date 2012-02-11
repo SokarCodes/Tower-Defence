@@ -7,9 +7,10 @@
 
 #ifndef TOWERENUMS_H
 #define	TOWERENUMS_H
-
+namespace gamelogic
+{
 // Enum for tower damage type. GROUND fires at ground targets, AIR fires air targets and BOTH fires at ...dun-dun-duuu... both targets.
-enum towerType { GROUND = 0, 
+enum towerType { GROUND = 0,
                 AIR, 
                 BOTH };
 
@@ -21,5 +22,7 @@ enum towerSplash { NO = 0,
 enum towerEffect { NONE = 0,
                 SLOW,
                 BURN };
+}
+
 #endif	/* TOWERENUMS_H */
 

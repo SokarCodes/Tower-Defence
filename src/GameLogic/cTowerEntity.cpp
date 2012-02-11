@@ -4,15 +4,17 @@
 #include "cEnemyEntity.h"
 #include "cTowerEntity.h"
 #include "cMapper.h"
+#include "towerEnums.h"
 
- 
+namespace gamelogic {
+
 cTowerEntity::cTowerEntity(int x, int y) :
-enemy_(0),
-damage_(20),
-range_(200),
-reloadTimeout_(2),
-lastShotTime_(0.f),
-entityName_("Tower")
+    enemy_(0),
+    damage_(20),
+    range_(200),
+    reloadTimeout_(2),
+    lastShotTime_(0.f),
+    entityName_("Tower")
 {
     hitpoints_ = 10;
     x_coord_ = x;
@@ -25,7 +27,7 @@ cTowerEntity::~cTowerEntity() {
 }
 
 void cTowerEntity::update(float frametime) {
-    if (enemy_ && getMapper()->entityExists(enemy_))
+    if (enemy_ && getMapper()->entityExists(enemy_) && getMapper()->isInRange(enemy_, this))
     {
         if ( (frametime - lastShotTime_) >= reloadTimeout_ )
         {
@@ -60,3 +62,10 @@ void cTowerEntity::acquireTarget() {
 std::string cTowerEntity::name() {
     return entityName_;
 }
+
+int cTowerEntity::getRange()
+{
+    return range_;
+}
+
+} // namespace gamelogic

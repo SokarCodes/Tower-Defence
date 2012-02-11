@@ -7,6 +7,9 @@
 // project libraries
 #include "cGameEntity.h"
 #include "cMapper.h"
+#include "cTowerEntity.h"
+#include "cEnemyEntity.h"
+namespace gamelogic {
 
 cMapper* cMapper::thisPointer_ = NULL;
 bool cMapper::instanceFlag_ = false;
@@ -24,9 +27,24 @@ cMapper* cMapper::getInstance() {
     }
 }
 
-void cMapper::add(cGameEntity *ent) {
-    entityContainer_.push_back(ent);
-    std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
+bool cMapper::addTower(towerType type, int x_coord, int y_coord)
+{
+    // This method is undergoing radical changes. Implement tower addition
+    // in a way API call can be made only by giving tower type.
+    // simplifies events from render layer user input to gamelogic.
+    switch (type)
+    {
+    case AIR:
+    {
+        cGameEntity* ent = dynamic_cast<cGameEntity*>(new cTowerEntity(x_coord,y_coord));
+        entityContainer_.push_back(ent);
+        std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
+        return true;
+    }
+    default:
+        std::cout << "DERP\n";
+        return false;
+    }
 }
 
 std::vector<cGameEntity*> cMapper::getEntities() {
@@ -95,6 +113,17 @@ bool cMapper::entityExists(cGameEntity * ent)
     return false;
 }
 
+bool cMapper::isInRange(cGameEntity * enemy, cGameEntity *tower)
+{
+    double diffX = tower->getXPosition() - enemy->getXPosition();
+    double diffY = tower->getYPosition() - enemy->getYPosition();
+    double range = sqrt(pow(diffX,2) + pow(diffY,2));
+    if (range <= tower->getRange())
+        return true;
+    else
+        return false;
+}
+
 int cMapper::getEnemyCount()
 {
     int count = 0;
@@ -118,3 +147,4 @@ int cMapper::getTowerCount()
         }
     return count;
 }
+} // namespace gamelogic

@@ -9,6 +9,9 @@
 #define	CMAPPER_H
 
 #include <vector>
+#include "towerEnums.h"
+namespace gamelogic {
+
 class cGameEntity;
 
 class cMapper {
@@ -20,7 +23,7 @@ public:
     static cMapper* getInstance();
 
     /// Adds cGameEntity to vector
-    void add(cGameEntity*);
+    bool addTower(towerType, int, int);
 
     /// Shows names of gameEntities in vector. Obsolete.
     std::vector<cGameEntity*> getEntities();
@@ -33,6 +36,9 @@ public:
 
     /// Check if entity exists
     bool entityExists(cGameEntity*);
+
+    /// Check if entity in fire range
+    bool isInRange(cGameEntity*, cGameEntity*);
 
     /// Returns closest possible target for querying entity.
     cGameEntity* getTarget(int, int, int);
@@ -56,7 +62,7 @@ private:
     /// Pointer to store cMapper class if some class wants it.
     static cMapper *thisPointer_;
 };
-
+} // namespace gamelogic
 
 #endif	/* CMAPPER_H */
 
