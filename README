@@ -5,7 +5,12 @@ Tower-Defence By Jukka Vatjus-Anttila
 This is project aiming to replicate good'old TD action known from Warcraft3 custom maps.
 No breakthroughs planned as of yet to game mechanics or logic but hopes are high.
 
-Version history. (Not all details covered.)
+Version history. (Not all details covered.) Possible timestamps in <dd.mm.yyyy> format.
+
+11.02.2012
+Preparing 0.1 release in experimental branch. Building gamelogic API. Under this API
+all gamelogic happens and is completely separate from rendering.
+
 
 v0.0.6
 - Work has began with sfml renderwindow testing.
