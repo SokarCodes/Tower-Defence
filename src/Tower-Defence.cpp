@@ -134,13 +134,13 @@ int main(int argc, char** argv)
             // Mouse button left pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
             {
-                mapper->addTower(gamelogic::AIR, Input.GetMouseX(), Input.GetMouseY());
+                mapper->addTower(gamelogic::MORTAR, Input.GetMouseX(), Input.GetMouseY());
             }
 
             // Mouse button right pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
             {
-                mapper->addTower(gamelogic::GROUND, Input.GetMouseX(), Input.GetMouseY());
+                mapper->addTower(gamelogic::ARROW, Input.GetMouseX(), Input.GetMouseY());
             }
         }
     }

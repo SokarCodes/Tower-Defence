@@ -9,6 +9,7 @@
 #include "cMapper.h"
 #include "cTowerEntity.h"
 #include "cEnemyEntity.h"
+
 namespace gamelogic {
 
 cMapper* cMapper::thisPointer_ = NULL;
@@ -34,13 +35,19 @@ bool cMapper::addTower(towerType type, int x_coord, int y_coord)
     // simplifies events from render layer user input to gamelogic.
     switch (type)
     {
-    case AIR:
+    case MORTAR:
     {
         cGameEntity* ent = dynamic_cast<cGameEntity*>(new cTowerEntity(x_coord,y_coord));
         entityContainer_.push_back(ent);
         std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
         return true;
     }
+    case ARROW:
+        cGameEntity* ent = dynamic_cast<cGameEntity*>(new cTowerEntity(x_coord,y_coord));
+        entityContainer_.push_back(ent);
+        std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
+        return true;
+
     default:
         std::cout << "DERP\n";
         return false;

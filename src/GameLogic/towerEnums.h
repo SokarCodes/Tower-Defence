@@ -9,20 +9,26 @@
 #define	TOWERENUMS_H
 namespace gamelogic
 {
-// Enum for tower damage type. GROUND fires at ground targets, AIR fires air targets and BOTH fires at ...dun-dun-duuu... both targets.
-enum towerType { GROUND = 0,
-                AIR, 
-                BOTH };
+// Enum for tower type.
+enum towerType { MORTAR = 0,
+                 ARROW,
+                 ICE,
+                 SPECIAL };
 
 // Splash damage boolean. Consider where AOE calculation are done!!
 enum towerSplash { NO = 0,
-                YES };
+                   YES };
 
-// Enum to add DOT type on target enemy.
+// Enum to add DamageOverTime type on target enemy.
 enum towerEffect { NONE = 0,
-                SLOW,
-                BURN };
+                   SLOW,
+                   BURN };
 }
+
+// Where tower can attack.
+enum attackType { GROUND = 0,
+                  AIR,
+                  BOTH };
 
 #endif	/* TOWERENUMS_H */
 

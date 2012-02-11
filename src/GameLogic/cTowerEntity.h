@@ -16,7 +16,7 @@ class cTowerEntity : public cGameEntity
 {
 public:
     /// Constructor
-    cTowerEntity(int x, int y);
+    cTowerEntity(std::string name, int x, int y);
 
     /// Destructor
     ~cTowerEntity();
