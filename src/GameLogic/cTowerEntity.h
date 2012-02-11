@@ -8,6 +8,7 @@
 #define	TOWERENTITY_H
 
 #include <string>
+#include "entityEnums.h"
 
 namespace gamelogic {
 class cGameEntity;
@@ -16,7 +17,7 @@ class cTowerEntity : public cGameEntity
 {
 public:
     /// Constructor
-    cTowerEntity(std::string name, int x, int y);
+    cTowerEntity(towerType, int, int);
 
     /// Destructor
     ~cTowerEntity();
@@ -35,6 +36,9 @@ public:
 
     /// Get entity name
     std::string name();
+
+    /// Initializer after creation
+    void initializeEntity();
 
 private:
     /// Fire method. Launches projectile towards enemy entity.
@@ -60,6 +64,9 @@ private:
 
     /// Entity name
     std::string entityName_;
+
+    /// Tower type
+    towerType type_;
 
 };
 } // namespace gamelogic

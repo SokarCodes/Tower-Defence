@@ -9,7 +9,7 @@
 #define	CMAPPER_H
 
 #include <vector>
-#include "towerEnums.h"
+#include "entityEnums.h"
 namespace gamelogic {
 
 class cGameEntity;

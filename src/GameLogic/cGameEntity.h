@@ -39,6 +39,9 @@ public:
     /// Virtual method to set name of entity. Define in base class.
     virtual std::string name() = 0;
 
+    /// Initialize all entity variables
+    virtual void initializeEntity() = 0;
+
     /// Virtual destructor for proper derived/base chain dismantling.
     virtual ~cGameEntity() { std::cout << "cGameEntity destruction!" << "\n"; }
 

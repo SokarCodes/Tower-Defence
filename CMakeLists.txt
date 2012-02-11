@@ -13,8 +13,8 @@ file(GLOB GameLogicHeaderFiles ${CMAKE_SOURCE_DIR}/src/GameLogic/*.h)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/utils )
 
-set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} )
 set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} )
+set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} )
 
 find_package ( SFML REQUIRED )
 

@@ -8,15 +8,41 @@
 
 namespace gamelogic {
 
-cEnemyEntity::cEnemyEntity(int x, int y) :
-    entityName_("Enemy"),   // Hardcoded for now to distinquish tower and enemy entities with name
-    movespeed_(5)
+cEnemyEntity::cEnemyEntity(enemyType type, int x_coord, int y_coord) :
+    entityName_(""),
+    movespeed_(0),
+    type_(type)
 {
     hitpoints_ = 100;
-    x_coord_ = x;
-    y_coord_ = y;
+    x_coord_ = x_coord;
+    y_coord_ = y_coord;
     std::cout << this->name() << ": Entity constructor!" << " --> ";
 }    
+
+void cEnemyEntity::initializeEntity()
+{
+    switch(type_)
+    {
+    case WALKING_ENEMY:
+        entityName_ = "Walking_enemy";
+        movespeed_ = 10;
+        break;
+    case FLYING_ENEMY:
+        entityName_ = "Flying_enemy";
+        movespeed_ = 15;
+        break;
+    case INVISIBLE_ENEMY:
+        entityName_ = "Invisible_enemy";
+        movespeed_ = 10;
+        break;
+    case FAST_ENEMY:
+        entityName_ = "Fast_enemy";
+        movespeed_ = 25;
+        break;
+    default:
+        std::cout << "WARNING: initialize entity failed. No valid type acquired!\n";
+    }
+}
 
 cEnemyEntity::~cEnemyEntity()
 {

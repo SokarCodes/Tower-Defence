@@ -4,23 +4,43 @@
 #include "cEnemyEntity.h"
 #include "cTowerEntity.h"
 #include "cMapper.h"
-#include "towerEnums.h"
+#include "entityEnums.h"
 
 namespace gamelogic {
 
-cTowerEntity::cTowerEntity(int x, int y) :
+cTowerEntity::cTowerEntity(towerType type, int x_coord, int y_coord) :
     enemy_(0),
-    damage_(20),
-    range_(200),
-    reloadTimeout_(2),
-    lastShotTime_(0.f),
-    entityName_("Tower")
+    damage_(0),
+    range_(0),
+    reloadTimeout_(0),
+    lastShotTime_(0),
+    entityName_(""),
+    type_(type)
 {
-    hitpoints_ = 10;
-    x_coord_ = x;
-    y_coord_ = y;
+    hitpoints_ = 100;
+    x_coord_ = x_coord;
+    y_coord_ = y_coord;
     std::cout << this->name() << ": Entity constructor!" << " --> ";
-}       
+}
+
+void cTowerEntity::initializeEntity()
+{
+    switch(type_)
+    {
+    case MORTAR_TOWER:
+        damage_ = 20;
+        range_ = 120;
+        reloadTimeout_ = 2;
+        entityName_ = "Mortar_tower";
+        break;
+    case ARROW_TOWER:
+        damage_ = 10;
+        range_ = 170;
+        reloadTimeout_ = 1;
+        entityName_ = "Arrow_tower";
+        break;
+    }
+}
 
 cTowerEntity::~cTowerEntity() {
     std::cout << this->name() << ": Entity destruction!" << " --> ";

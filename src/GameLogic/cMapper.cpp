@@ -9,6 +9,7 @@
 #include "cMapper.h"
 #include "cTowerEntity.h"
 #include "cEnemyEntity.h"
+#include "entityEnums.h"
 
 namespace gamelogic {
 
@@ -33,21 +34,23 @@ bool cMapper::addTower(towerType type, int x_coord, int y_coord)
     // This method is undergoing radical changes. Implement tower addition
     // in a way API call can be made only by giving tower type.
     // simplifies events from render layer user input to gamelogic.
+    cGameEntity *entity;
     switch (type)
     {
-    case MORTAR:
-    {
-        cGameEntity* ent = dynamic_cast<cGameEntity*>(new cTowerEntity(x_coord,y_coord));
-        entityContainer_.push_back(ent);
-        std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
+    case MORTAR_TOWER:
+        entity = dynamic_cast<cGameEntity*>(new cTowerEntity(type, x_coord, y_coord));
+        entity->initializeEntity();
+        entityContainer_.push_back(entity);
+        std::cout << "Added cGameEntity: " << entity->name() << " to container! Position(" << entity->getXPosition() << "," << entity->getYPosition() << ").\n";
         return true;
-    }
-    case ARROW:
-        cGameEntity* ent = dynamic_cast<cGameEntity*>(new cTowerEntity(x_coord,y_coord));
-        entityContainer_.push_back(ent);
-        std::cout << "Added cGameEntity: " << ent->name() << " to container! Position(" << ent->getXPosition() << "," << ent->getYPosition() << ").\n";
+        break;
+    case ARROW_TOWER:
+        entity = dynamic_cast<cGameEntity*>(new cTowerEntity(type, x_coord, y_coord));
+        entity->initializeEntity();
+        entityContainer_.push_back(entity);
+        std::cout << "Added cGameEntity: " << entity->name() << " to container! Position(" << entity->getXPosition() << "," << entity->getYPosition() << ").\n";
         return true;
-
+        break;
     default:
         std::cout << "DERP\n";
         return false;

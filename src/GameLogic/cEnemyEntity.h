@@ -8,12 +8,13 @@
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
 #include <string>
+#include "entityEnums.h"
 namespace gamelogic {
 
 class cEnemyEntity : public cGameEntity {
 public:
     /// Constructor
-    cEnemyEntity(int, int);
+    cEnemyEntity(enemyType, int, int);
 
     /// Destructor
     ~cEnemyEntity();
@@ -24,12 +25,18 @@ public:
     /// Return entity name
     std::string name();
 
+    /// Initializer after creation
+    void initializeEntity();
+
 private:
     /// Entity name variable
     std::string entityName_;
 
     /// Entity move speed
     unsigned short int movespeed_;
+
+    /// Entity type
+    enemyType type_;
 };
 
 } // namespace gamelogic

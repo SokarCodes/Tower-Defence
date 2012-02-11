@@ -9,7 +9,7 @@
 #include <sstream>
 #include "GameLogic/cGameEntity.h"
 #include "GameLogic/cMapper.h"
-#include "GameLogic/towerEnums.h"
+#include "GameLogic/entityEnums.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -134,13 +134,13 @@ int main(int argc, char** argv)
             // Mouse button left pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
             {
-                mapper->addTower(gamelogic::MORTAR, Input.GetMouseX(), Input.GetMouseY());
+                mapper->addTower(gamelogic::MORTAR_TOWER, Input.GetMouseX(), Input.GetMouseY());
             }
 
             // Mouse button right pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
             {
-                mapper->addTower(gamelogic::ARROW, Input.GetMouseX(), Input.GetMouseY());
+                mapper->addTower(gamelogic::ARROW_TOWER, Input.GetMouseX(), Input.GetMouseY());
             }
         }
     }
