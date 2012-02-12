@@ -39,6 +39,21 @@ void cTowerEntity::initializeEntity()
         reloadTimeout_ = 1;
         entityName_ = "Arrow_tower";
         break;
+    case ICE_TOWER:
+        damage_ = 70;
+        range_ = 200;
+        reloadTimeout_ = 1;
+        entityName_ = "Ice_tower";
+        break;
+    case SPECIAL_TOWER:
+        damage_ = 30;
+        range_ = 250;
+        reloadTimeout_ = 3;
+        entityName_ = "Special_tower";
+        break;
+    default:
+        std::cout << "WARNING: initialize entity failed. No valid type acquired!\n";
+
     }
 }
 
