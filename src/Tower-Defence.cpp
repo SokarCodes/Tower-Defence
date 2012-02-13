@@ -39,8 +39,7 @@ int main(int argc, char** argv)
 
     // Testing renderwindow draw shapes and text
     sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
-    sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
-    sf::Shape Line   = sf::Shape::Line(0, 1, 0, 2, 1, sf::Color::Red);
+    sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color(255,255,200,200));
     sf::String text("Frametime");
 
 
@@ -70,21 +69,37 @@ int main(int argc, char** argv)
         buffer.append("Frametime: ").append(frametimer.str());
         text.SetText(buffer);
 
-        std::vector<gamelogic::cGameEntity*> entityList = mapper->getEntities();
-        std::vector<gamelogic::cGameEntity*>::iterator iter = entityList.begin();
-        for (;iter < entityList.end(); iter++)
+        std::vector<gamelogic::cGameEntity*> enemyList = mapper->getEnemyEntities();
+        std::vector<gamelogic::cGameEntity*>::iterator iter = enemyList.begin();
+        for (;iter < enemyList.end(); iter++)
         {
-            if ((*iter)->name() == "Enemy")
-            {
-                enemyShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
-                window.Draw(enemyShape);
-            }
-            else
-            {
-                towerShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
-                window.Draw(towerShape);
-            }
+            enemyShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+            if ((*iter)->name() == "Walking_enemy")
+                enemyShape.SetColor(sf::Color::Magenta);
+            else if ((*iter)->name() == "Flying_enemy")
+                enemyShape.SetColor(sf::Color::Blue);
+            else if ((*iter)->name() == "Invisible_enemy")
+                enemyShape.SetColor(sf::Color::Green);
+            else if ((*iter)->name() == "Fast_enemy")
+                enemyShape.SetColor(sf::Color::Red);
+            window.Draw(enemyShape);
         }
+        std::vector<gamelogic::cGameEntity*> towerList = mapper->getTowerEntities();
+        iter = towerList.begin();
+        for (;iter < towerList.end(); iter++)
+        {
+            towerShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+            if ((*iter)->name() == "Mortar_tower")
+                towerShape.SetColor(sf::Color::Cyan);
+            else if ((*iter)->name() == "Arrow_tower")
+                towerShape.SetColor(sf::Color::White);
+            else if ((*iter)->name() == "Ice_tower")
+                towerShape.SetColor(sf::Color::Yellow);
+            else if ((*iter)->name() == "Special_tower")
+                towerShape.SetColor(sf::Color(100,50,220,200));
+            window.Draw(towerShape);
+        }
+
 
         window.Draw(text);
         window.Display();
@@ -98,7 +113,7 @@ int main(int argc, char** argv)
 
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;
-        
+
         // If difference is smaller than budgeted, rest until next frame
         if (difference < frameBudget)
         {
@@ -131,16 +146,55 @@ int main(int argc, char** argv)
                 window.Close();
             }
 
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Z))
+            {
+                mapper->addEnemy(gamelogic::WALKING_ENEMY, Input.GetMouseX(), Input.GetMouseY());
+            }
+
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::X))
+            {
+                mapper->addEnemy(gamelogic::FLYING_ENEMY, Input.GetMouseX(), Input.GetMouseY());
+            }
+
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::C))
+            {
+                mapper->addEnemy(gamelogic::INVISIBLE_ENEMY, Input.GetMouseX(), Input.GetMouseY());
+            }
+
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::V))
+            {
+                mapper->addEnemy(gamelogic::FAST_ENEMY, Input.GetMouseX(), Input.GetMouseY());
+            }
+
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::A))
+            {
+                mapper->addTower(gamelogic::MORTAR_TOWER, Input.GetMouseX(), Input.GetMouseY());
+            }
+
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::S))
+            {
+                mapper->addTower(gamelogic::ARROW_TOWER, Input.GetMouseX(), Input.GetMouseY());
+            }
+
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::D))
+            {
+                mapper->addTower(gamelogic::ICE_TOWER, Input.GetMouseX(), Input.GetMouseY());
+            }
+
+            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::F))
+            {
+                mapper->addTower(gamelogic::SPECIAL_TOWER, Input.GetMouseX(), Input.GetMouseY());
+            }
             // Mouse button left pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
             {
-                mapper->addTower(gamelogic::MORTAR_TOWER, Input.GetMouseX(), Input.GetMouseY());
+                //mapper->addTower(gamelogic::MORTAR_TOWER, Input.GetMouseX(), Input.GetMouseY());
             }
 
             // Mouse button right pressed
             if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
             {
-                mapper->addTower(gamelogic::SPECIAL_TOWER, Input.GetMouseX(), Input.GetMouseY());
+                //mapper->addTower(gamelogic::SPECIAL_TOWER, Input.GetMouseX(), Input.GetMouseY());
             }
         }
     }

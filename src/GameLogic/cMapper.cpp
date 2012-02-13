@@ -41,7 +41,7 @@ bool cMapper::addTower(towerType type, int x_coord, int y_coord)
     case SPECIAL_TOWER:
         entity = dynamic_cast<cGameEntity*>(new cTowerEntity(type, x_coord, y_coord));
         entity->initializeEntity();
-        entityContainer_.push_back(entity);
+        towerContainer_.push_back(entity);
         std::cout << "Added cGameEntity: " << entity->name() << " to container! Position(" << entity->getXPosition() << "," << entity->getYPosition() << ").\n";
         return true;
     default:
@@ -50,39 +50,54 @@ bool cMapper::addTower(towerType type, int x_coord, int y_coord)
     }
 }
 
-std::vector<cGameEntity*> cMapper::getEntities() {
-    return entityContainer_;
+bool cMapper::addEnemy(enemyType type, int x_coord, int y_coord)
+{
+    cGameEntity *enemy;
+
+    switch (type)
+    {
+    case FLYING_ENEMY:
+    case WALKING_ENEMY:
+    case INVISIBLE_ENEMY:
+    case FAST_ENEMY:
+        enemy = dynamic_cast<cGameEntity*>(new cEnemyEntity(type, x_coord, y_coord));
+        enemy->initializeEntity();
+        enemyContainer_.push_back(enemy);
+        std::cout << "Added cGameEntity: " << enemy->name() << " to container! Position(" << enemy->getXPosition() << "," << enemy->getYPosition() << ").\n";
+        return true;
+    default:
+        std::cout << "No valit enemy type given!\n";
+        return false;
+    }
 }
 
 void cMapper::update(float frametime) {
-    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
+    std::vector<cGameEntity*>::iterator iter;
 
-    for (;iter < entityContainer_.end();iter++)
+    for (iter = enemyContainer_.begin();iter < enemyContainer_.end();iter++)
+        (*iter)->update(frametime);
+    for (iter = towerContainer_.begin();iter < towerContainer_.end();iter++)
         (*iter)->update(frametime);
 }
 
 cGameEntity* cMapper::getTarget(int x, int y, int range)
 {
-    // Brute force approach. Iterate through every enemyEntities and
-    // calculate distance between querying tower and enemy.
-    // Return enemyEntity ptr if in range.
     cGameEntity *closestEntity = NULL;
     float closestRange = 999999;
 
-    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
+    std::vector<cGameEntity*>::iterator iter;
 
-    for (;iter < entityContainer_.end();iter++)
-        if ((*iter)->name() == "Enemy")
+    for (iter = enemyContainer_.begin();iter < enemyContainer_.end();iter++)
+    {
+        double diffX = x - (*iter)->getXPosition();
+        double diffY = y - (*iter)->getYPosition();
+        double range = sqrt(pow(diffX,2) + pow(diffY,2));
+        if (range < closestRange)
         {
-            double diffX = x - (*iter)->getXPosition();
-            double diffY = y - (*iter)->getYPosition();
-            double range = sqrt(pow(diffX,2) + pow(diffY,2));
-            if (range < closestRange)
-            {
-                closestRange = range;
-                closestEntity = (*iter);
-            }
+            closestRange = range;
+            closestEntity = (*iter);
         }
+    }
     if (closestRange <= range)
     {
         std::cout << "Closest enemy was " << closestRange << " distance away.\n";
@@ -96,19 +111,28 @@ cGameEntity* cMapper::getTarget(int x, int y, int range)
 
 void cMapper::deleteEntity(cGameEntity *instance)
 {
-    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
-    for (;iter < entityContainer_.end();iter++)
+    std::vector<cGameEntity*>::iterator iter = enemyContainer_.begin();
+    for (;iter < enemyContainer_.end();iter++)
         if ((*iter) == instance)
         {
             delete (*iter);
-            entityContainer_.erase(iter);
+            enemyContainer_.erase(iter);
+            return;
+        }
+    // instance is tower if we are this far.
+    iter = towerContainer_.begin();
+    for (;iter < towerContainer_.end();iter++)
+        if ((*iter) == instance)
+        {
+            delete (*iter);
+            towerContainer_.erase(iter);
         }
 }
 
 bool cMapper::entityExists(cGameEntity * ent)
 {
-    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
-    for (;iter < entityContainer_.end();iter++)
+    std::vector<cGameEntity*>::iterator iter = enemyContainer_.begin();
+    for (;iter < enemyContainer_.end();iter++)
         if ((*iter) == ent)
         {
             return true;
@@ -116,7 +140,7 @@ bool cMapper::entityExists(cGameEntity * ent)
     return false;
 }
 
-bool cMapper::isInRange(cGameEntity * enemy, cGameEntity *tower)
+bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower)
 {
     double diffX = tower->getXPosition() - enemy->getXPosition();
     double diffY = tower->getYPosition() - enemy->getYPosition();
@@ -127,27 +151,23 @@ bool cMapper::isInRange(cGameEntity * enemy, cGameEntity *tower)
         return false;
 }
 
+std::vector<cGameEntity*> cMapper::getEnemyEntities()
+{
+    return enemyContainer_;
+}
+
+std::vector<cGameEntity*> cMapper::getTowerEntities()
+{
+    return towerContainer_;
+}
+
 int cMapper::getEnemyCount()
 {
-    int count = 0;
-    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
-    for (;iter < entityContainer_.end();iter++)
-        if ((*iter)->name() == "Enemy")
-        {
-            ++count;
-        }
-    return count;
+    return enemyContainer_.size();
 }
 
 int cMapper::getTowerCount()
 {
-    int count = 0;
-    std::vector<cGameEntity*>::iterator iter = entityContainer_.begin();
-    for (;iter < entityContainer_.end();iter++)
-        if ((*iter)->name() == "Tower")
-        {
-            ++count;
-        }
-    return count;
+    return towerContainer_.size();
 }
 } // namespace gamelogic

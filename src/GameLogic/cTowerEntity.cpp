@@ -76,6 +76,8 @@ void cTowerEntity::update(float frametime) {
         enemy_ = 0;
         acquireTarget();
     }
+    if (hitpoints_ <= 0)
+        getMapper()->deleteEntity(this);
 }
 void cTowerEntity::fire() {
     enemy_->inflictDamage(damage_);
