@@ -27,9 +27,8 @@ public:
     /// Adds new cTowerEntity to vector as cGameEntity
     bool addTower(towerType, int, int);
 
-    /// Creates new enemy or whole wave
+    /// Creates new enemy
     bool addEnemy(enemyType, int, int);
-    bool addEnemyWave(enemyType, int, int);
 
     /// Returns vectors for enemies and towers.
     std::vector<cGameEntity*> getEnemyEntities();

@@ -10,6 +10,7 @@
 #include "GameLogic/cGameEntity.h"
 #include "GameLogic/cMapper.h"
 #include "GameLogic/entityEnums.h"
+#include "Renderer/cRenderer.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -49,8 +50,11 @@ int main(int argc, char** argv)
     // Singleton mapper class which updates all gameEntities
     gamelogic::cMapper *mapper;
 
+    // Singleton renderer class which handles all graphics
+    renderer::cRenderer *render;
     try {
         mapper = gamelogic::cMapper::getInstance();
+        render = renderer::cRenderer::getInstance();
     } catch (bad_alloc&) {
         return EXIT_FAILURE;
     }

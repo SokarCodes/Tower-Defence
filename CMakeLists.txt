@@ -11,10 +11,14 @@ file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
 file(GLOB GameLogicSourceFiles ${CMAKE_SOURCE_DIR}/src/GameLogic/*.cpp)
 file(GLOB GameLogicHeaderFiles ${CMAKE_SOURCE_DIR}/src/GameLogic/*.h)
 
+# Renderer
+file(GLOB RendererSourceFiles ${CMAKE_SOURCE_DIR}/src/Renderer/*.cpp)
+file(GLOB RendererHeaderFiles ${CMAKE_SOURCE_DIR}/src/Renderer/*.h)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/utils )
 
-set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} )
-set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} )
+set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} ${RendererSourceFiles} )
+set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} ${RendererSourceFiles} )
 
 find_package ( SFML REQUIRED )
 
