@@ -64,12 +64,14 @@ int main(int argc, char** argv)
         window.Clear();
 
         std::ostringstream frametimer;
+        std::ostringstream towers, enemies;
         frametimer << framestartTime;
         std::string buffer;
         buffer.append("Frametime: ").append(frametimer.str());
-        text.SetText(buffer);
 
         std::vector<gamelogic::cGameEntity*> enemyList = mapper->getEnemyEntities();
+        enemies << enemyList.size();
+        buffer.append("\nEnemies: ").append(enemies.str());
         std::vector<gamelogic::cGameEntity*>::iterator iter = enemyList.begin();
         for (;iter < enemyList.end(); iter++)
         {
@@ -85,7 +87,10 @@ int main(int argc, char** argv)
             window.Draw(enemyShape);
         }
         std::vector<gamelogic::cGameEntity*> towerList = mapper->getTowerEntities();
+        towers << towerList.size();
+        buffer.append(", Towers: ").append(towers.str());
         iter = towerList.begin();
+        text.SetText(buffer);
         for (;iter < towerList.end(); iter++)
         {
             towerShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   cTowerEntity.h
  * Author: Jukka Vatjus-Anttila
  *
@@ -67,6 +67,9 @@ private:
 
     /// Tower type
     towerType type_;
+
+    /// tower lifetime
+    float lifetime_;
 
 };
 } // namespace gamelogic

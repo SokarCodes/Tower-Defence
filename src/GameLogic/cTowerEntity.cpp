@@ -15,7 +15,8 @@ cTowerEntity::cTowerEntity(towerType type, int x_coord, int y_coord) :
     reloadTimeout_(0),
     lastShotTime_(0),
     entityName_(""),
-    type_(type)
+    type_(type),
+    lifetime_(15)
 {
     hitpoints_ = 100;
     x_coord_ = x_coord;
@@ -76,7 +77,7 @@ void cTowerEntity::update(float frametime) {
         enemy_ = 0;
         acquireTarget();
     }
-    if (hitpoints_ <= 0)
+    if ((frametime - lastShotTime_) > lifetime_ && lastShotTime_ != 0)
         getMapper()->deleteEntity(this);
 }
 void cTowerEntity::fire() {
