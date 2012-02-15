@@ -25,7 +25,7 @@ public:
     int getYPosition() { return y_coord_; }
 
     /// Get maximum fire range for tower
-    virtual int getRange() {}
+    virtual int getRange() { return 0;}
 
     /// Virtual update method. Define in base class.
     virtual void update(float) = 0;

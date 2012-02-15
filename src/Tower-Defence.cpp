@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <sstream>
+
 #include "GameLogic/cGameEntity.h"
 #include "GameLogic/cMapper.h"
 #include "GameLogic/entityEnums.h"
@@ -14,13 +15,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
-using namespace std;
-/*
- * 
- */
 int main(int argc, char** argv)
 {
-    cout << "Hello tower defense - experimental branch!\n";
+    std::cout << "Hello tower defense - experimental branch!\n";
 
     bool appRunning = true;
     
@@ -44,7 +41,8 @@ int main(int argc, char** argv)
     try {
         mapper = gamelogic::cMapper::getInstance();
         render = renderer::cRenderer::getInstance();
-    } catch (bad_alloc&) {
+    } catch (std::bad_alloc& e) {
+        std::cout << "Initial memory allocation for mapper and renderer failed! " << e.what() << "\n";
         return EXIT_FAILURE;
     }
 
@@ -86,7 +84,7 @@ int main(int argc, char** argv)
             // Window closed
             if (Event.Type == sf::Event::Closed)
             {
-                cout << "User interrupt close window!\n";
+                std::cout << "User interrupt close window!\n";
                 appRunning = false;
                 render->getRenderwindow()->Close();
             }
@@ -94,7 +92,7 @@ int main(int argc, char** argv)
             // Escape key pressed
             if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape))
             {
-                cout << "User interrupt ESC-key!\n";
+                std::cout << "User interrupt ESC-key!\n";
                 appRunning = false;
                 render->getRenderwindow()->Close();
             }
@@ -139,20 +137,22 @@ int main(int argc, char** argv)
                 mapper->addTower(gamelogic::SPECIAL_TOWER, Input.GetMouseX(), Input.GetMouseY());
             }
             // Mouse button left pressed
-            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
+            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.MouseButton.Button == sf::Mouse::Left))
             {
                 //mapper->addTower(gamelogic::MORTAR_TOWER, Input.GetMouseX(), Input.GetMouseY());
             }
 
             // Mouse button right pressed
-            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
+            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.MouseButton.Button == sf::Mouse::Right))
             {
-                //mapper->addTower(gamelogic::SPECIAL_TOWER, Input.GetMouseX(), Input.GetMouseY());
+                mapper->addTower(gamelogic::SPECIAL_TOWER, Event.MouseButton.X, Event.MouseButton.Y);
             }
         }
     }
     // End of gameloop. Destroy mapper.
+    delete render;
     delete mapper;
+
 
     return EXIT_SUCCESS;
 }

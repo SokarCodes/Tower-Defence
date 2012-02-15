@@ -15,10 +15,18 @@ file(GLOB GameLogicHeaderFiles ${CMAKE_SOURCE_DIR}/src/GameLogic/*.h)
 file(GLOB RendererSourceFiles ${CMAKE_SOURCE_DIR}/src/Renderer/*.cpp)
 file(GLOB RendererHeaderFiles ${CMAKE_SOURCE_DIR}/src/Renderer/*.h)
 
+# EventHandler
+file(GLOB EventHandlerSourceFiles ${CMAKE_SOURCE_DIR}/src/EventHandler/*.cpp)
+file(GLOB EventHandlerHeaderFiles ${CMAKE_SOURCE_DIR}/src/EventHandler/*.h)
+
+# InputHandler
+file(GLOB InputHandlerSourceFiles ${CMAKE_SOURCE_DIR}/src/InputHandler/*.cpp)
+file(GLOB InputHandlerHeaderFiles ${CMAKE_SOURCE_DIR}/src/InputHandler/*.h)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/utils )
 
-set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} ${RendererSourceFiles} )
-set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} ${RendererSourceFiles} )
+set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} ${RendererSourceFiles} ${EventHandlerSourceFiles} ${InputHandlerSourceFiles} )
+set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} ${RendererSourceFiles} ${EventHandlerHeaderFiles} ${InputHandlerHeaderFiles} )
 
 find_package ( SFML REQUIRED )
 
