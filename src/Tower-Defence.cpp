@@ -32,26 +32,15 @@ int main(int argc, char** argv)
     float sleepTime = 0;
     float frameBudget = 1/(float)framerate;
 
-    // Create SFML renderwindow
-    sf::RenderWindow window(sf::VideoMode(800,600,32), "Tower-Defence!", sf::Style::Close);
-
     // Create event mapper
     sf::Event Event;
-
-    // Testing renderwindow draw shapes and text
-    sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
-    sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color(255,255,200,200));
-    sf::String text("Frametime");
-
-
-    // Inputmapper
-    const sf::Input& Input = window.GetInput();
 
     // Singleton mapper class which updates all gameEntities
     gamelogic::cMapper *mapper;
 
     // Singleton renderer class which handles all graphics
     renderer::cRenderer *render;
+
     try {
         mapper = gamelogic::cMapper::getInstance();
         render = renderer::cRenderer::getInstance();
@@ -59,66 +48,21 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    // Inputmapper
+    const sf::Input& Input = render->getRenderwindow()->GetInput();
+
     // Start running the clock just before gameloop
     clock.Reset();
 
     // Gameloop
     while(appRunning)
     {
-        window.Clear();
-
-        std::ostringstream frametimer;
-        std::ostringstream towers, enemies;
-        frametimer << framestartTime;
-        std::string buffer;
-        buffer.append("Frametime: ").append(frametimer.str());
-
-        std::vector<gamelogic::cGameEntity*> enemyList = mapper->getEnemyEntities();
-        enemies << enemyList.size();
-        buffer.append("\nEnemies: ").append(enemies.str());
-        std::vector<gamelogic::cGameEntity*>::iterator iter = enemyList.begin();
-        for (;iter < enemyList.end(); iter++)
-        {
-            enemyShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
-            if ((*iter)->name() == "Walking_enemy")
-                enemyShape.SetColor(sf::Color::Magenta);
-            else if ((*iter)->name() == "Flying_enemy")
-                enemyShape.SetColor(sf::Color::Blue);
-            else if ((*iter)->name() == "Invisible_enemy")
-                enemyShape.SetColor(sf::Color::Green);
-            else if ((*iter)->name() == "Fast_enemy")
-                enemyShape.SetColor(sf::Color::Red);
-            window.Draw(enemyShape);
-        }
-        std::vector<gamelogic::cGameEntity*> towerList = mapper->getTowerEntities();
-        towers << towerList.size();
-        buffer.append(", Towers: ").append(towers.str());
-        iter = towerList.begin();
-        text.SetText(buffer);
-        for (;iter < towerList.end(); iter++)
-        {
-            towerShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
-            if ((*iter)->name() == "Mortar_tower")
-                towerShape.SetColor(sf::Color::Cyan);
-            else if ((*iter)->name() == "Arrow_tower")
-                towerShape.SetColor(sf::Color::White);
-            else if ((*iter)->name() == "Ice_tower")
-                towerShape.SetColor(sf::Color::Yellow);
-            else if ((*iter)->name() == "Special_tower")
-                towerShape.SetColor(sf::Color(100,50,220,200));
-            window.Draw(towerShape);
-        }
-
-
-        window.Draw(text);
-        window.Display();
-
-
         // Get current framestart time
         framestartTime = clock.GetElapsedTime();
 
-        // Update game logic. Here only mapper->update()
+        // Update game logic and renderer instance.
         mapper->update(framestartTime);
+        render->update(framestartTime);
 
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;
@@ -137,14 +81,14 @@ int main(int argc, char** argv)
         }
 
         // Event loop checker
-        while (window.GetEvent(Event))
+        while (render->getRenderwindow()->GetEvent(Event))
         {
             // Window closed
             if (Event.Type == sf::Event::Closed)
             {
                 cout << "User interrupt close window!\n";
                 appRunning = false;
-                window.Close();
+                render->getRenderwindow()->Close();
             }
 
             // Escape key pressed
@@ -152,7 +96,7 @@ int main(int argc, char** argv)
             {
                 cout << "User interrupt ESC-key!\n";
                 appRunning = false;
-                window.Close();
+                render->getRenderwindow()->Close();
             }
 
             if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Z))

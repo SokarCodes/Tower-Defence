@@ -2,6 +2,7 @@
 #define RENDERER_H
 
 #include "SFML/Graphics.hpp"
+#include "../GameLogic/cMapper.h"
 
 namespace renderer {
 
@@ -14,10 +15,13 @@ public:
     /// Returns singleton pointer
     static cRenderer* getInstance();
 
+    /// Get renderwindow for inputmapper
+    sf::RenderWindow* getRenderwindow();
+
     void update(float);
 private:
     /// Private constructor because singleton instance is gotten from getInstance()
-    cRenderer() {}
+    cRenderer();
 
     /// Status for singleton instance pointer
     static bool instanceFlag_;
@@ -26,16 +30,19 @@ private:
     static cRenderer* thisPointer_;
 
     /// Renderwindow
-    sf::RenderWindow window_;
+    sf::RenderWindow *window_;
 
     /// Shape for tower
-    sf::Shape towerShape_;
+    sf::Shape *towerShape_;
 
     /// Shape for enemy
-    sf::Shape enemyShape_;
+    sf::Shape *enemyShape_;
 
     /// Text variable for renderwindow text print.
-    sf::String text_;
+    sf::String *text_;
+
+    /// GameLogic pointer
+    static gamelogic::cMapper* mapper_;
 
 
 };
