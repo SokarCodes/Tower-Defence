@@ -25,19 +25,19 @@ void cEnemyEntity::initializeEntity()
     {
     case WALKING_ENEMY:
         entityName_ = "Walking_enemy";
-        movespeed_ = 10;
+        movespeed_ = 2;
         break;
     case FLYING_ENEMY:
         entityName_ = "Flying_enemy";
-        movespeed_ = 15;
+        movespeed_ = 5;
         break;
     case INVISIBLE_ENEMY:
         entityName_ = "Invisible_enemy";
-        movespeed_ = 10;
+        movespeed_ = 3;
         break;
     case FAST_ENEMY:
         entityName_ = "Fast_enemy";
-        movespeed_ = 25;
+        movespeed_ = 8;
         break;
     default:
         std::cout << "WARNING: initialize entity failed. No valid type acquired!\n";

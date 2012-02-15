@@ -74,9 +74,9 @@ bool cMapper::addEnemy(enemyType type, int x_coord, int y_coord)
 void cMapper::update(float frametime) {
     std::vector<cGameEntity*>::iterator iter;
 
-    for (iter = enemyContainer_.begin();iter < enemyContainer_.end();iter++)
-        (*iter)->update(frametime);
     for (iter = towerContainer_.begin();iter < towerContainer_.end();iter++)
+        (*iter)->update(frametime);
+    for (iter = enemyContainer_.begin();iter < enemyContainer_.end();iter++)
         (*iter)->update(frametime);
 }
 
@@ -115,6 +115,8 @@ void cMapper::deleteEntity(cGameEntity *instance)
     for (;iter < enemyContainer_.end();iter++)
         if ((*iter) == instance)
         {
+            cGameEntity *p = (*iter);
+
             delete (*iter);
             enemyContainer_.erase(iter);
             return;

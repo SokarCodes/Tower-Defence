@@ -63,13 +63,19 @@ cTowerEntity::~cTowerEntity() {
 }
 
 void cTowerEntity::update(float frametime) {
-    if (enemy_ && getMapper()->entityExists(enemy_) && getMapper()->isInRange(enemy_, this))
+    if (enemy_)
     {
-        if ( (frametime - lastShotTime_) >= reloadTimeout_ )
+        if (getMapper()->entityExists(enemy_))
         {
-            lastShotTime_ = frametime;
-            fire();
-            std::cout << ". frametime: " << frametime << ".\n" <<this->name() << ": Reloading!\n";
+            if (getMapper()->isInRange(enemy_, this))
+            {
+                if ( (frametime - lastShotTime_) >= reloadTimeout_ )
+                {
+                    lastShotTime_ = frametime;
+                    fire();
+                    std::cout << ". frametime: " << frametime << ".\n" <<this->name() << ": Reloading!\n";
+                }
+            }
         }
     }
     else

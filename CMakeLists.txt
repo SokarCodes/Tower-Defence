@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 PROJECT(Tower-Defence CXX)
 
-ADD_DEFINITIONS(-Wall -g)
+ADD_DEFINITIONS(-Wall -g -O)
 
 file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
@@ -24,6 +24,7 @@ file(GLOB InputHandlerSourceFiles ${CMAKE_SOURCE_DIR}/src/InputHandler/*.cpp)
 file(GLOB InputHandlerHeaderFiles ${CMAKE_SOURCE_DIR}/src/InputHandler/*.h)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/utils )
+#set(CMAKE_EXE_LINKER_FLAGS "")
 
 set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} ${RendererSourceFiles} ${EventHandlerSourceFiles} ${InputHandlerSourceFiles} )
 set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} ${RendererSourceFiles} ${EventHandlerHeaderFiles} ${InputHandlerHeaderFiles} )

@@ -23,8 +23,8 @@ int main(int argc, char** argv)
     
     // Initialize variables for gameloop timer logic
     sf::Clock clock;
-    const int framerate = 60;
-    float framestartTime = 0; //fix this
+    const int framerate = 30;
+    float framestartTime = 0;
     float difference = 0;
     float sleepTime = 0;
     float frameBudget = 1/(float)framerate;
