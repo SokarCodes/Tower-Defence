@@ -44,5 +44,5 @@ set_target_properties(Tower-Defence PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_
 if(WIN32)
         TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics)
 elseif (UNIX)
-       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics gcov)
+       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window gcov GL GLU)
 endif()

@@ -1,7 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "SFML/Graphics.hpp"
+#include "SFML/Window.hpp"
 #include "../GameLogic/cMapper.h"
 
 namespace renderer {
@@ -16,7 +16,7 @@ public:
     static cRenderer* getInstance();
 
     /// Get renderwindow for inputmapper
-    sf::RenderWindow* getRenderwindow();
+    sf::Window* getRenderwindow();
 
     void update(float);
 private:
@@ -30,16 +30,7 @@ private:
     static cRenderer* thisPointer_;
 
     /// Renderwindow
-    sf::RenderWindow *window_;
-
-    /// Shape for tower
-    sf::Shape *towerShape_;
-
-    /// Shape for enemy
-    sf::Shape *enemyShape_;
-
-    /// Text variable for renderwindow text print.
-    sf::String *text_;
+    sf::Window *window_;
 
     /// GameLogic pointer
     static gamelogic::cMapper* mapper_;
