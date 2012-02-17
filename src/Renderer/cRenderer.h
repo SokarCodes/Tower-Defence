@@ -37,6 +37,9 @@ private:
 
     sf::String *text_;
 
+    sf::Shape *enemyShape_;
+    sf::Shape *towerShape_;
+
 
 };
 

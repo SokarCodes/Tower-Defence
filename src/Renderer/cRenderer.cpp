@@ -40,7 +40,23 @@ cRenderer::cRenderer()
         std::cout << "Renderwindow creation failure!\n";
         return;
     }
-    text_ = new sf::String("lalla");
+    try
+    {
+        // shape::circle/rect is not a type name but static function. Pointer is created this way.
+        towerShape_ = new sf::Shape(sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White));
+
+        enemyShape_ = new sf::Shape(sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color(255,255,200,200)));
+
+        text_ = new sf::String("Temporary text here.\n");
+    }
+    catch (std::bad_alloc&)
+    {
+        towerShape_ = NULL;
+        enemyShape_ = NULL;
+        text_ = NULL;
+        std::cout << "Basic shape allocation failure!\n";
+        return;
+    }
     // Set color and depth clear value
     glClearDepth(1.f);
     glClearColor(0.f, 0.f, 0.f, 0.f);
@@ -66,42 +82,42 @@ void cRenderer::update(float frametime)
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.f, 0.f, -200.f);
-    glRotatef(frametime * 50, 1.f, 0.f, 0.f);
-    glRotatef(frametime * 30, 0.f, 1.f, 0.f);
-    glRotatef(frametime * 90, 0.f, 0.f, 1.f);
+    glTranslatef(275.f, 275.f, -450.f);
+    glRotatef(frametime * 100, 1.f, 0.f, 0.f);
+    glRotatef(frametime * 60, 0.f, 1.f, 0.f);
+    glRotatef(frametime * 180, 0.f, 0.f, 1.f);
 
     glBegin(GL_QUADS);
 
-        glVertex3f(-50.f, -50.f, -50.f);
-        glVertex3f(-50.f,  50.f, -50.f);
-        glVertex3f( 50.f,  50.f, -50.f);
-        glVertex3f( 50.f, -50.f, -50.f);
+    glVertex3f(-50.f, -50.f, -50.f);
+    glVertex3f(-50.f,  50.f, -50.f);
+    glVertex3f( 50.f,  50.f, -50.f);
+    glVertex3f( 50.f, -50.f, -50.f);
 
-        glVertex3f(-50.f, -50.f, 50.f);
-        glVertex3f(-50.f,  50.f, 50.f);
-        glVertex3f( 50.f,  50.f, 50.f);
-        glVertex3f( 50.f, -50.f, 50.f);
+    glVertex3f(-50.f, -50.f, 50.f);
+    glVertex3f(-50.f,  50.f, 50.f);
+    glVertex3f( 50.f,  50.f, 50.f);
+    glVertex3f( 50.f, -50.f, 50.f);
 
-        glVertex3f(-50.f, -50.f, -50.f);
-        glVertex3f(-50.f,  50.f, -50.f);
-        glVertex3f(-50.f,  50.f,  50.f);
-        glVertex3f(-50.f, -50.f,  50.f);
+    glVertex3f(-50.f, -50.f, -50.f);
+    glVertex3f(-50.f,  50.f, -50.f);
+    glVertex3f(-50.f,  50.f,  50.f);
+    glVertex3f(-50.f, -50.f,  50.f);
 
-        glVertex3f(50.f, -50.f, -50.f);
-        glVertex3f(50.f,  50.f, -50.f);
-        glVertex3f(50.f,  50.f,  50.f);
-        glVertex3f(50.f, -50.f,  50.f);
+    glVertex3f(50.f, -50.f, -50.f);
+    glVertex3f(50.f,  50.f, -50.f);
+    glVertex3f(50.f,  50.f,  50.f);
+    glVertex3f(50.f, -50.f,  50.f);
 
-        glVertex3f(-50.f, -50.f,  50.f);
-        glVertex3f(-50.f, -50.f, -50.f);
-        glVertex3f( 50.f, -50.f, -50.f);
-        glVertex3f( 50.f, -50.f,  50.f);
+    glVertex3f(-50.f, -50.f,  50.f);
+    glVertex3f(-50.f, -50.f, -50.f);
+    glVertex3f( 50.f, -50.f, -50.f);
+    glVertex3f( 50.f, -50.f,  50.f);
 
-        glVertex3f(-50.f, 50.f,  50.f);
-        glVertex3f(-50.f, 50.f, -50.f);
-        glVertex3f( 50.f, 50.f, -50.f);
-        glVertex3f( 50.f, 50.f,  50.f);
+    glVertex3f(-50.f, 50.f,  50.f);
+    glVertex3f(-50.f, 50.f, -50.f);
+    glVertex3f( 50.f, 50.f, -50.f);
+    glVertex3f( 50.f, 50.f,  50.f);
 
     glEnd();
 
@@ -116,7 +132,7 @@ void cRenderer::update(float frametime)
     enemies << enemyList.size();
     buffer.append("\nEnemies: ").append(enemies.str());
     std::vector<gamelogic::cGameEntity*>::iterator iter = enemyList.begin();
-    /*for (;iter < enemyList.end(); iter++)
+    for (;iter < enemyList.end(); iter++)
     {
         enemyShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
         if ((*iter)->name() == "Walking_enemy")
@@ -128,13 +144,13 @@ void cRenderer::update(float frametime)
         else if ((*iter)->name() == "Fast_enemy")
             enemyShape_->SetColor(sf::Color::Red);
         window_->Draw(*enemyShape_);
-    }*/
+    }
     std::vector<gamelogic::cGameEntity*> towerList = mapper_->getTowerEntities();
     towers << towerList.size();
     buffer.append(", Towers: ").append(towers.str());
     iter = towerList.begin();
     text_->SetText(buffer);
-    /*for (;iter < towerList.end(); iter++)
+    for (;iter < towerList.end(); iter++)
     {
         towerShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
         if ((*iter)->name() == "Mortar_tower")
@@ -146,7 +162,7 @@ void cRenderer::update(float frametime)
         else if ((*iter)->name() == "Special_tower")
             towerShape_->SetColor(sf::Color(100,50,220,200));
         window_->Draw(*towerShape_);
-    }*/
+    }
 
     window_->Draw(*text_);
     window_->Display();

@@ -76,6 +76,16 @@ void cTowerEntity::update(float frametime) {
                     std::cout << ". frametime: " << frametime << ".\n" <<this->name() << ": Reloading!\n";
                 }
             }
+            else
+            {
+                enemy_ = 0;
+                acquireTarget();
+            }
+        }
+        else
+        {
+            enemy_ = 0;
+            acquireTarget();
         }
     }
     else
