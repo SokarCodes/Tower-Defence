@@ -1,7 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "SFML/Window.hpp"
+#include "SFML/Graphics.hpp"
 #include "../GameLogic/cMapper.h"
 
 namespace renderer {
@@ -16,7 +16,7 @@ public:
     static cRenderer* getInstance();
 
     /// Get renderwindow for inputmapper
-    sf::Window* getRenderwindow();
+    sf::RenderWindow* getRenderwindow();
 
     void update(float);
 private:
@@ -30,10 +30,12 @@ private:
     static cRenderer* thisPointer_;
 
     /// Renderwindow
-    sf::Window *window_;
+    sf::RenderWindow *window_;
 
     /// GameLogic pointer
     static gamelogic::cMapper* mapper_;
+
+    sf::String *text_;
 
 
 };

@@ -32,7 +32,7 @@ cRenderer::cRenderer()
 {
     try
     {
-        window_ = new sf::Window(sf::VideoMode(800,600,32), "Tower-Defence experimental build!", sf::Style::Close);
+        window_ = new sf::RenderWindow(sf::VideoMode(800,600,32), "Tower-Defence experimental build!", sf::Style::Close);
     }
     catch (std::bad_alloc&)
     {
@@ -40,6 +40,7 @@ cRenderer::cRenderer()
         std::cout << "Renderwindow creation failure!\n";
         return;
     }
+    text_ = new sf::String("lalla");
     // Set color and depth clear value
     glClearDepth(1.f);
     glClearColor(0.f, 0.f, 0.f, 0.f);
@@ -52,12 +53,16 @@ cRenderer::cRenderer()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(90.f, 1.f, 1.f, 500.f);
+
+    window_->SetActive();
 }
 
 void cRenderer::update(float frametime)
 {
-    window_->SetActive();
+    window_->PreserveOpenGLStates(true);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -100,8 +105,6 @@ void cRenderer::update(float frametime)
 
     glEnd();
 
-        window_->Display();
-    /*window_->Clear();
 
     std::ostringstream frametimer;
     std::ostringstream towers, enemies;
@@ -113,7 +116,7 @@ void cRenderer::update(float frametime)
     enemies << enemyList.size();
     buffer.append("\nEnemies: ").append(enemies.str());
     std::vector<gamelogic::cGameEntity*>::iterator iter = enemyList.begin();
-    for (;iter < enemyList.end(); iter++)
+    /*for (;iter < enemyList.end(); iter++)
     {
         enemyShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
         if ((*iter)->name() == "Walking_enemy")
@@ -125,13 +128,13 @@ void cRenderer::update(float frametime)
         else if ((*iter)->name() == "Fast_enemy")
             enemyShape_->SetColor(sf::Color::Red);
         window_->Draw(*enemyShape_);
-    }
+    }*/
     std::vector<gamelogic::cGameEntity*> towerList = mapper_->getTowerEntities();
     towers << towerList.size();
     buffer.append(", Towers: ").append(towers.str());
     iter = towerList.begin();
     text_->SetText(buffer);
-    for (;iter < towerList.end(); iter++)
+    /*for (;iter < towerList.end(); iter++)
     {
         towerShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
         if ((*iter)->name() == "Mortar_tower")
@@ -143,12 +146,12 @@ void cRenderer::update(float frametime)
         else if ((*iter)->name() == "Special_tower")
             towerShape_->SetColor(sf::Color(100,50,220,200));
         window_->Draw(*towerShape_);
-    }
+    }*/
 
     window_->Draw(*text_);
-    window_->Display();*/
+    window_->Display();
 }
-sf::Window* cRenderer::getRenderwindow()
+sf::RenderWindow* cRenderer::getRenderwindow()
 {
     return window_;
 }
