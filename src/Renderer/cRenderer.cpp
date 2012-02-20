@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <cstdlib>
 #include <vector>
@@ -79,7 +80,6 @@ void cRenderer::update(float frametime)
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef(275.f, 275.f, -450.f);
@@ -121,8 +121,8 @@ void cRenderer::update(float frametime)
 
     glEnd();
 
-
     std::ostringstream frametimer;
+    frametimer << std::fixed << std::setprecision(1);
     std::ostringstream towers, enemies;
     frametimer << frametime;
     std::string buffer;
@@ -170,6 +170,13 @@ void cRenderer::update(float frametime)
 sf::RenderWindow* cRenderer::getRenderwindow()
 {
     return window_;
+}
+
+void cRenderer::drawFPS(float spentTime)
+{
+    std::ostringstream frametimer;
+    frametimer << std::fixed << std::setprecision(1);
+    frametimer << spentTime;
 }
 
 }

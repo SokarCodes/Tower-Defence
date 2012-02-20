@@ -19,6 +19,8 @@ public:
     sf::RenderWindow* getRenderwindow();
 
     void update(float);
+
+    void drawFPS(float spentTime);
 private:
     /// Private constructor because singleton instance is gotten from getInstance()
     cRenderer();
