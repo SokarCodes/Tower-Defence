@@ -35,71 +35,63 @@ void cEventHandler::update()
     // Event loop checker
     while (render_->getRenderwindow()->GetEvent(event_))
     {
-        // Window closed
-        if (event_.Type == sf::Event::Closed)
+        switch (event_.Type)
         {
+        // Window closed
+        case sf::Event::Closed:
             std::cout << "User interrupt close window!\n";
             appRunning = false;
             render_->getRenderwindow()->Close();
-        }
-
-        // Escape key pressed
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::Escape))
-        {
-            std::cout << "User interrupt ESC-key!\n";
-            appRunning = false;
-            render_->getRenderwindow()->Close();
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::Z))
-        {
-            mapper_->addEnemy(gamelogic::WALKING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::X))
-        {
-            mapper_->addEnemy(gamelogic::FLYING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::C))
-        {
-            mapper_->addEnemy(gamelogic::INVISIBLE_ENEMY, input_.GetMouseX(), input_.GetMouseY());
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::V))
-        {
-            mapper_->addEnemy(gamelogic::FAST_ENEMY, input_.GetMouseX(), input_.GetMouseY());
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::A))
-        {
-            mapper_->addTower(gamelogic::MORTAR_TOWER, input_.GetMouseX(), input_.GetMouseY());
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::S))
-        {
-            mapper_->addTower(gamelogic::ARROW_TOWER, input_.GetMouseX(), input_.GetMouseY());
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::D))
-        {
-            mapper_->addTower(gamelogic::ICE_TOWER, input_.GetMouseX(), input_.GetMouseY());
-        }
-
-        if ((event_.Type == sf::Event::KeyPressed) && (event_.Key.Code == sf::Key::F))
-        {
-            mapper_->addTower(gamelogic::SPECIAL_TOWER, input_.GetMouseX(), input_.GetMouseY());
-        }
-        // Mouse button left pressed
-        if ((event_.Type == sf::Event::MouseButtonPressed) && (event_.MouseButton.Button == sf::Mouse::Left))
-        {
-            //mapper->addTower(gamelogic::MORTAR_TOWER, Input.GetMouseX(), Input.GetMouseY());
-        }
-
-        // Mouse button right pressed
-        if ((event_.Type == sf::Event::MouseButtonPressed) && (event_.MouseButton.Button == sf::Mouse::Right))
-        {
-            mapper_->addTower(gamelogic::SPECIAL_TOWER, event_.MouseButton.X, event_.MouseButton.Y);
+            break;
+        // Keyboard key pressed
+        case sf::Event::KeyPressed:
+            switch (event_.Key.Code)
+            {
+            case sf::Key::Escape:
+                std::cout << "User interrupt ESC-key!\n";
+                appRunning = false;
+                render_->getRenderwindow()->Close();
+                break;
+            case sf::Key::Z:
+                mapper_->addEnemy(gamelogic::WALKING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            case sf::Key::X:
+                mapper_->addEnemy(gamelogic::FLYING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            case sf::Key::C:
+                mapper_->addEnemy(gamelogic::INVISIBLE_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            case sf::Key::V:
+                mapper_->addEnemy(gamelogic::FAST_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            case sf::Key::A:
+                mapper_->addTower(gamelogic::MORTAR_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            case sf::Key::S:
+                mapper_->addTower(gamelogic::ARROW_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            case sf::Key::D:
+                mapper_->addTower(gamelogic::ICE_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            case sf::Key::F:
+                mapper_->addTower(gamelogic::SPECIAL_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                break;
+            default:
+                std::cout << "No action for key.\n";
+            }
+            break;
+        // Mouse button pressed
+        case sf::Event::MouseButtonPressed:
+            switch (event_.MouseButton.Button)
+            {
+            case sf::Mouse::Left:
+                break;
+            case sf::Mouse::Right:
+                break;
+            default:
+                std::cout << "No action for mousebutton.\n";
+            }
+            break;
         }
     }
 }

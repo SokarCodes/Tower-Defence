@@ -34,13 +34,9 @@ int main(int argc, char** argv)
     float sleepTime = 0;
     float frameBudget = 1/(float)framerate;
 
-    // Singleton mapper class which updates all gameEntities
+    // Singletons
     gamelogic::cMapper *mapper;
-
-    // Singleton renderer class which handles all graphics
     renderer::cRenderer *render;
-
-    // Singleton event and input handler class
     IOHandling::cEventHandler *InputOutput;
 
     try {
