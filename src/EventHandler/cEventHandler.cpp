@@ -92,6 +92,8 @@ void cEventHandler::update()
                 std::cout << "No action for mousebutton.\n";
             }
             break;
+        default:
+            std::cout << "Input type not implemented!\n";
         }
     }
 }
