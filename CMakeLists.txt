@@ -2,7 +2,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 PROJECT(Tower-Defence CXX)
 
-ADD_DEFINITIONS(-Wall -g -pg -fprofile-arcs -ftest-coverage)
+#ADD_DEFINITIONS(-Wall -g -pg -fprofile-arcs -ftest-coverage)
+ADD_DEFINITIONS(-Wall -g -O2)
 
 file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
@@ -44,5 +45,7 @@ set_target_properties(Tower-Defence PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_
 if(WIN32)
         TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics)
 elseif (UNIX)
-       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics gcov GL GLU)
+#       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics gcov GL GLU)
+       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics GL GLU)
+
 endif()
