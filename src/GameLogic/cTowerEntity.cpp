@@ -69,7 +69,7 @@ void cTowerEntity::update(float frametime) {
         {
             if (getMapper()->isInRange(enemy_, this))
             {
-                if ( (frametime - lastShotTime_) >= reloadTimeout_ )
+                if ( (frametime - lastShotTime_) >= reloadTimeout_ && enemy_->getState() == ALIVE )
                 {
                     lastShotTime_ = frametime;
                     fire();

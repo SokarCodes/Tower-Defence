@@ -11,7 +11,8 @@ namespace gamelogic {
 cEnemyEntity::cEnemyEntity(enemyType type, int x_coord, int y_coord) :
     entityName_(""),
     movespeed_(0),
-    type_(type)
+    type_(type),
+    state_(ALIVE)
 {
     hitpoints_ = 100;
     x_coord_ = x_coord;
@@ -52,31 +53,48 @@ cEnemyEntity::~cEnemyEntity()
 
 void cEnemyEntity::update(float frametime)
 {
-    int random = sf::Randomizer::Random(0,3);
-
-    switch(random)
+    if (state_ == DEAD)
     {
-    case 0:
-        if(x_coord_ > movespeed_)
-            x_coord_ -= movespeed_;
-        break;
-    case 1:
-        if(x_coord_ < 779)
-            x_coord_ += movespeed_;
-        break;
-    case 2:
-        if (y_coord_ > movespeed_)
-            y_coord_ -= movespeed_;
-        break;
-    case 3:
-        if (y_coord_ < 579)
-            y_coord_ += movespeed_;
-        break;
-    }
-
-    // For now, only thing enemyEntity can do is die away.
-    if (hitpoints_ <= 0)
         getMapper()->deleteEntity(this);
+        return;
+    }
+    else if (state_ == DECAYING)
+    {
+        state_ = DEAD;
+    }
+    else if (state_ == ALIVE)
+    {
+        int random = sf::Randomizer::Random(0,3);
+
+        switch(random)
+        {
+        case 0:
+            if(x_coord_ > movespeed_)
+                x_coord_ -= movespeed_;
+            break;
+        case 1:
+            if(x_coord_ < 779)
+                x_coord_ += movespeed_;
+            break;
+        case 2:
+            if (y_coord_ > movespeed_)
+                y_coord_ -= movespeed_;
+            break;
+        case 3:
+            if (y_coord_ < 579)
+                y_coord_ += movespeed_;
+            break;
+        }
+
+        // For now, only thing enemyEntity can do is die away.
+        if (hitpoints_ <= 0)
+            state_ = DECAYING;
+    }
+}
+
+enemyState cEnemyEntity::getState()
+{
+    return state_;
 }
 
 std::string cEnemyEntity::name()

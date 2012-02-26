@@ -28,6 +28,9 @@ public:
     /// Initializer after creation
     void initializeEntity();
 
+    /// Returns enemy entity state
+    enemyState getState();
+
 private:
     /// Entity name variable
     std::string entityName_;
@@ -37,6 +40,9 @@ private:
 
     /// Entity type
     enemyType type_;
+
+    /// State
+    enemyState state_;
 };
 
 } // namespace gamelogic

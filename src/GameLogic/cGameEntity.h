@@ -25,13 +25,15 @@ public:
     int getYPosition() { return y_coord_; }
 
     /// Get maximum fire range for tower
-    virtual int getRange() { return 0;}
+    virtual int getRange() { return 0; }
 
-    virtual bool hasEnemy() {}
+    virtual bool hasEnemy() { return false; }
 
-    virtual cGameEntity* getEnemy() {}
+    virtual cGameEntity* getEnemy() {return 0;}
 
-    virtual float lastFireTime() {}
+    virtual float lastFireTime() {return 0;}
+
+    virtual enemyState getState() { return ALIVE; }
 
     /// Virtual update method. Define in base class.
     virtual void update(float) = 0;

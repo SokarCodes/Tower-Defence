@@ -33,5 +33,9 @@ enum towerEffect { NO_EFFECT,
                    BURN_EFFECT };
 }
 
+enum enemyState { ALIVE,
+                  DECAYING,
+                  DEAD };
+
 #endif	/* TOWERENUMS_H */
 
