@@ -45,8 +45,8 @@ cRenderer::cRenderer()
     {
         // shape::circle/rect is not a type name but static function. Pointer is created this way.
         towerShape_ = new sf::Shape(sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White));
-
         enemyShape_ = new sf::Shape(sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color(255,255,200,200)));
+        projectile_ = new sf::Shape(sf::Shape::Line(0,0,0,0,2,sf::Color::White));
 
         text_ = new sf::String("Temporary text here.\n");
     }
@@ -128,27 +128,10 @@ void cRenderer::update(float frametime)
     std::string buffer;
     buffer.append("Frametime: ").append(frametimer.str());
 
-    std::vector<gamelogic::cGameEntity*> enemyList = mapper_->getEnemyEntities();
-    enemies << enemyList.size();
-    buffer.append("\nEnemies: ").append(enemies.str());
-    std::vector<gamelogic::cGameEntity*>::iterator iter = enemyList.begin();
-    for (;iter < enemyList.end(); iter++)
-    {
-        enemyShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
-        if ((*iter)->name() == "Walking_enemy")
-            enemyShape_->SetColor(sf::Color::Magenta);
-        else if ((*iter)->name() == "Flying_enemy")
-            enemyShape_->SetColor(sf::Color::Blue);
-        else if ((*iter)->name() == "Invisible_enemy")
-            enemyShape_->SetColor(sf::Color::Green);
-        else if ((*iter)->name() == "Fast_enemy")
-            enemyShape_->SetColor(sf::Color::Red);
-        window_->Draw(*enemyShape_);
-    }
     std::vector<gamelogic::cGameEntity*> towerList = mapper_->getTowerEntities();
     towers << towerList.size();
     buffer.append(", Towers: ").append(towers.str());
-    iter = towerList.begin();
+    std::vector<gamelogic::cGameEntity*>::iterator iter = towerList.begin();
     text_->SetText(buffer);
     for (;iter < towerList.end(); iter++)
     {
@@ -162,6 +145,30 @@ void cRenderer::update(float frametime)
         else if ((*iter)->name() == "Special_tower")
             towerShape_->SetColor(sf::Color(100,50,220,200));
         window_->Draw(*towerShape_);
+        if ((*iter)->hasEnemy())
+        {
+            gamelogic::cGameEntity *enemy = (*iter)->getEnemy();
+            if (frametime - (*iter)->lastFireTime() < 0.1)
+                window_->Draw(sf::Shape::Line((*iter)->getXPosition()+5, (*iter)->getYPosition()+5, enemy->getXPosition()+5, enemy->getYPosition()+5, 2, sf::Color::White));
+        }
+    }
+
+    std::vector<gamelogic::cGameEntity*> enemyList = mapper_->getEnemyEntities();
+    enemies << enemyList.size();
+    buffer.append("\nEnemies: ").append(enemies.str());
+    iter = enemyList.begin();
+    for (;iter < enemyList.end(); iter++)
+    {
+        enemyShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+        if ((*iter)->name() == "Walking_enemy")
+            enemyShape_->SetColor(sf::Color::Magenta);
+        else if ((*iter)->name() == "Flying_enemy")
+            enemyShape_->SetColor(sf::Color::Blue);
+        else if ((*iter)->name() == "Invisible_enemy")
+            enemyShape_->SetColor(sf::Color::Green);
+        else if ((*iter)->name() == "Fast_enemy")
+            enemyShape_->SetColor(sf::Color::Red);
+        window_->Draw(*enemyShape_);
     }
 
     window_->Draw(*text_);

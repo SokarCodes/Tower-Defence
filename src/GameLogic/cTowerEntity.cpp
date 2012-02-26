@@ -122,4 +122,9 @@ int cTowerEntity::getRange()
     return range_;
 }
 
+bool cTowerEntity::hasEnemy()
+{
+    return getMapper()->entityExists(enemy_);
+}
+
 } // namespace gamelogic

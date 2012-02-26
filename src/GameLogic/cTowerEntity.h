@@ -40,6 +40,12 @@ public:
     /// Initializer after creation
     void initializeEntity();
 
+    bool hasEnemy();
+
+    cGameEntity* getEnemy() { return enemy_; }
+
+    float lastFireTime() { return lastShotTime_; }
+
 private:
     /// Fire method. Launches projectile towards enemy entity.
     void fire();

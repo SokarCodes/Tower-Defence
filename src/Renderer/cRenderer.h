@@ -41,6 +41,7 @@ private:
 
     sf::Shape *enemyShape_;
     sf::Shape *towerShape_;
+    sf::Shape *projectile_;
 
 
 };

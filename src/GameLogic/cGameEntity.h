@@ -27,6 +27,12 @@ public:
     /// Get maximum fire range for tower
     virtual int getRange() { return 0;}
 
+    virtual bool hasEnemy() {}
+
+    virtual cGameEntity* getEnemy() {}
+
+    virtual float lastFireTime() {}
+
     /// Virtual update method. Define in base class.
     virtual void update(float) = 0;
 
