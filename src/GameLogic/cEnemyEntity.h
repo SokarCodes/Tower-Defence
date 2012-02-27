@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   cEnemyEntity.h
  * Author: Jukka Vatjus-Anttila
  *
@@ -7,11 +7,14 @@
 
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
+#include <string>
+#include "entityEnums.h"
+namespace gamelogic {
 
 class cEnemyEntity : public cGameEntity {
 public:
     /// Constructor
-    cEnemyEntity(int, int);
+    cEnemyEntity(enemyType, int, int);
 
     /// Destructor
     ~cEnemyEntity();
@@ -22,11 +25,26 @@ public:
     /// Return entity name
     std::string name();
 
+    /// Initializer after creation
+    void initializeEntity();
+
+    /// Returns enemy entity state
+    enemyState getState();
+
 private:
     /// Entity name variable
     std::string entityName_;
+
+    /// Entity move speed
+    unsigned short int movespeed_;
+
+    /// Entity type
+    enemyType type_;
+
+    /// State
+    enemyState state_;
 };
 
-
+} // namespace gamelogic
 #endif	/* ENEMYENTITY_H */
 

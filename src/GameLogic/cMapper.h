@@ -9,30 +9,45 @@
 #define	CMAPPER_H
 
 #include <vector>
+#include "entityEnums.h"
+namespace gamelogic {
+
 class cGameEntity;
 
 class cMapper {
 public:
+    // Consider this public segment as public API layer for Input/Interface/Etc.
+
     /// Destructor, sets instanceFlag to false so getInstance creates new on request
     ~cMapper() { instanceFlag_ = false; }
 
     /// Returns instance of this class
     static cMapper* getInstance();
 
-    /// Adds cGameEntity to vector
-    void add(cGameEntity*);
+    /// Adds new cTowerEntity to vector as cGameEntity
+    bool addTower(towerType, int, int);
 
-    /// Shows names of gameEntities in vector. Obsolete.
-    std::vector<cGameEntity*> getEntities();
+    /// Creates new enemy
+    bool addEnemy(enemyType, int, int);
+
+    /// Returns vectors for enemies and towers.
+    std::vector<cGameEntity*> getEnemyEntities();
+    std::vector<cGameEntity*> getTowerEntities();
 
     /// Update method. Calls update methods of all gameEntities.
     void update(float);
+
+public:
+    // This public segment is for derived classes and other more private use.
 
     /// deletes instance of cGameEntity from vector
     void deleteEntity(cGameEntity*);
 
     /// Check if entity exists
     bool entityExists(cGameEntity*);
+
+    /// Check if entity in fire range
+    bool isInRange(cGameEntity*, cGameEntity*);
 
     /// Returns closest possible target for querying entity.
     cGameEntity* getTarget(int, int, int);
@@ -47,8 +62,9 @@ private:
     /// Private constructor because singleton class pointer is get from getInstance()
     cMapper() {}
 
-    /// Vector to store all entities in the map
-    std::vector<cGameEntity*> entityContainer_;
+    /// Vectors to store all entities in the map
+    std::vector<cGameEntity*> enemyContainer_;
+    std::vector<cGameEntity*> towerContainer_;
 
     /// Singleton instance created flag
     static bool instanceFlag_;
@@ -56,7 +72,7 @@ private:
     /// Pointer to store cMapper class if some class wants it.
     static cMapper *thisPointer_;
 };
-
+} // namespace gamelogic
 
 #endif	/* CMAPPER_H */
 

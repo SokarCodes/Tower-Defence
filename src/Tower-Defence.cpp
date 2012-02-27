@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   main.cpp
  * Author: Jukka Vatjus-Anttila
  *
@@ -7,52 +7,44 @@
 #include <iostream>
 #include <cstdlib>
 #include <sstream>
+
 #include "GameLogic/cGameEntity.h"
-#include "GameLogic/cTowerEntity.h"
-#include "GameLogic/cEnemyEntity.h"
 #include "GameLogic/cMapper.h"
+#include "GameLogic/entityEnums.h"
+#include "Renderer/cRenderer.h"
+#include "EventHandler/cEventHandler.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
-using namespace std;
-/*
- * 
- */
+#include "common.h"
+
+bool appRunning;
+
 int main(int argc, char** argv)
 {
-    cout << "Hello tower defense - master branch!\n";
-
-    bool appRunning = true;
+    std::cout << "Hello tower defense - experimental branch!\n";
     
+    appRunning = true;
+
     // Initialize variables for gameloop timer logic
     sf::Clock clock;
-    const int framerate = 60;
-    float framestartTime = 0; //fix this
+    const int framerate = 30;
+    float framestartTime = 0;
     float difference = 0;
     float sleepTime = 0;
     float frameBudget = 1/(float)framerate;
 
-    // Create SFML renderwindow
-    sf::RenderWindow window(sf::VideoMode(800,600,32), "Tower-Defence!", sf::Style::Close);
-
-    // Create event mapper
-    sf::Event Event;
-
-    // Testing renderwindow draw shapes and text
-    sf::Shape towerShape = sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White);
-    sf::Shape enemyShape = sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color::Blue);
-    sf::String text("Frametime");
-
-
-    // Inputmapper
-    const sf::Input& Input = window.GetInput();
-
-    // Singleton mapper class which updates all gameEntities
-    cMapper *mapper;
+    // Singletons
+    gamelogic::cMapper *mapper;
+    renderer::cRenderer *render;
+    IOHandling::cEventHandler *InputOutput;
 
     try {
-        mapper = cMapper::getInstance();
-    } catch (bad_alloc&) {
+        mapper = gamelogic::cMapper::getInstance();
+        render = renderer::cRenderer::getInstance();
+        InputOutput = IOHandling::cEventHandler::getInstance();
+    } catch (std::bad_alloc& e) {
+        std::cout << "Initial memory allocation for mapper and renderer failed! " << e.what() << "\n";
         return EXIT_FAILURE;
     }
 
@@ -62,43 +54,17 @@ int main(int argc, char** argv)
     // Gameloop
     while(appRunning)
     {
-        window.Clear();
-
-        std::ostringstream frametimer;
-        frametimer << framestartTime;
-        std::string buffer;
-        buffer.append("Frametime: ").append(frametimer.str());
-        text.SetText(buffer);
-
-        std::vector<cGameEntity*> entityList = mapper->getEntities();
-        std::vector<cGameEntity*>::iterator iter = entityList.begin();
-        for (;iter < entityList.end(); iter++)
-        {
-            if ((*iter)->name() == "Enemy")
-            {
-                enemyShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
-                window.Draw(enemyShape);
-            }
-            else
-            {
-                towerShape.SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
-                window.Draw(towerShape);
-            }
-        }
-
-        window.Draw(text);
-        window.Display();
-
-
         // Get current framestart time
         framestartTime = clock.GetElapsedTime();
 
-        // Update game logic. Here only mapper->update()
+        // Update game logic and renderer instance.
         mapper->update(framestartTime);
+        render->update(framestartTime);
+        InputOutput->update();
 
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;
-        
+
         // If difference is smaller than budgeted, rest until next frame
         if (difference < frameBudget)
         {
@@ -111,41 +77,12 @@ int main(int argc, char** argv)
             // Sleep for rest of the frame
             sf::Sleep(sleepTime);
         }
-
-        // Event loop checker
-        while (window.GetEvent(Event))
-        {
-            // Window closed
-            if (Event.Type == sf::Event::Closed)
-            {
-                cout << "User interrupt close window!\n";
-                appRunning = false;
-                window.Close();
-            }
-
-            // Escape key pressed
-            if ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape))
-            {
-                cout << "User interrupt ESC-key!\n";
-                appRunning = false;
-                window.Close();
-            }
-
-            // Mouse button left pressed
-            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Left))
-            {
-                mapper->add(dynamic_cast<cGameEntity*> (new cTowerEntity(Input.GetMouseX(),Input.GetMouseY())));
-            }
-
-            // Mouse button right pressed
-            if ((Event.Type == sf::Event::MouseButtonPressed) && (Event.Key.Code == sf::Mouse::Right))
-            {
-                mapper->add(dynamic_cast<cGameEntity*> (new cEnemyEntity(Input.GetMouseX(),Input.GetMouseY())));
-            }
-        }
     }
     // End of gameloop. Destroy mapper.
+    delete InputOutput;
+    delete render;
     delete mapper;
+
 
     return EXIT_SUCCESS;
 }

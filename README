@@ -10,6 +10,10 @@ Version history. (Not all details covered.) Possible timestamps in <dd.mm.yyyy> 
 11.02.2012
 Preparing 0.1 release in experimental branch. Building gamelogic API. Under this API
 all gamelogic happens and is completely separate from rendering.
+<<<<<<< HEAD
+=======
+
+>>>>>>> experimental
 
 v0.0.6
 - Work has began with sfml renderwindow testing.

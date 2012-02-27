@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "cMapper.h"
+namespace gamelogic {
 
 class cGameEntity {
 public:
@@ -23,6 +24,21 @@ public:
     /// Get derived class entity position in 2D space
     int getYPosition() { return y_coord_; }
 
+    /// Get maximum fire range for tower
+    virtual int getRange() { return 0; }
+
+    /// Virtual function for checking if tower has enemy. Overloaded in cTowerEntity. Returns false if enemyEntity.
+    virtual bool hasEnemy() { return false; }
+
+    /// Returns towers target enemy.
+    virtual cGameEntity* getEnemy() {return 0;}
+
+    /// Returns towers last fire time. If enemyEntity, return 0.
+    virtual float lastFireTime() {return 0;}
+
+    /// Returns enemy state. Overloaded in cEnemyEntity.
+    virtual enemyState getState() { return ALIVE; }
+
     /// Virtual update method. Define in base class.
     virtual void update(float) = 0;
 
@@ -34,6 +50,9 @@ public:
 
     /// Virtual method to set name of entity. Define in base class.
     virtual std::string name() = 0;
+
+    /// Initialize all entity variables
+    virtual void initializeEntity() = 0;
 
     /// Virtual destructor for proper derived/base chain dismantling.
     virtual ~cGameEntity() { std::cout << "cGameEntity destruction!" << "\n"; }
@@ -55,6 +74,6 @@ private:
     /// cMapper pointer. Used in derived classes to inform cMapper of their destruction.
     static cMapper *mapper_;
 };
-
+} // namespace gamelogic
 #endif	/* GAMEENTITY_H */
 
