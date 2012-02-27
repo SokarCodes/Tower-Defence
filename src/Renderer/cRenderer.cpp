@@ -149,7 +149,7 @@ void cRenderer::update(float frametime)
         {
             gamelogic::cGameEntity *enemy = (*iter)->getEnemy();
             if (frametime - (*iter)->lastFireTime() < 0.1)
-                window_->Draw(sf::Shape::Line((*iter)->getXPosition()+5, (*iter)->getYPosition()+5, enemy->getXPosition()+5, enemy->getYPosition()+5, 2, sf::Color::White));
+                window_->Draw(sf::Shape::Line((*iter)->getXPosition(), (*iter)->getYPosition(), enemy->getXPosition()+3, enemy->getYPosition()+3, 2, sf::Color::White));
         }
     }
 
