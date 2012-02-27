@@ -27,12 +27,16 @@ public:
     /// Get maximum fire range for tower
     virtual int getRange() { return 0; }
 
+    /// Virtual function for checking if tower has enemy. Overloaded in cTowerEntity. Returns false if enemyEntity.
     virtual bool hasEnemy() { return false; }
 
+    /// Returns towers target enemy.
     virtual cGameEntity* getEnemy() {return 0;}
 
+    /// Returns towers last fire time. If enemyEntity, return 0.
     virtual float lastFireTime() {return 0;}
 
+    /// Returns enemy state. Overloaded in cEnemyEntity.
     virtual enemyState getState() { return ALIVE; }
 
     /// Virtual update method. Define in base class.

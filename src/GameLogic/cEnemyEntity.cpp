@@ -53,6 +53,10 @@ cEnemyEntity::~cEnemyEntity()
 
 void cEnemyEntity::update(float frametime)
 {
+    // When enemy hitpoints are drained out, enemy is set to DECAY-state.
+    // When in DECAY-state towers stop actions towards this enemy. DECAY-state
+    // is kept for one frame and after that entity is put to DEAD-state and removed.
+    // This guarantees that rendering layer renders last lethal shot to enemy.
     if (state_ == DEAD)
     {
         getMapper()->deleteEntity(this);

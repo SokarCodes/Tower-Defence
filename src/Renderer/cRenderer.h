@@ -20,6 +20,7 @@ public:
 
     void update(float);
 
+    /// Not implemented properly
     void drawFPS(float spentTime);
 private:
     /// Private constructor because singleton instance is gotten from getInstance()
@@ -37,8 +38,10 @@ private:
     /// GameLogic pointer
     static gamelogic::cMapper* mapper_;
 
+    /// This text object shows all text on screen for now
     sf::String *text_;
 
+    /// Shapes for current game entities.
     sf::Shape *enemyShape_;
     sf::Shape *towerShape_;
     sf::Shape *projectile_;

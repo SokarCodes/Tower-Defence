@@ -40,10 +40,13 @@ public:
     /// Initializer after creation
     void initializeEntity();
 
+    /// Function for checking if tower has enemy.
     bool hasEnemy();
 
+    /// Return target enemy.
     cGameEntity* getEnemy() { return enemy_; }
 
+    /// Return last fire time.
     float lastFireTime() { return lastShotTime_; }
 
 private:

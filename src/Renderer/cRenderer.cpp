@@ -179,6 +179,7 @@ sf::RenderWindow* cRenderer::getRenderwindow()
     return window_;
 }
 
+// Not implemented properly.
 void cRenderer::drawFPS(float spentTime)
 {
     std::ostringstream frametimer;
