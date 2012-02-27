@@ -98,7 +98,7 @@ void cTowerEntity::update(float frametime) {
 }
 void cTowerEntity::fire() {
     enemy_->inflictDamage(damage_);
-    std::cout << this->name() <<  ": FIRE IN THE HOLE!";
+    std::cout << this->name() <<  ": FIRE IN THE HOLE!\n";
 }
 
 void cTowerEntity::setDamage(const unsigned int damage) {

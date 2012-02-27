@@ -22,7 +22,7 @@ bool appRunning;
 
 int main(int argc, char** argv)
 {
-    std::cout << "Hello tower defense - experimental branch!\n";
+    std::cout << "Hello tower defense - master branch - v0.1.0!\n";
     
     appRunning = true;
 
