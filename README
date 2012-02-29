@@ -7,6 +7,10 @@ No breakthroughs planned as of yet to game mechanics or logic but hopes are high
 
 Version history. (Not all details covered.) Possible timestamps in <dd.mm.yyyy> format.
 
+v0.1.1
+- New licensing policy. See LICENSE.TXT for more information.
+- Date: 29.02.2012
+
 v0.1.0
 - Completely reworked gameloop.
 - Introduces new classes: Eventhandler and renderer. 
