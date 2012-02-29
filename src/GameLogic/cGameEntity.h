@@ -1,8 +1,8 @@
-/* 
- * File:   cGameEntity.h
- * Author: Jukka Vatjus-Anttila
+/* Tower-Defence
  *
- * Created on January 24, 2012, 8:25 PM
+ * Author: Jukka Vatjus-Anttila <jukka.vatjusanttila@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE.txt
  */
 
 #ifndef GAMEENTITY_H

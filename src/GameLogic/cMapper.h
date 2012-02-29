@@ -1,8 +1,8 @@
-/* 
- * File:   cMapper.h
- * Author: Jukka Vatjus-Anttila
+/* Tower-Defence
  *
- * Created on February 1, 2012, 7:28 PM
+ * Author: Jukka Vatjus-Anttila <jukka.vatjusanttila@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE.txt
  */
 
 #ifndef CMAPPER_H
