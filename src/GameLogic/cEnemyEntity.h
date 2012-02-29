@@ -10,6 +10,7 @@
 #include <string>
 #include "entityEnums.h"
 namespace gamelogic {
+class cGameEntity;
 
 class cEnemyEntity : public cGameEntity {
 public:

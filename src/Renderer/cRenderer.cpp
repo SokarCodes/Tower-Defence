@@ -53,8 +53,8 @@ cRenderer::cRenderer()
         // shape::circle/rect is not a type name but static function. Pointer is created this way.
         towerShape_ = new sf::Shape(sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White));
         enemyShape_ = new sf::Shape(sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color(255,255,200,200)));
-        projectile_ = new sf::Shape(sf::Shape::Line(0,0,0,0,2,sf::Color::White));
-
+        //projectile_ = new sf::Shape(sf::Shape::Line(0,0,0,0,2,sf::Color::White));
+        projectile_ = new sf::Shape(sf::Shape::Rectangle(0.f, 0.f, 3.f, 3.f, sf::Color::Green));
         text_ = new sf::String("Temporary text here.\n");
     }
     catch (std::bad_alloc&)
@@ -152,12 +152,12 @@ void cRenderer::update(float frametime)
         else if ((*iter)->name() == "Special_tower")
             towerShape_->SetColor(sf::Color(100,50,220,200));
         window_->Draw(*towerShape_);
-        if ((*iter)->hasEnemy())
-        {
-            gamelogic::cGameEntity *enemy = (*iter)->getEnemy();
-            if (frametime - (*iter)->lastFireTime() < 0.1)
-                window_->Draw(sf::Shape::Line((*iter)->getXPosition(), (*iter)->getYPosition(), enemy->getXPosition()+3, enemy->getYPosition()+3, 2, sf::Color::White));
-        }
+//        if ((*iter)->hasEnemy())
+//        {
+//            gamelogic::cGameEntity *enemy = (*iter)->getEnemy();
+//            if (frametime - (*iter)->lastFireTime() < 0.1)
+//                window_->Draw(sf::Shape::Line((*iter)->getXPosition(), (*iter)->getYPosition(), enemy->getXPosition()+3, enemy->getYPosition()+3, 2, sf::Color::White));
+//        }
     }
 
     std::vector<gamelogic::cGameEntity*> enemyList = mapper_->getEnemyEntities();
@@ -176,6 +176,14 @@ void cRenderer::update(float frametime)
         else if ((*iter)->name() == "Fast_enemy")
             enemyShape_->SetColor(sf::Color::Red);
         window_->Draw(*enemyShape_);
+    }
+
+    std::vector<gamelogic::cGameEntity*> projectileList = mapper_->getProjectileEntities();
+    iter = projectileList.begin();
+    for (;iter < projectileList.end(); iter++)
+    {
+        projectile_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+        window_->Draw(*projectile_);
     }
 
     window_->Draw(*text_);

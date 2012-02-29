@@ -33,12 +33,16 @@ public:
     /// Returns vectors for enemies and towers.
     std::vector<cGameEntity*> getEnemyEntities();
     std::vector<cGameEntity*> getTowerEntities();
+    std::vector<cGameEntity*> getProjectileEntities();
 
     /// Update method. Calls update methods of all gameEntities.
     void update(float);
 
 public:
     // This public segment is for derived classes and other more private use.
+
+    /// Adds projectile entity to gamelogic
+    bool addProjectile(cGameEntity*, cGameEntity*);
 
     /// deletes instance of cGameEntity from vector
     void deleteEntity(cGameEntity*);
@@ -65,6 +69,7 @@ private:
     /// Vectors to store all entities in the map
     std::vector<cGameEntity*> enemyContainer_;
     std::vector<cGameEntity*> towerContainer_;
+    std::vector<cGameEntity*> projectileContainer_;
 
     /// Singleton instance created flag
     static bool instanceFlag_;

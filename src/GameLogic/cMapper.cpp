@@ -17,6 +17,7 @@
 #include "cTowerEntity.h"
 #include "cEnemyEntity.h"
 #include "entityEnums.h"
+#include "cProjectile.h"
 
 namespace gamelogic {
 
@@ -78,12 +79,32 @@ bool cMapper::addEnemy(enemyType type, int x_coord, int y_coord)
     }
 }
 
+bool cMapper::addProjectile(cGameEntity *owner, cGameEntity *target)
+{
+    cGameEntity *entity;
+    try
+    {
+        entity = dynamic_cast<cGameEntity*>(new cProjectile(owner,target));
+    }
+    catch (std::bad_alloc &e)
+    {
+        std::cout << "Unable to allocate new projectile: " << e.what() << "\n";
+        return false;
+    }
+    entity->initializeEntity();
+    projectileContainer_.push_back(entity);
+    return true;
+
+}
+
 void cMapper::update(float frametime) {
     std::vector<cGameEntity*>::iterator iter;
 
     for (iter = towerContainer_.begin();iter < towerContainer_.end();++iter)
         (*iter)->update(frametime);
     for (iter = enemyContainer_.begin();iter < enemyContainer_.end();++iter)
+        (*iter)->update(frametime);
+    for (iter = projectileContainer_.begin();iter < projectileContainer_.end();++iter)
         (*iter)->update(frametime);
 }
 
@@ -134,6 +155,13 @@ void cMapper::deleteEntity(cGameEntity *instance)
             delete (*iter);
             towerContainer_.erase(iter);
         }
+    iter = projectileContainer_.begin();
+    for (;iter < projectileContainer_.end();++iter)
+        if ((*iter) == instance)
+        {
+            delete (*iter);
+            projectileContainer_.erase(iter);
+        }
 }
 
 bool cMapper::entityExists(cGameEntity * ent)
@@ -166,6 +194,11 @@ std::vector<cGameEntity*> cMapper::getEnemyEntities()
 std::vector<cGameEntity*> cMapper::getTowerEntities()
 {
     return towerContainer_;
+}
+
+std::vector<cGameEntity*> cMapper::getProjectileEntities()
+{
+    return projectileContainer_;
 }
 
 int cMapper::getEnemyCount()

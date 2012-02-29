@@ -12,6 +12,7 @@
 #include "cTowerEntity.h"
 #include "cMapper.h"
 #include "entityEnums.h"
+#include "cProjectile.h"
 
 namespace gamelogic {
 
@@ -37,8 +38,8 @@ void cTowerEntity::initializeEntity()
     {
     case MORTAR_TOWER:
         damage_ = 20;
-        range_ = 120;
-        reloadTimeout_ = 2;
+        range_ = 420;
+        reloadTimeout_ = 1;
         entityName_ = "Mortar_tower";
         break;
     case ARROW_TOWER:
@@ -104,8 +105,9 @@ void cTowerEntity::update(float frametime) {
         getMapper()->deleteEntity(this);
 }
 void cTowerEntity::fire() {
-    enemy_->inflictDamage(damage_);
-    std::cout << this->name() <<  ": FIRE IN THE HOLE!\n";
+    getMapper()->addProjectile(this, enemy_);
+    //enemy_->inflictDamage(damage_);
+    std::cout << entityName_ <<  ": FIRE IN THE HOLE!\n";
 }
 
 void cTowerEntity::setDamage(const unsigned int damage) {
