@@ -1,9 +1,10 @@
-/*
- * File:   cTowerEntity.h
- * Author: Jukka Vatjus-Anttila
+/* Tower-Defence
  *
- * Created on January 23, 2012, 8:51 PM
+ * Author: Jukka Vatjus-Anttila <jukka.vatjusanttila@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE.txt
  */
+
 #ifndef TOWERENTITY_H
 #define	TOWERENTITY_H
 

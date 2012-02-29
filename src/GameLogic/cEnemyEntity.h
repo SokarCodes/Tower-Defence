@@ -1,8 +1,8 @@
-/*
- * File:   cEnemyEntity.h
- * Author: Jukka Vatjus-Anttila
+/* Tower-Defence
  *
- * Created on January 23, 2012, 9:37 PM
+ * Author: Jukka Vatjus-Anttila <jukka.vatjusanttila@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE.txt
  */
 
 #ifndef ENEMYENTITY_H
