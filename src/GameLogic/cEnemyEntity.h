@@ -8,6 +8,7 @@
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
 #include <string>
+#include <SFML/System/Vector2.hpp>
 #include "entityEnums.h"
 namespace gamelogic {
 class cGameEntity;
@@ -15,7 +16,7 @@ class cGameEntity;
 class cEnemyEntity : public cGameEntity {
 public:
     /// Constructor
-    cEnemyEntity(enemyType, int, int);
+    cEnemyEntity(enemyType type, sf::Vector2f position);
 
     /// Destructor
     ~cEnemyEntity();

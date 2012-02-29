@@ -39,6 +39,8 @@ cEventHandler::cEventHandler() :
 void cEventHandler::update()
 {
 
+    sf::Vector2f inputCoord;
+
     // Event loop checker
     while (render_->getRenderwindow()->GetEvent(event_))
     {
@@ -52,6 +54,8 @@ void cEventHandler::update()
             break;
             // Keyboard key pressed
         case sf::Event::KeyPressed:
+            inputCoord.x = input_.GetMouseX();
+            inputCoord.y = input_.GetMouseY();
             switch (event_.Key.Code)
             {
             case sf::Key::Escape:
@@ -60,28 +64,28 @@ void cEventHandler::update()
                 render_->getRenderwindow()->Close();
                 break;
             case sf::Key::Z:
-                mapper_->addEnemy(gamelogic::WALKING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::WALKING_ENEMY, inputCoord);
                 break;
             case sf::Key::X:
-                mapper_->addEnemy(gamelogic::FLYING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::FLYING_ENEMY, inputCoord);
                 break;
             case sf::Key::C:
-                mapper_->addEnemy(gamelogic::INVISIBLE_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::INVISIBLE_ENEMY, inputCoord);
                 break;
             case sf::Key::V:
-                mapper_->addEnemy(gamelogic::FAST_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::FAST_ENEMY, inputCoord);
                 break;
             case sf::Key::A:
-                mapper_->addTower(gamelogic::MORTAR_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::MORTAR_TOWER, inputCoord);
                 break;
             case sf::Key::S:
-                mapper_->addTower(gamelogic::ARROW_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::ARROW_TOWER, inputCoord);
                 break;
             case sf::Key::D:
-                mapper_->addTower(gamelogic::ICE_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::ICE_TOWER, inputCoord);
                 break;
             case sf::Key::F:
-                mapper_->addTower(gamelogic::SPECIAL_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::SPECIAL_TOWER, inputCoord);
                 break;
             default:
                 std::cout << "No action for key.\n";

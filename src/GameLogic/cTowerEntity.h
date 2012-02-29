@@ -18,7 +18,7 @@ class cTowerEntity : public cGameEntity
 {
 public:
     /// Constructor
-    cTowerEntity(towerType, int, int);
+    cTowerEntity(towerType type, sf::Vector2f position);
 
     /// Destructor
     ~cTowerEntity();

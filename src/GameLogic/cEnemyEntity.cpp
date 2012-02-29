@@ -15,16 +15,15 @@
 
 namespace gamelogic {
 
-cEnemyEntity::cEnemyEntity(enemyType type, int x_coord, int y_coord) :
+cEnemyEntity::cEnemyEntity(enemyType type, sf::Vector2f position) :
     entityName_(""),
     movespeed_(0),
     type_(type),
     state_(ALIVE)
 {
     hitpoints_ = 100;
-    x_coord_ = x_coord;
-    y_coord_ = y_coord;
-    std::cout << this->name() << ": Entity constructor!" << " --> ";
+    position_ = position;
+    std::cout << entityName_ << ": Entity constructor!" << " --> ";
 }    
 
 void cEnemyEntity::initializeEntity()
@@ -80,20 +79,20 @@ void cEnemyEntity::update(float frametime)
         switch(random)
         {
         case 0:
-            if(x_coord_ > movespeed_)
-                x_coord_ -= movespeed_;
+            if(position_.x > movespeed_)
+                position_.x -= movespeed_;
             break;
         case 1:
-            if(x_coord_ < 779)
-                x_coord_ += movespeed_;
+            if(position_.x < 779)
+                position_.x += movespeed_;
             break;
         case 2:
-            if (y_coord_ > movespeed_)
-                y_coord_ -= movespeed_;
+            if (position_.y > movespeed_)
+                position_.y -= movespeed_;
             break;
         case 3:
-            if (y_coord_ < 579)
-                y_coord_ += movespeed_;
+            if (position_.y < 579)
+                position_.y += movespeed_;
             break;
         }
 

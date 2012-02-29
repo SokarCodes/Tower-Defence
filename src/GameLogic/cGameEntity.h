@@ -9,20 +9,18 @@
 #define	GAMEENTITY_H
 
 #include <iostream>
+#include <SFML/System/Vector2.hpp>
 #include "cMapper.h"
+
 namespace gamelogic {
 
 class cGameEntity {
 public:
     void inflictDamage(int);
     /// Set derived class entity position in 2D space
-    void setPosition(int x, int y) { x_coord_ = x; y_coord_ = y; }
+    void setPosition(sf::Vector2f pos) { position_ = pos; }
 
-    /// Get derived class entity position in 2D space
-    int getXPosition() { return x_coord_; }
-
-    /// Get derived class entity position in 2D space
-    int getYPosition() { return y_coord_; }
+    sf::Vector2f& getPosition() { return position_; }
 
     /// Get maximum fire range for tower
     virtual int getRange() { return 0; }
@@ -61,11 +59,8 @@ protected:
     /// Return cMapper pointer to derived class.
     cMapper* getMapper() { return mapper_; }
 
-    /// Entity X-coord in 2D space.
-    int x_coord_;
-
-    /// Entity Y-coord in 2D space.
-    int y_coord_;
+    /// Position
+    sf::Vector2f position_;
 
     /// Entity hitpoints. Entity removal when hitpoints <= 0
     int hitpoints_;

@@ -10,6 +10,8 @@
 
 #include <vector>
 #include "entityEnums.h"
+#include <SFML/System/Vector2.hpp>
+
 namespace gamelogic {
 
 class cGameEntity;
@@ -25,10 +27,10 @@ public:
     static cMapper* getInstance();
 
     /// Adds new cTowerEntity to vector as cGameEntity
-    bool addTower(towerType, int, int);
+    bool addTower(towerType, sf::Vector2f position);
 
     /// Creates new enemy
-    bool addEnemy(enemyType, int, int);
+    bool addEnemy(enemyType, sf::Vector2f position);
 
     /// Returns vectors for enemies and towers.
     std::vector<cGameEntity*> getEnemyEntities();
@@ -54,7 +56,7 @@ public:
     bool isInRange(cGameEntity*, cGameEntity*);
 
     /// Returns closest possible target for querying entity.
-    cGameEntity* getTarget(int, int, int);
+    cGameEntity* getTarget(sf::Vector2f, int);
 
     /// Returns number of towers on map
     int getTowerCount();

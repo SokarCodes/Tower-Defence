@@ -142,7 +142,8 @@ void cRenderer::update(float frametime)
     text_->SetText(buffer);
     for (;iter < towerList.end(); iter++)
     {
-        towerShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+        sf::Vector2f position = (*iter)->getPosition();
+        towerShape_->SetPosition(position.x, position.y);
         if ((*iter)->name() == "Mortar_tower")
             towerShape_->SetColor(sf::Color::Cyan);
         else if ((*iter)->name() == "Arrow_tower")
@@ -166,7 +167,8 @@ void cRenderer::update(float frametime)
     iter = enemyList.begin();
     for (;iter < enemyList.end(); iter++)
     {
-        enemyShape_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+        sf::Vector2f position = (*iter)->getPosition();
+        enemyShape_->SetPosition(position.x, position.y);
         if ((*iter)->name() == "Walking_enemy")
             enemyShape_->SetColor(sf::Color::Magenta);
         else if ((*iter)->name() == "Flying_enemy")
@@ -182,7 +184,8 @@ void cRenderer::update(float frametime)
     iter = projectileList.begin();
     for (;iter < projectileList.end(); iter++)
     {
-        projectile_->SetPosition((*iter)->getXPosition(), (*iter)->getYPosition());
+        sf::Vector2f position = (*iter)->getPosition();
+        projectile_->SetPosition(position.x, position.y);
         window_->Draw(*projectile_);
     }
 

@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <SFML/System/Vector2.hpp>
 
 #include "cGameEntity.h"
 #include "cEnemyEntity.h"
@@ -16,7 +17,7 @@
 
 namespace gamelogic {
 
-cTowerEntity::cTowerEntity(towerType type, int x_coord, int y_coord) :
+cTowerEntity::cTowerEntity(towerType type, sf::Vector2f position) :
     enemy_(0),
     damage_(0),
     range_(0),
@@ -27,8 +28,7 @@ cTowerEntity::cTowerEntity(towerType type, int x_coord, int y_coord) :
     lifetime_(15)
 {
     hitpoints_ = 100;
-    x_coord_ = x_coord;
-    y_coord_ = y_coord;
+    position_ = position;
     std::cout << this->name() << ": Entity constructor!" << " --> ";
 }
 
@@ -119,7 +119,7 @@ void cTowerEntity::setRange(const unsigned int range) {
 }
 
 void cTowerEntity::acquireTarget() {
-    enemy_ = getMapper()->getTarget(x_coord_, y_coord_, range_);
+    enemy_ = getMapper()->getTarget(position_, range_);
 }
 
 std::string cTowerEntity::name() {

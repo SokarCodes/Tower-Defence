@@ -37,7 +37,7 @@ cMapper* cMapper::getInstance() {
     }
 }
 
-bool cMapper::addTower(towerType type, int x_coord, int y_coord)
+bool cMapper::addTower(towerType type, sf::Vector2f position)
 {
     cGameEntity *entity;
 
@@ -47,10 +47,10 @@ bool cMapper::addTower(towerType type, int x_coord, int y_coord)
     case ARROW_TOWER:
     case ICE_TOWER:
     case SPECIAL_TOWER:
-        entity = dynamic_cast<cGameEntity*>(new cTowerEntity(type, x_coord, y_coord));
+        entity = dynamic_cast<cGameEntity*>(new cTowerEntity(type, position));
         entity->initializeEntity();
         towerContainer_.push_back(entity);
-        std::cout << "Added cGameEntity: " << entity->name() << " to container! Position(" << entity->getXPosition() << "," << entity->getYPosition() << ").\n";
+        std::cout << "Added cGameEntity: " << entity->name() << " to container! Position(" << entity->getPosition().x << "," << entity->getPosition().y << ").\n";
         return true;
     default:
         std::cout << "No valid tower type given!\n";
@@ -58,7 +58,7 @@ bool cMapper::addTower(towerType type, int x_coord, int y_coord)
     }
 }
 
-bool cMapper::addEnemy(enemyType type, int x_coord, int y_coord)
+bool cMapper::addEnemy(enemyType type, sf::Vector2f position)
 {
     cGameEntity *enemy;
 
@@ -68,10 +68,10 @@ bool cMapper::addEnemy(enemyType type, int x_coord, int y_coord)
     case WALKING_ENEMY:
     case INVISIBLE_ENEMY:
     case FAST_ENEMY:
-        enemy = dynamic_cast<cGameEntity*>(new cEnemyEntity(type, x_coord, y_coord));
+        enemy = dynamic_cast<cGameEntity*>(new cEnemyEntity(type, position));
         enemy->initializeEntity();
         enemyContainer_.push_back(enemy);
-        std::cout << "Added cGameEntity: " << enemy->name() << " to container! Position(" << enemy->getXPosition() << "," << enemy->getYPosition() << ").\n";
+        std::cout << "Added cGameEntity: " << enemy->name() << " to container! Position(" << enemy->getPosition().x << "," << enemy->getPosition().y << ").\n";
         return true;
     default:
         std::cout << "No valit enemy type given!\n";
@@ -108,18 +108,20 @@ void cMapper::update(float frametime) {
         (*iter)->update(frametime);
 }
 
-cGameEntity* cMapper::getTarget(int x, int y, int range)
+cGameEntity* cMapper::getTarget(sf::Vector2f position, int range)
 {
     cGameEntity *closestEntity = NULL;
+    // Bitwise shift left so we dont have to do sqrt on distance calc.
+    range = range << 1;
     float closestRange = 999999;
 
     std::vector<cGameEntity*>::iterator iter;
 
     for (iter = enemyContainer_.begin();iter < enemyContainer_.end();++iter)
     {
-        double diffX = x - (*iter)->getXPosition();
-        double diffY = y - (*iter)->getYPosition();
-        double range = sqrt(pow(diffX,2) + pow(diffY,2));
+        sf::Vector2f enemyPos = (*iter)->getPosition();
+        sf::Vector2f diff = position - enemyPos;
+        double range = pow(diff.x,2) + pow(diff.y,2);
         if (range < closestRange)
         {
             closestRange = range;
@@ -128,7 +130,7 @@ cGameEntity* cMapper::getTarget(int x, int y, int range)
     }
     if (closestRange <= range)
     {
-        std::cout << "Closest enemy was " << closestRange << " distance away.\n";
+        std::cout << "Closest enemy was " << sqrt(closestRange) << " distance away.\n";
         return closestEntity;
     }
     else
@@ -154,6 +156,7 @@ void cMapper::deleteEntity(cGameEntity *instance)
         {
             delete (*iter);
             towerContainer_.erase(iter);
+            return;
         }
     iter = projectileContainer_.begin();
     for (;iter < projectileContainer_.end();++iter)
@@ -161,6 +164,7 @@ void cMapper::deleteEntity(cGameEntity *instance)
         {
             delete (*iter);
             projectileContainer_.erase(iter);
+            return;
         }
 }
 
@@ -177,10 +181,9 @@ bool cMapper::entityExists(cGameEntity * ent)
 
 bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower)
 {
-    double diffX = tower->getXPosition() - enemy->getXPosition();
-    double diffY = tower->getYPosition() - enemy->getYPosition();
-    double range = sqrt(pow(diffX,2) + pow(diffY,2));
-    if (range <= tower->getRange())
+    sf::Vector2f diff = tower->getPosition() - enemy->getPosition();
+    double range = pow(diff.x,2) + pow(diff.y,2);
+    if (range <= (tower->getRange() << 1))
         return true;
     else
         return false;
