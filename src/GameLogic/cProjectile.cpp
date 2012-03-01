@@ -12,7 +12,7 @@
 namespace gamelogic {
 
 cProjectile::cProjectile(cGameEntity *owner, cGameEntity *target) :
-    entityName_(""),
+    entityName_("Projectile"),
     movespeed_(0),
     lastMoveTime_(0),
     owner_(owner),
@@ -26,13 +26,13 @@ cProjectile::cProjectile(cGameEntity *owner, cGameEntity *target) :
 
 cProjectile::~cProjectile()
 {
-
+    std::cout << this->name() << ": Entity destruction!" << " --> ";
 }
 
 void cProjectile::initializeEntity()
 {
     entityName_ = "Projectile";
-    movespeed_ = 50;
+    movespeed_ = 350;
     std::cout << "Projectile direction vector: " << direction_.x << "i " << direction_.y << "j with movespeed: " << movespeed_ << ".\n";
 }
 
@@ -41,7 +41,11 @@ void cProjectile::update(float frametime)
     if (!lastMoveTime_)
         lastMoveTime_ = frametime;
 
-    if (frametime - lastMoveTime_ > 1)
+    position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+    lastMoveTime_ = frametime;
+    if (position_.x < 0 || position_.y < 0)
+        getMapper()->deleteEntity(this);
+    else if (position_.x > 800 || position_.y > 600)
         getMapper()->deleteEntity(this);
 }
 
