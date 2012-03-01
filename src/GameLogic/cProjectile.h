@@ -23,6 +23,7 @@ public:
     std::string name();
     void initializeEntity();
     void normalize(sf::Vector2f);
+    double distance(sf::Vector2f, sf::Vector2f);
 private:
     // Name for this entity. Possibly obsolete.
     std::string entityName_;

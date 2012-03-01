@@ -105,7 +105,7 @@ void cTowerEntity::update(float frametime) {
 }
 void cTowerEntity::fire() {
     getMapper()->addProjectile(this, enemy_);
-    enemy_->inflictDamage(damage_);
+    //enemy_->inflictDamage(damage_);
     std::cout << entityName_ <<  ": FIRE IN THE HOLE";
 }
 
