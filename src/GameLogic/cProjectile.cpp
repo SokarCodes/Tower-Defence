@@ -41,7 +41,15 @@ void cProjectile::update(float frametime)
     if (!lastMoveTime_)
         lastMoveTime_ = frametime;
     if (!getMapper()->entityExists(target_))
-        getMapper()->deleteEntity(this);
+    {
+        position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+        lastMoveTime_ = frametime;
+        if (position_.x < 0 || position_.y < 0)
+            getMapper()->deleteEntity(this);
+        else if (position_.x > 800 || position_.y > 600)
+            getMapper()->deleteEntity(this);
+        return;
+    }
 
     direction_ = target_->getPosition() - position_;
     normalize(direction_);
@@ -56,8 +64,6 @@ void cProjectile::update(float frametime)
         target_->inflictDamage(10);
         getMapper()->deleteEntity(this);
     }
-    //else if (position_.x > 800 || position_.y > 600)
-    //    getMapper()->deleteEntity(this);
 }
 
 std::string cProjectile::name()
