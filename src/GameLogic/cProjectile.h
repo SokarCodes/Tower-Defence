@@ -22,6 +22,7 @@ public:
     void update(float frametime);
     std::string name();
     void initializeEntity();
+    void normalize(sf::Vector2f);
 private:
     // Name for this entity. Possibly obsolete.
     std::string entityName_;
@@ -37,9 +38,6 @@ private:
 
     // Target entity. No actual use cases yet.
     cGameEntity *target_;
-
-    // Position
-    sf::Vector2f position_;
 
     // Direction vector
     sf::Vector2f direction_;

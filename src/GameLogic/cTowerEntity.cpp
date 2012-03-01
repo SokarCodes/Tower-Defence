@@ -104,7 +104,7 @@ void cTowerEntity::update(float frametime) {
         getMapper()->deleteEntity(this);
 }
 void cTowerEntity::fire() {
-    //getMapper()->addProjectile(this, enemy_);
+    getMapper()->addProjectile(this, enemy_);
     enemy_->inflictDamage(damage_);
     std::cout << entityName_ <<  ": FIRE IN THE HOLE!\n";
 }
@@ -118,7 +118,6 @@ void cTowerEntity::setRange(const unsigned int range) {
 }
 
 void cTowerEntity::acquireTarget() {
-    std::cout << "Getting enemy.\n";
     enemy_ = getMapper()->getTarget(position_, range_);
 }
 
