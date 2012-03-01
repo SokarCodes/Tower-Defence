@@ -98,15 +98,14 @@ void cTowerEntity::update(float frametime) {
     }
     else
     {
-        enemy_ = 0;
         acquireTarget();
     }
     if ((frametime - lastShotTime_) > lifetime_ && lastShotTime_ != 0)
         getMapper()->deleteEntity(this);
 }
 void cTowerEntity::fire() {
-    getMapper()->addProjectile(this, enemy_);
-    //enemy_->inflictDamage(damage_);
+    //getMapper()->addProjectile(this, enemy_);
+    enemy_->inflictDamage(damage_);
     std::cout << entityName_ <<  ": FIRE IN THE HOLE!\n";
 }
 
@@ -119,6 +118,7 @@ void cTowerEntity::setRange(const unsigned int range) {
 }
 
 void cTowerEntity::acquireTarget() {
+    std::cout << "Getting enemy.\n";
     enemy_ = getMapper()->getTarget(position_, range_);
 }
 

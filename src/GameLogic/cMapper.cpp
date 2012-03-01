@@ -111,8 +111,6 @@ void cMapper::update(float frametime) {
 cGameEntity* cMapper::getTarget(sf::Vector2f position, int range)
 {
     cGameEntity *closestEntity = NULL;
-    // Bitwise shift left so we dont have to do sqrt on distance calc.
-    range = range << 1;
     float closestRange = 999999;
 
     std::vector<cGameEntity*>::iterator iter;
@@ -121,7 +119,7 @@ cGameEntity* cMapper::getTarget(sf::Vector2f position, int range)
     {
         sf::Vector2f enemyPos = (*iter)->getPosition();
         sf::Vector2f diff = position - enemyPos;
-        double range = pow(diff.x,2) + pow(diff.y,2);
+        double range = sqrt(pow(diff.x,2) + pow(diff.y,2));
         if (range < closestRange)
         {
             closestRange = range;
@@ -130,7 +128,7 @@ cGameEntity* cMapper::getTarget(sf::Vector2f position, int range)
     }
     if (closestRange <= range)
     {
-        std::cout << "Closest enemy was " << sqrt(closestRange) << " distance away.\n";
+        std::cout << "Closest enemy was " << closestRange << " distance away.\n";
         return closestEntity;
     }
     else
@@ -182,8 +180,8 @@ bool cMapper::entityExists(cGameEntity * ent)
 bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower)
 {
     sf::Vector2f diff = tower->getPosition() - enemy->getPosition();
-    double range = pow(diff.x,2) + pow(diff.y,2);
-    if (range <= (tower->getRange() << 1))
+    double range = sqrt(pow(diff.x,2) + pow(diff.y,2));
+    if (range <= tower->getRange())
         return true;
     else
         return false;
