@@ -32,6 +32,9 @@ public:
     /// getRange
     int getRange();
 
+    /// Get tower type
+    towerType getType();
+
     /// Update method for cTowerEntity
     void update(float);
 

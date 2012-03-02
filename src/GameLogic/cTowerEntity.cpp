@@ -39,7 +39,7 @@ void cTowerEntity::initializeEntity()
     case MORTAR_TOWER:
         damage_ = 20;
         range_ = 400;
-        reloadTimeout_ = 0.2;
+        reloadTimeout_ = 1;
         entityName_ = "Mortar_tower";
         break;
     case ARROW_TOWER:
@@ -128,6 +128,11 @@ std::string cTowerEntity::name() {
 int cTowerEntity::getRange()
 {
     return range_;
+}
+
+towerType cTowerEntity::getType()
+{
+    return type_;
 }
 
 bool cTowerEntity::hasEnemy()

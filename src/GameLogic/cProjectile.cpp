@@ -16,7 +16,8 @@ cProjectile::cProjectile(cGameEntity *owner, cGameEntity *target) :
     movespeed_(0),
     lastMoveTime_(0),
     owner_(owner),
-    target_(target)
+    target_(target),
+    targetLocation_(0,0)
 {
 }
 
@@ -27,6 +28,31 @@ cProjectile::~cProjectile()
 
 void cProjectile::initializeEntity()
 {
+    switch (owner_->getType())
+    {
+    case MORTAR_TOWER:
+        type_ = INDIRECT;
+        movespeed_ = 300;
+        targetLocation_ = target_->getPosition();
+        break;
+    case ARROW_TOWER:
+        type_ = HOMING;
+        movespeed_ = 450;
+        break;
+    case ICE_TOWER:
+        type_ = HOMING;
+        movespeed_ = 450;
+        break;
+    case SPECIAL_TOWER:
+        type_ = INSTANT;
+        movespeed_ = 9999;
+        break;
+    default:
+        type_ = INDIRECT;
+        movespeed_ = 300;
+        std::cout << "No valid type given. Using INDIRECT projectile type.\n";
+    }
+
     // Set some obsolete name for this entity.
     entityName_ = "Projectile";
 
@@ -37,39 +63,72 @@ void cProjectile::initializeEntity()
     direction_ = target_->getPosition() - position_;
 
     // Normalize direction to unit vector.
-        normalize(direction_);
+    normalize(direction_);
 
     entityName_ = "Projectile";
-    movespeed_ = 450;
+
 }
 
 void cProjectile::update(float frametime)
 {
     if (!lastMoveTime_)
         lastMoveTime_ = frametime;
-    if (!getMapper()->entityExists(target_))
+
+    switch (type_)
     {
-        position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+    case HOMING:
+        if (!getMapper()->entityExists(target_))
+        {
+            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+            lastMoveTime_ = frametime;
+
+            // Projectile out of screen.
+            if (position_.x < 0 || position_.y < 0)
+                getMapper()->deleteEntity(this);
+            else if (position_.x > 800 || position_.y > 600)
+                getMapper()->deleteEntity(this);
+
+            return;
+        }
+
+        direction_ = target_->getPosition() - position_;
+        normalize(direction_);
+
+        if (distance(position_, target_->getPosition()) < ((float)movespeed_ * (frametime - lastMoveTime_)))
+            position_ = target_->getPosition();
+        else
+            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
         lastMoveTime_ = frametime;
-        if (position_.x < 0 || position_.y < 0)
+        if (std::abs(position_.x - target_->getPosition().x) < 5 && std::abs(position_.y - target_->getPosition().y) < 5)
+        {
+            target_->inflictDamage(10);
             getMapper()->deleteEntity(this);
-        else if (position_.x > 800 || position_.y > 600)
+        }
+        break;
+    case INSTANT:
+        if (distance(position_, target_->getPosition()) < ((float)movespeed_ * (frametime - lastMoveTime_)))
+            position_ = target_->getPosition();
+        else
+            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+        lastMoveTime_ = frametime;
+        if (std::abs(position_.x - target_->getPosition().x) < 5 && std::abs(position_.y - target_->getPosition().y) < 5)
+        {
+            target_->inflictDamage(10);
             getMapper()->deleteEntity(this);
-        return;
-    }
-
-//    direction_ = target_->getPosition() - position_;
-//    normalize(direction_);
-
-    if (distance(position_, target_->getPosition()) < ((float)movespeed_ * (frametime - lastMoveTime_)))
-        position_ = target_->getPosition();
-    else
-        position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
-    lastMoveTime_ = frametime;
-    if (std::abs(position_.x - target_->getPosition().x) < 5 && std::abs(position_.y - target_->getPosition().y) < 5)
-    {
-        target_->inflictDamage(10);
-        getMapper()->deleteEntity(this);
+        }
+        break;
+    case INDIRECT:
+        if (distance(position_, targetLocation_) < ((float)movespeed_ * (frametime - lastMoveTime_)))
+            position_ = targetLocation_;
+        else
+            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+        lastMoveTime_ = frametime;
+        if (std::abs(position_.x - targetLocation_.x) < 3 && std::abs(position_.y - targetLocation_.y) < 3)
+        {
+            //target_->inflictDamage(10);
+            getMapper()->deleteEntity(this);
+        }
+        break;
     }
 }
 

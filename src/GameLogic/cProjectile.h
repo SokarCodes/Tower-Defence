@@ -53,8 +53,14 @@ private:
     /// Target entity. To get direction vector.
     cGameEntity *target_;
 
+    /// Target location. For indirect fire.
+    sf::Vector2f targetLocation_;
+
     /// Direction vector.
     sf::Vector2f direction_;
+
+    /// Projectile type
+    projectileType type_;
 
 };
 } // gamelogic

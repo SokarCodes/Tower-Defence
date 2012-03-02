@@ -55,6 +55,9 @@ public:
     /// Virtual destructor for proper derived/base chain dismantling.
     virtual ~cGameEntity() { std::cout << "cGameEntity destruction!" << "\n"; }
 
+    /// Virtual method, tower type getter.
+    virtual towerType getType() {}
+
 protected:
     /// Return cMapper pointer to derived class.
     cMapper* getMapper() { return mapper_; }

@@ -33,9 +33,14 @@ enum towerEffect { NO_EFFECT,
                    BURN_EFFECT };
 }
 
+// Enum for enemy current state.
 enum enemyState { ALIVE,
                   DECAYING,
                   DEAD };
+
+enum projectileType { HOMING,
+                      INDIRECT,
+                      INSTANT };
 
 #endif	/* TOWERENUMS_H */
 
