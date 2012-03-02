@@ -17,30 +17,43 @@ namespace gamelogic {
 class cProjectile : public cGameEntity
 {
 public:
+    /// Projectile constructor.
     cProjectile(cGameEntity *owner, cGameEntity *target);
+
+    /// Destructor
     ~cProjectile();
+
+    /// Update method
     void update(float frametime);
+
+    /// Return this projectile name. Possibly obsolete.
     std::string name();
+
+    /// Initializes entity parameters.
     void initializeEntity();
+
+    /// This is used to get unit vector from direction vector between projectile-target.
     void normalize(sf::Vector2f);
+
+    /// Calculates distance between two vectors.
     double distance(sf::Vector2f, sf::Vector2f);
 private:
-    // Name for this entity. Possibly obsolete.
+    /// Name for this entity. Possibly obsolete.
     std::string entityName_;
 
-    // Entity movespeed on map.
+    /// Entity movespeed on map. pix/s
     int movespeed_;
 
-    // Last move time for movement interpolation.
+    /// Last move time for movement interpolation.
     float lastMoveTime_;
 
-    // Owner entity. No use cases yet.
+    /// Owner entity. Means tower basicly.
     cGameEntity *owner_;
 
-    // Target entity. No actual use cases yet.
+    /// Target entity. To get direction vector.
     cGameEntity *target_;
 
-    // Direction vector
+    /// Direction vector.
     sf::Vector2f direction_;
 
 };

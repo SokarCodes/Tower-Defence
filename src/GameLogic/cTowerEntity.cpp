@@ -38,25 +38,25 @@ void cTowerEntity::initializeEntity()
     {
     case MORTAR_TOWER:
         damage_ = 20;
-        range_ = 420;
+        range_ = 400;
         reloadTimeout_ = 1;
         entityName_ = "Mortar_tower";
         break;
     case ARROW_TOWER:
         damage_ = 10;
-        range_ = 170;
+        range_ = 300;
         reloadTimeout_ = 1;
         entityName_ = "Arrow_tower";
         break;
     case ICE_TOWER:
         damage_ = 70;
-        range_ = 200;
+        range_ = 350;
         reloadTimeout_ = 1;
         entityName_ = "Ice_tower";
         break;
     case SPECIAL_TOWER:
         damage_ = 30;
-        range_ = 250;
+        range_ = 500;
         reloadTimeout_ = 3;
         entityName_ = "Special_tower";
         break;
@@ -104,9 +104,9 @@ void cTowerEntity::update(float frametime) {
         getMapper()->deleteEntity(this);
 }
 void cTowerEntity::fire() {
+    // Tower generates new projectile which does the damage if hit.
+    // Tower does not care about anything else but targeting and launching projectile.
     getMapper()->addProjectile(this, enemy_);
-    //enemy_->inflictDamage(damage_);
-    std::cout << entityName_ <<  ": FIRE IN THE HOLE";
 }
 
 void cTowerEntity::setDamage(const unsigned int damage) {

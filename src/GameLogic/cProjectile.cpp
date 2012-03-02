@@ -12,28 +12,35 @@
 namespace gamelogic {
 
 cProjectile::cProjectile(cGameEntity *owner, cGameEntity *target) :
-    entityName_("Projectile"),
+    entityName_(""),
     movespeed_(0),
     lastMoveTime_(0),
     owner_(owner),
     target_(target)
-
 {
-    position_ = owner_->getPosition();
-    direction_ = target_->getPosition() - position_;
-    normalize(direction_);
 }
 
 cProjectile::~cProjectile()
 {
-    std::cout << this->name() << ": Entity destruction!" << " --> ";
+    std::cout << entityName_ << ": Entity destruction!" << " --> ";
 }
 
 void cProjectile::initializeEntity()
 {
+    // Set some obsolete name for this entity.
+    entityName_ = "Projectile";
+
+    // Get position from tower launching this projectile.
+    position_ = owner_->getPosition();
+
+    // Get direction vector between target and position.
+    direction_ = target_->getPosition() - position_;
+
+    // Normalize direction to unit vector.
+        normalize(direction_);
+
     entityName_ = "Projectile";
     movespeed_ = 450;
-    std::cout << "Projectile direction vector: " << direction_.x << "i " << direction_.y << "j with movespeed: " << movespeed_ << ".\n";
 }
 
 void cProjectile::update(float frametime)
@@ -51,8 +58,8 @@ void cProjectile::update(float frametime)
         return;
     }
 
-    direction_ = target_->getPosition() - position_;
-    normalize(direction_);
+//    direction_ = target_->getPosition() - position_;
+//    normalize(direction_);
 
     if (distance(position_, target_->getPosition()) < ((float)movespeed_ * (frametime - lastMoveTime_)))
         position_ = target_->getPosition();
