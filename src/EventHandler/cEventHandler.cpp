@@ -8,6 +8,8 @@
 #include <iostream>
 #include "cEventHandler.h"
 #include "../Renderer/cRenderer.h"
+#include "../GameLogic/cMapper.h"
+#include "../GameLogic/cGameEntity.h"
 
 namespace IOHandling {
 
@@ -31,14 +33,15 @@ cEventHandler* cEventHandler::getInstance()
 cEventHandler::cEventHandler() :
     render_(renderer::cRenderer::getInstance()),
     mapper_(gamelogic::cMapper::getInstance()),
-    input_(render_->getRenderwindow()->GetInput())
+    input_(render_->getRenderwindow()->GetInput()),
+    mouseleftDown_(false),
+    entity_(0)
 {
 
 }
 
 void cEventHandler::update()
 {
-
     sf::Vector2f inputCoord;
 
     // Event loop checker
@@ -93,9 +96,13 @@ void cEventHandler::update()
             break;
             // Mouse button pressed
         case sf::Event::MouseButtonPressed:
+            inputCoord.x = input_.GetMouseX();
+            inputCoord.y = input_.GetMouseY();
             switch (event_.MouseButton.Button)
             {
             case sf::Mouse::Left:
+                mouseleftDown_ = true;
+                mapper_->addEnemy(gamelogic::WALKING_ENEMY, inputCoord);
                 std::cout << "Mouse left!\n";
                 break;
             case sf::Mouse::Right:
@@ -130,8 +137,25 @@ void cEventHandler::update()
             }
             break;
         case sf::Event::MouseButtonReleased:
+            mouseleftDown_ = false;
             break;
         case sf::Event::MouseMoved:
+            inputCoord.x = input_.GetMouseX();
+            inputCoord.y = input_.GetMouseY();
+            if (mouseleftDown_)
+            {
+                entity_ = gamelogic::cMapper::getInstance()->getTarget(inputCoord, 50);
+                if (entity_)
+                {
+                    std::cout << "Setting entity position: " << inputCoord.x << "," << inputCoord.y << ".\n";
+                    entity_->setPosition(inputCoord);
+                }
+            }
+            else
+            {
+               gamelogic::cMapper::getInstance()->deleteEntity(entity_);
+               entity_ = 0;
+            }
             break;
         case sf::Event::MouseEntered:
             break;

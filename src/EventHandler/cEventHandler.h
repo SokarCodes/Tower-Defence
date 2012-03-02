@@ -19,6 +19,7 @@ class cRenderer;
 
 namespace gamelogic {
 class cMapper;
+class cGameEntity;
 }
 
 namespace IOHandling {
@@ -56,6 +57,11 @@ private:
 
     /// SFML input instance
     const sf::Input& input_;
+
+    bool mouseleftDown_;
+
+    gamelogic::cGameEntity *entity_;
+
 
 
 };

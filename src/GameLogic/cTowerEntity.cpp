@@ -39,7 +39,7 @@ void cTowerEntity::initializeEntity()
     case MORTAR_TOWER:
         damage_ = 20;
         range_ = 400;
-        reloadTimeout_ = 1;
+        reloadTimeout_ = 0.2;
         entityName_ = "Mortar_tower";
         break;
     case ARROW_TOWER:

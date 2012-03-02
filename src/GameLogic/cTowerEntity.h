@@ -67,7 +67,7 @@ private:
     unsigned int range_;
 
     /// Reload timeout
-    int reloadTimeout_;
+    float reloadTimeout_;
 
     /// Last shot timestamp
     float lastShotTime_;
