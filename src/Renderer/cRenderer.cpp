@@ -54,7 +54,7 @@ cRenderer::cRenderer()
         towerShape_ = new sf::Shape(sf::Shape::Circle(0.f, 0.f, 5.f, sf::Color::White));
         enemyShape_ = new sf::Shape(sf::Shape::Rectangle(0.f, 0.f, 10.f, 10.f, sf::Color(255,255,200,200)));
         //projectile_ = new sf::Shape(sf::Shape::Line(0,0,0,0,2,sf::Color::White));
-        projectile_ = new sf::Shape(sf::Shape::Rectangle(0.f, 0.f, 3.f, 3.f, sf::Color::Green));
+        projectile_ = new sf::Shape(sf::Shape::Rectangle(0.f, 0.f, 4.f, 4.f, sf::Color::Green));
         text_ = new sf::String("Temporary text here.\n");
     }
     catch (std::bad_alloc&)
@@ -130,16 +130,16 @@ void cRenderer::update(float frametime)
 
     std::ostringstream frametimer;
     frametimer << std::fixed << std::setprecision(1);
-    std::ostringstream towers, enemies;
+    std::ostringstream towers, enemies, projectiles;
     frametimer << frametime;
     std::string buffer;
     buffer.append("Frametime: ").append(frametimer.str());
 
     std::vector<gamelogic::cGameEntity*> towerList = mapper_->getTowerEntities();
     towers << towerList.size();
-    buffer.append(", Towers: ").append(towers.str());
+    buffer.append("\nTowers: ").append(towers.str());
     std::vector<gamelogic::cGameEntity*>::iterator iter = towerList.begin();
-    text_->SetText(buffer);
+
     for (;iter < towerList.end(); iter++)
     {
         sf::Vector2f position = (*iter)->getPosition();
@@ -164,6 +164,7 @@ void cRenderer::update(float frametime)
     std::vector<gamelogic::cGameEntity*> enemyList = mapper_->getEnemyEntities();
     enemies << enemyList.size();
     buffer.append("\nEnemies: ").append(enemies.str());
+    text_->SetText(buffer);
     iter = enemyList.begin();
     for (;iter < enemyList.end(); iter++)
     {
@@ -181,6 +182,9 @@ void cRenderer::update(float frametime)
     }
 
     std::vector<gamelogic::cGameEntity*> projectileList = mapper_->getProjectileEntities();
+    projectiles << projectileList.size();
+    buffer.append("\nProjectiles: ").append(projectiles.str());
+    text_->SetText(buffer);
     iter = projectileList.begin();
     for (;iter < projectileList.end(); iter++)
     {
