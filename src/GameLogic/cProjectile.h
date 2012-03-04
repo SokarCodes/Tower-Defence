@@ -62,6 +62,9 @@ private:
     /// Projectile type
     projectileType type_;
 
+    /// Splash size
+    towerSplash splash_;
+
 };
 } // gamelogic
 

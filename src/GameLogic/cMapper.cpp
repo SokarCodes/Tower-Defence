@@ -187,6 +187,27 @@ bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower)
         return false;
 }
 
+void cMapper::dealAOEDamage(sf::Vector2f location, int range, int damage)
+{
+    std::vector<cGameEntity*> enemiesInAOE;
+    std::vector<cGameEntity*>::iterator iter = enemyContainer_.begin();
+    for (;iter < enemyContainer_.end(); ++iter)
+    {
+        if (distance(location,(*iter)->getPosition()) <= range)
+            enemiesInAOE.push_back(*iter);
+    }
+    for (iter = enemiesInAOE.begin();iter < enemiesInAOE.end(); ++iter)
+        (*iter)->inflictDamage(damage);
+
+}
+
+double cMapper::distance(sf::Vector2f A, sf::Vector2f B)
+{
+    sf::Vector2f diff = B-A;
+    double distance = sqrt(pow(diff.x,2)+pow(diff.y,2));
+    return distance;
+}
+
 std::vector<cGameEntity*> cMapper::getEnemyEntities()
 {
     return enemyContainer_;

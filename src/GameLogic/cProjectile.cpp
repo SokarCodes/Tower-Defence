@@ -17,7 +17,8 @@ cProjectile::cProjectile(cGameEntity *owner, cGameEntity *target) :
     lastMoveTime_(0),
     owner_(owner),
     target_(target),
-    targetLocation_(0,0)
+    targetLocation_(0,0),
+    splash_(NO_SPLASH)
 {
 }
 
@@ -32,23 +33,28 @@ void cProjectile::initializeEntity()
     {
     case MORTAR_TOWER:
         type_ = INDIRECT;
+        splash_ = HUGE_SPLASH;
         movespeed_ = 300;
         targetLocation_ = target_->getPosition();
         break;
     case ARROW_TOWER:
         type_ = HOMING;
+        splash_ = NO_SPLASH;
         movespeed_ = 450;
         break;
     case ICE_TOWER:
         type_ = HOMING;
+        splash_ = NO_SPLASH;
         movespeed_ = 450;
         break;
     case SPECIAL_TOWER:
         type_ = INSTANT;
+        splash_ = LITTLE_SPLASH;
         movespeed_ = 9999;
         break;
     default:
         type_ = INDIRECT;
+        splash_ = HUGE_SPLASH;
         movespeed_ = 300;
         std::cout << "No valid type given. Using INDIRECT projectile type.\n";
     }
@@ -125,7 +131,8 @@ void cProjectile::update(float frametime)
         lastMoveTime_ = frametime;
         if (std::abs(position_.x - targetLocation_.x) < 3 && std::abs(position_.y - targetLocation_.y) < 3)
         {
-            //target_->inflictDamage(10);
+            cMapper *instance = getMapper();
+            instance->dealAOEDamage(position_, 50, 100);
             getMapper()->deleteEntity(this);
         }
         break;

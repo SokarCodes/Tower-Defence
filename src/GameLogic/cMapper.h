@@ -43,6 +43,9 @@ public:
 public:
     // This public segment is for derived classes and other more private use.
 
+    /// Deals AOE damage according to parameters
+    void dealAOEDamage(sf::Vector2f location, int range, int damage);
+
     /// Adds projectile entity to gamelogic
     bool addProjectile(cGameEntity*, cGameEntity*);
 
@@ -63,6 +66,9 @@ public:
 
     /// Returns number of enemies on map
     int getEnemyCount();
+
+    /// Calculates distance between two vectors.
+    double distance(sf::Vector2f, sf::Vector2f);
 
 private:
     /// Private constructor because singleton class pointer is get from getInstance()
