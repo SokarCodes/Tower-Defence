@@ -34,7 +34,7 @@ void cProjectile::initializeEntity()
     case MORTAR_TOWER:
         type_ = INDIRECT;
         splash_ = HUGE_SPLASH;
-        movespeed_ = 300;
+        movespeed_ = 10;
         targetLocation_ = target_->getPosition();
         break;
     case ARROW_TOWER:
@@ -127,12 +127,37 @@ void cProjectile::update(float frametime)
         if (distance(position_, targetLocation_) < ((float)movespeed_ * (frametime - lastMoveTime_)))
             position_ = targetLocation_;
         else
-            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+        {
+            float step = frametime - lastMoveTime_;
+            double acceleration = 0.5*500*pow(step,2);
+            double velocity = (movespeed_ * step) + acceleration;
+            movespeed_ += (float)velocity;
+            std::cout << "Movespeed: " << movespeed_ << "\n";
+            position_ += direction_ * (movespeed_ * step);
+        }
         lastMoveTime_ = frametime;
         if (std::abs(position_.x - targetLocation_.x) < 3 && std::abs(position_.y - targetLocation_.y) < 3)
         {
             cMapper *instance = getMapper();
-            instance->dealAOEDamage(position_, 50, 100);
+            switch(splash_)
+            {
+            case NO_SPLASH:
+                instance->dealAOEDamage(position_, 1, 100);
+                break;
+            case LITTLE_SPLASH:
+                instance->dealAOEDamage(position_, 50, 100);
+                break;
+            case HUGE_SPLASH:
+                instance->dealAOEDamage(position_, 100, 100);
+                break;
+            case AWESOME_SPLASH:
+                instance->dealAOEDamage(position_, 150, 100);
+                break;
+            default:
+                std::cout << "No valid AOE splash specifier.\n";
+                instance->dealAOEDamage(position_, 1, 100);
+                break;
+            }
             getMapper()->deleteEntity(this);
         }
         break;

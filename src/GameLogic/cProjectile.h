@@ -42,7 +42,7 @@ private:
     std::string entityName_;
 
     /// Entity movespeed on map. pix/s
-    int movespeed_;
+    float movespeed_;
 
     /// Last move time for movement interpolation.
     float lastMoveTime_;

@@ -198,7 +198,6 @@ void cMapper::dealAOEDamage(sf::Vector2f location, int range, int damage)
     }
     for (iter = enemiesInAOE.begin();iter < enemiesInAOE.end(); ++iter)
         (*iter)->inflictDamage(damage);
-
 }
 
 double cMapper::distance(sf::Vector2f A, sf::Vector2f B)
