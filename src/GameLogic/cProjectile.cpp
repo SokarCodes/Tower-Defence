@@ -128,11 +128,11 @@ void cProjectile::update(float frametime)
             position_ = targetLocation_;
         else
         {
+            // This is just acceleration test code: s = vt + at²/2
             float step = frametime - lastMoveTime_;
             double acceleration = 0.5*500*pow(step,2);
             double velocity = (movespeed_ * step) + acceleration;
             movespeed_ += (float)velocity;
-            std::cout << "Movespeed: " << movespeed_ << "\n";
             position_ += direction_ * (movespeed_ * step);
         }
         lastMoveTime_ = frametime;
