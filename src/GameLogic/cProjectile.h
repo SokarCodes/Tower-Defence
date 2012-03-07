@@ -33,10 +33,13 @@ public:
     void initializeEntity();
 
     /// This is used to get unit vector from direction vector between projectile-target.
-    void normalize(sf::Vector2f);
+    sf::Vector2f normalize(sf::Vector2f);
 
     /// Calculates distance between two vectors.
     double distance(sf::Vector2f, sf::Vector2f);
+
+    /// Dot product
+    double dotProduct(sf::Vector2f vector1,sf::Vector2f vector2);
 private:
     /// Name for this entity. Possibly obsolete.
     std::string entityName_;

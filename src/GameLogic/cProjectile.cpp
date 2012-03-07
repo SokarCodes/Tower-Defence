@@ -34,7 +34,7 @@ void cProjectile::initializeEntity()
     case MORTAR_TOWER:
         type_ = INDIRECT;
         splash_ = HUGE_SPLASH;
-        movespeed_ = 10;
+        movespeed_ = 200;
         targetLocation_ = target_->getPosition();
         break;
     case ARROW_TOWER:
@@ -69,7 +69,7 @@ void cProjectile::initializeEntity()
     direction_ = target_->getPosition() - position_;
 
     // Normalize direction to unit vector.
-    normalize(direction_);
+    direction_= normalize(direction_);
 
     entityName_ = "Projectile";
 
@@ -79,13 +79,15 @@ void cProjectile::update(float frametime)
 {
     if (!lastMoveTime_)
         lastMoveTime_ = frametime;
+    float step = frametime - lastMoveTime_;
+    sf::Vector2f targetPos = target_->getPosition();
 
     switch (type_)
     {
     case HOMING:
         if (!getMapper()->entityExists(target_))
         {
-            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+            position_ += direction_ * (movespeed_ * step);
             lastMoveTime_ = frametime;
 
             // Projectile out of screen.
@@ -96,41 +98,40 @@ void cProjectile::update(float frametime)
 
             return;
         }
+        direction_ = targetPos - position_;
+        direction_ = normalize(direction_);
 
-        direction_ = target_->getPosition() - position_;
-        normalize(direction_);
-
-        if (distance(position_, target_->getPosition()) < ((float)movespeed_ * (frametime - lastMoveTime_)))
-            position_ = target_->getPosition();
+        if (distance(position_, targetPos) < (movespeed_ * step))
+            position_ = targetPos;
         else
-            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+            position_ += direction_ * (movespeed_ * step);
         lastMoveTime_ = frametime;
-        if (std::abs(position_.x - target_->getPosition().x) < 5 && std::abs(position_.y - target_->getPosition().y) < 5)
+        if (std::abs(position_.x - targetPos.x) < 5 && std::abs(position_.y - targetPos.y) < 5)
         {
             target_->inflictDamage(10);
             getMapper()->deleteEntity(this);
         }
         break;
     case INSTANT:
-        if (distance(position_, target_->getPosition()) < ((float)movespeed_ * (frametime - lastMoveTime_)))
-            position_ = target_->getPosition();
+        if (distance(position_, targetPos) < (movespeed_ * step))
+            position_ = targetPos;
         else
-            position_ += direction_ * ((float)movespeed_ * (frametime - lastMoveTime_));
+            position_ += direction_ * (movespeed_ * step);
         lastMoveTime_ = frametime;
-        if (std::abs(position_.x - target_->getPosition().x) < 5 && std::abs(position_.y - target_->getPosition().y) < 5)
+        if (std::abs(position_.x - targetPos.x) < 5 && std::abs(position_.y - targetPos.y) < 5)
         {
             target_->inflictDamage(10);
             getMapper()->deleteEntity(this);
         }
         break;
     case INDIRECT:
-        if (distance(position_, targetLocation_) < ((float)movespeed_ * (frametime - lastMoveTime_)))
+        if (distance(position_, targetLocation_) < (movespeed_ * step))
             position_ = targetLocation_;
         else
         {
             // This is just acceleration test code: s = vt + at²/2
             float step = frametime - lastMoveTime_;
-            double acceleration = 0.5*500*pow(step,2);
+            double acceleration = 0.5*1*pow(step,2);
             double velocity = (movespeed_ * step) + acceleration;
             movespeed_ += (float)velocity;
             position_ += direction_ * (movespeed_ * step);
@@ -169,14 +170,14 @@ std::string cProjectile::name()
     return entityName_;
 }
 
-void cProjectile::normalize(sf::Vector2f vector)
+sf::Vector2f cProjectile::normalize(sf::Vector2f vector)
 {
     // Calculate magnitude
     double magnitude = sqrt(vector.x*vector.x + vector.y*vector.y);
     sf::Vector2f normalized;
     normalized.x = vector.x / magnitude;
     normalized.y = vector.y / magnitude;
-    direction_ = normalized;
+    return normalized;
 }
 
 double cProjectile::distance(sf::Vector2f A, sf::Vector2f B)
@@ -184,6 +185,11 @@ double cProjectile::distance(sf::Vector2f A, sf::Vector2f B)
     sf::Vector2f diff = B-A;
     double distance = sqrt(pow(diff.x,2)+pow(diff.y,2));
     return distance;
+}
+
+double cProjectile::dotProduct(sf::Vector2f vector1, sf::Vector2f vector2)
+{
+    return (vector1.x * vector2.x) + (vector1.y * vector2.y);
 }
 
 }
