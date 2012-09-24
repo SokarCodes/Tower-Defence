@@ -15,7 +15,6 @@
 #include "Renderer/cRenderer.h"
 #include "EventHandler/cEventHandler.h"
 #include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
 
 #include "common.h"
 
@@ -23,26 +22,26 @@ bool appRunning;
 
 int main(int argc, char** argv)
 {
-    std::cout << "Hello tower defense - master branch - v0.1.0!\n";
-    
+    std::cout << "Hello tower defense - experimental branch on bitbucket - v0.1.0!\n";
+
     appRunning = true;
 
     // Initialize variables for gameloop timer logic
     sf::Clock clock;
-    const int framerate = 30;
+    const int framerate = 60;
     float framestartTime = 0;
     float difference = 0;
     float sleepTime = 0;
     float frameBudget = 1/(float)framerate;
 
     // Singletons
-    gamelogic::cMapper *mapper;
     renderer::cRenderer *render;
+    gamelogic::cMapper *mapper;
     IOHandling::cEventHandler *InputOutput;
 
     try {
-        mapper = gamelogic::cMapper::getInstance();
         render = renderer::cRenderer::getInstance();
+        mapper = gamelogic::cMapper::getInstance();
         InputOutput = IOHandling::cEventHandler::getInstance();
     } catch (std::bad_alloc& e) {
         std::cout << "Initial memory allocation for mapper and renderer failed! " << e.what() << "\n";

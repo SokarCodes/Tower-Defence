@@ -9,17 +9,6 @@
 #define	TOWERENUMS_H
 namespace gamelogic
 {
-// Enum for tower type.
-enum towerType { MORTAR_TOWER,
-                 ARROW_TOWER,
-                 ICE_TOWER,
-                 SPECIAL_TOWER };
-
-// Enum for enemy type.
-enum enemyType { WALKING_ENEMY,
-                 FLYING_ENEMY,
-                 INVISIBLE_ENEMY,
-                 FAST_ENEMY};
 
 // Splash damage boolean. Consider where AOE calculation are done!!
 enum towerSplash { NO_SPLASH,
@@ -31,11 +20,29 @@ enum towerSplash { NO_SPLASH,
 enum towerEffect { NO_EFFECT,
                    SLOW_EFFECT,
                    BURN_EFFECT };
-}
 
+// Enum for enemy current state.
 enum enemyState { ALIVE,
                   DECAYING,
                   DEAD };
+
+enum entityType { TOWER,
+                  ENEMY,
+                  PROJECTILE };
+
+enum entityInitType { MORTAR_TOWER,
+                      ARROW_TOWER,
+                      ICE_TOWER,
+                      SPECIAL_TOWER,
+                      WALKING_ENEMY,
+                      FLYING_ENEMY,
+                      INVISIBLE_ENEMY,
+                      FAST_ENEMY,
+                      HOMING,
+                      INDIRECT,
+                      INSTANT};
+}
+
 
 #endif	/* TOWERENUMS_H */
 

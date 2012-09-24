@@ -9,7 +9,7 @@
 #define H_EVENTHANDLER
 
 #include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 #include "../common.h"
 
@@ -19,6 +19,7 @@ class cRenderer;
 
 namespace gamelogic {
 class cMapper;
+class cGameEntity;
 }
 
 namespace IOHandling {
@@ -57,6 +58,9 @@ private:
     /// SFML input instance
     const sf::Input& input_;
 
+    bool mouseleftDown_;
+
+    gamelogic::cGameEntity *entity_;
 
 };
 

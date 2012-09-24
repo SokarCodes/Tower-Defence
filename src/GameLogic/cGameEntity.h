@@ -9,20 +9,20 @@
 #define	GAMEENTITY_H
 
 #include <iostream>
+#include <SFML/System/Vector3.hpp>
 #include "cMapper.h"
+
 namespace gamelogic {
 
 class cGameEntity {
 public:
+    /// Cause single target damage to a entity.
     void inflictDamage(int);
+
     /// Set derived class entity position in 2D space
-    void setPosition(int x, int y) { x_coord_ = x; y_coord_ = y; }
+    void setPosition(sf::Vector3f pos) { position_ = pos; }
 
-    /// Get derived class entity position in 2D space
-    int getXPosition() { return x_coord_; }
-
-    /// Get derived class entity position in 2D space
-    int getYPosition() { return y_coord_; }
+    sf::Vector3f& getPosition() { return position_; }
 
     /// Get maximum fire range for tower
     virtual int getRange() { return 0; }
@@ -52,20 +52,20 @@ public:
     virtual std::string name() = 0;
 
     /// Initialize all entity variables
-    virtual void initializeEntity() = 0;
+    virtual void initializeEntity(entityInitType type, sf::Vector3f position) = 0;
+
+    /// Set entity target enemy
+    virtual void setTarget(cGameEntity* target) {}
 
     /// Virtual destructor for proper derived/base chain dismantling.
-    virtual ~cGameEntity() { std::cout << "cGameEntity destruction!" << "\n"; }
+    virtual ~cGameEntity() { }
 
 protected:
     /// Return cMapper pointer to derived class.
     cMapper* getMapper() { return mapper_; }
 
-    /// Entity X-coord in 2D space.
-    int x_coord_;
-
-    /// Entity Y-coord in 2D space.
-    int y_coord_;
+    /// Position
+    sf::Vector3f position_;
 
     /// Entity hitpoints. Entity removal when hitpoints <= 0
     int hitpoints_;

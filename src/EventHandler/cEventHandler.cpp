@@ -8,6 +8,10 @@
 #include <iostream>
 #include "cEventHandler.h"
 #include "../Renderer/cRenderer.h"
+#include "../GameLogic/cMapper.h"
+#include "../GameLogic/cGameEntity.h"
+#include "../common.h"
+#include "../GameLogic/entityEnums.h"
 
 namespace IOHandling {
 
@@ -31,13 +35,16 @@ cEventHandler* cEventHandler::getInstance()
 cEventHandler::cEventHandler() :
     render_(renderer::cRenderer::getInstance()),
     mapper_(gamelogic::cMapper::getInstance()),
-    input_(render_->getRenderwindow()->GetInput())
+    input_(render_->getRenderwindow()->GetInput()),
+    mouseleftDown_(false),
+    entity_(0)
 {
 
 }
 
 void cEventHandler::update()
 {
+    sf::Vector3f inputCoord;
 
     // Event loop checker
     while (render_->getRenderwindow()->GetEvent(event_))
@@ -52,6 +59,9 @@ void cEventHandler::update()
             break;
             // Keyboard key pressed
         case sf::Event::KeyPressed:
+            inputCoord.x = input_.GetMouseX();
+            inputCoord.y = -input_.GetMouseY();
+            inputCoord.z = 0;
             switch (event_.Key.Code)
             {
             case sf::Key::Escape:
@@ -60,28 +70,64 @@ void cEventHandler::update()
                 render_->getRenderwindow()->Close();
                 break;
             case sf::Key::Z:
-                mapper_->addEnemy(gamelogic::WALKING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::WALKING_ENEMY, inputCoord);
                 break;
             case sf::Key::X:
-                mapper_->addEnemy(gamelogic::FLYING_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::FLYING_ENEMY, inputCoord);
                 break;
             case sf::Key::C:
-                mapper_->addEnemy(gamelogic::INVISIBLE_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::INVISIBLE_ENEMY, inputCoord);
                 break;
             case sf::Key::V:
-                mapper_->addEnemy(gamelogic::FAST_ENEMY, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addEnemy(gamelogic::FAST_ENEMY, inputCoord);
                 break;
             case sf::Key::A:
-                mapper_->addTower(gamelogic::MORTAR_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::MORTAR_TOWER, inputCoord);
                 break;
             case sf::Key::S:
-                mapper_->addTower(gamelogic::ARROW_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::ARROW_TOWER, inputCoord);
                 break;
             case sf::Key::D:
-                mapper_->addTower(gamelogic::ICE_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::ICE_TOWER, inputCoord);
                 break;
             case sf::Key::F:
-                mapper_->addTower(gamelogic::SPECIAL_TOWER, input_.GetMouseX(), input_.GetMouseY());
+                mapper_->addTower(gamelogic::SPECIAL_TOWER, inputCoord);
+                break;
+            case sf::Key::U:
+                rotX += 5;
+                break;
+            case sf::Key::J:
+                rotX -= 5;
+                break;
+            case sf::Key::I:
+                rotY += 5;
+                break;
+            case sf::Key::K:
+                rotY -= 5;
+                break;
+            case sf::Key::O:
+                rotZ += 5;
+                break;
+            case sf::Key::L:
+                rotZ -= 5;
+                break;
+            case sf::Key::Numpad8:
+                camY += 5;
+                break;
+            case sf::Key::Numpad2:
+                camY -= 5;
+                break;
+            case sf::Key::Numpad6:
+                camX += 5;
+                break;
+            case sf::Key::Numpad4:
+                camX -= 5;
+                break;
+            case sf::Key::Numpad7:
+                camZ += 5;
+                break;
+            case sf::Key::Numpad1:
+                camZ -= 5;
                 break;
             default:
                 std::cout << "No action for key.\n";
@@ -89,9 +135,16 @@ void cEventHandler::update()
             break;
             // Mouse button pressed
         case sf::Event::MouseButtonPressed:
+            inputCoord.x = input_.GetMouseX();
+            inputCoord.y = -input_.GetMouseY();
             switch (event_.MouseButton.Button)
             {
             case sf::Mouse::Left:
+                mouseleftDown_ = true;
+                if (mapper_->addEnemy(gamelogic::WALKING_ENEMY, inputCoord))
+                    entity_ = gamelogic::cMapper::getInstance()->getTarget(inputCoord, 50);
+                else
+                    std::cout << "Entity could not be added!";
                 std::cout << "Mouse left!\n";
                 break;
             case sf::Mouse::Right:
@@ -118,16 +171,34 @@ void cEventHandler::update()
             switch (event_.MouseWheel.Delta)
             {
             case -1:
-                std::cout << "Mouse wheen down.\n";
+                camZ += 5;
                 break;
             case 1:
-                std::cout << "Mouse wheen up.\n";
+                camZ -= 5;
                 break;
             }
             break;
         case sf::Event::MouseButtonReleased:
+            mouseleftDown_ = false;
+            if (entity_)
+            {
+                std::cout << "Deleting entity!\n";
+                gamelogic::cMapper::getInstance()->deleteEntity(entity_, gamelogic::WALKING_ENEMY);
+                entity_ = 0;
+            }
             break;
         case sf::Event::MouseMoved:
+            inputCoord.x = input_.GetMouseX();
+            inputCoord.y = -input_.GetMouseY();
+            if (mouseleftDown_)
+            {
+                if (entity_)
+                {
+                    std::cout << "Setting entity position: " << inputCoord.x << "," << inputCoord.y << ".\n";
+                    entity_->setPosition(inputCoord);
+                }
+                entity_ = gamelogic::cMapper::getInstance()->getTarget(inputCoord, 50);
+            }
             break;
         case sf::Event::MouseEntered:
             break;

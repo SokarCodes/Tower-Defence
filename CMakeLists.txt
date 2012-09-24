@@ -3,7 +3,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(Tower-Defence CXX)
 
 #ADD_DEFINITIONS(-Wall -g -pg -fprofile-arcs -ftest-coverage)
-ADD_DEFINITIONS(-Wall -g -O2)
+ADD_DEFINITIONS(-Wall -g -O0)
 
 file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
@@ -27,8 +27,8 @@ file(GLOB InputHandlerHeaderFiles ${CMAKE_SOURCE_DIR}/src/InputHandler/*.h)
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/utils )
 SET(CMAKE_EXE_LINKER_FLAGS "-pg")
 
-set(SourceFiles ${SourceFiles} ${GameLogicSourceFiles} ${RendererSourceFiles} ${EventHandlerSourceFiles} ${InputHandlerSourceFiles} )
-set(HeadereFiles ${HeaderFiles} ${GameLogicHeaderFiles} ${RendererSourceFiles} ${EventHandlerHeaderFiles} ${InputHandlerHeaderFiles} )
+set(SourceFiles ${SourceFiles} ${RendererSourceFiles} ${GameLogicSourceFiles} ${EventHandlerSourceFiles} ${InputHandlerSourceFiles} )
+set(HeadereFiles ${HeaderFiles} ${RendererSourceFiles} ${GameLogicHeaderFiles} ${EventHandlerHeaderFiles} ${InputHandlerHeaderFiles} )
 
 find_package ( SFML REQUIRED )
 
@@ -43,9 +43,8 @@ ADD_EXECUTABLE(Tower-Defence ${SourceFiles} ${HeaderFiles})
 set_target_properties(Tower-Defence PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if(WIN32)
-        TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics)
+        TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window)
 elseif (UNIX)
-#       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics gcov GL GLU)
-       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window sfml-graphics GL GLU)
+       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window GLEW GL )
 
 endif()

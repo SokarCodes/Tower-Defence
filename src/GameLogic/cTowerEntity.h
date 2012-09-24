@@ -18,19 +18,22 @@ class cTowerEntity : public cGameEntity
 {
 public:
     /// Constructor
-    cTowerEntity(towerType, int, int);
+    //cTowerEntity(entityInitType type, sf::Vector3f position);
+
+    /// Default constructor
+    cTowerEntity();
 
     /// Destructor
     ~cTowerEntity();
-
-    /// Set damage output for tower
-    void setDamage(const unsigned int);
 
     /// Set maximum fire range for tower
     void setRange(const unsigned int);
 
     /// getRange
     int getRange();
+
+    /// Get tower type
+    entityInitType getType();
 
     /// Update method for cTowerEntity
     void update(float);
@@ -39,7 +42,7 @@ public:
     std::string name();
 
     /// Initializer after creation
-    void initializeEntity();
+    void initializeEntity(entityInitType type, sf::Vector3f position);
 
     /// Function for checking if tower has enemy.
     bool hasEnemy();
@@ -49,6 +52,12 @@ public:
 
     /// Return last fire time.
     float lastFireTime() { return lastShotTime_; }
+
+    /// Fire angle calculator
+    bool isInRange();
+
+    /// Calculates distance between two vectors.
+    double distance(sf::Vector3f, sf::Vector3f);
 
 private:
     /// Fire method. Launches projectile towards enemy entity.
@@ -60,14 +69,14 @@ private:
     /// Target entity. NULL if no target acquired.
     cGameEntity* enemy_;
 
-    /// Tower damage output
-    unsigned int damage_;
-
     /// Tower maximum range
     unsigned int range_;
 
+    /// Fire angle
+    float fireAngle_;
+
     /// Reload timeout
-    int reloadTimeout_;
+    float reloadTimeout_;
 
     /// Last shot timestamp
     float lastShotTime_;
@@ -76,7 +85,7 @@ private:
     std::string entityName_;
 
     /// Tower type
-    towerType type_;
+    entityInitType type_;
 
     /// tower lifetime
     float lifetime_;

@@ -8,13 +8,18 @@
 #ifndef ENEMYENTITY_H
 #define	ENEMYENTITY_H
 #include <string>
+#include <SFML/System/Vector3.hpp>
 #include "entityEnums.h"
 namespace gamelogic {
+class cGameEntity;
 
 class cEnemyEntity : public cGameEntity {
 public:
     /// Constructor
-    cEnemyEntity(enemyType, int, int);
+    //cEnemyEntity(entityInitType type, sf::Vector3f position);
+
+    /// Default constructor
+    cEnemyEntity();
 
     /// Destructor
     ~cEnemyEntity();
@@ -26,7 +31,7 @@ public:
     std::string name();
 
     /// Initializer after creation
-    void initializeEntity();
+    void initializeEntity(entityInitType type, sf::Vector3f position);
 
     /// Returns enemy entity state
     enemyState getState();
@@ -39,7 +44,7 @@ private:
     unsigned short int movespeed_;
 
     /// Entity type
-    enemyType type_;
+    entityInitType type_;
 
     /// State
     enemyState state_;

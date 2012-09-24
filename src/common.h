@@ -10,5 +10,7 @@
 
 // Global variable used in main loop
 extern bool appRunning;
+extern float camX, camY, camZ;
+extern float rotX, rotY, rotZ;
 
 #endif
