@@ -31,7 +31,7 @@ class cRenderer
 {
 public:
     /// Destructor, sets instanceFlag to false so getInstance creates new on request
-    ~cRenderer() {instanceFlag_ = false;}
+    ~cRenderer();
 
     /// Returns singleton pointer
     static cRenderer* getInstance();

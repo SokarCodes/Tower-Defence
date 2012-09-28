@@ -69,63 +69,19 @@ cRenderer::cRenderer()
     renderContext->init();
 }
 
+cRenderer::~cRenderer()
+{
+    delete renderContext;
+    delete xWindow;
+    instanceFlag_ = false;
+}
+
 void cRenderer::update(float frametime)
 {
     xWindow->refresh();
-    // Clear the screen to black
-//    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-//    glClear( GL_COLOR_BUFFER_BIT );
 
-//    // Draw a rectangle from the 2 triangles using 6 indices
-//    glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
 
-//    // Swap buffers
-//    window_->Display();
-
-    /*    //window_->PreserveOpenGLStates(true);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glTranslatef(camX, camY, camZ);
-    glRotatef(rotX, 1.0, 0.f, 0.f);
-    glRotatef(rotY, 0.f, 1.f, 0.f);
-    glRotatef(rotZ, 0.f, 0.f, 1.f);
-
-    glBegin(GL_QUADS);
-//    glVertex3f(-350.f, -350.f, -1.f);
-//    glVertex3f(-350.f,  350.f, -1.f);
-//    glVertex3f( 350.f,  350.f, -1.f);
-//    glVertex3f( 350.f, -350.f, -1.f);
-
-//    glVertex3f(-50.f, -50.f, 50.f);
-//    glVertex3f(-50.f,  50.f, 50.f);
-//    glVertex3f( 50.f,  50.f, 50.f);
-//    glVertex3f( 50.f, -50.f, 50.f);
-
-//    glVertex3f(-50.f, -50.f, -50.f);
-//    glVertex3f(-50.f,  50.f, -50.f);
-//    glVertex3f(-50.f,  50.f,  50.f);
-//    glVertex3f(-50.f, -50.f,  50.f);
-
-//    glVertex3f(50.f, -50.f, -50.f);
-//    glVertex3f(50.f,  50.f, -50.f);
-//    glVertex3f(50.f,  50.f,  50.f);
-//    glVertex3f(50.f, -50.f,  50.f);
-
-//    glVertex3f(-50.f, http://www.youtube.com/watch?v=lbqxkS2ssUI&feature=related#t=5m05s-50.f,  50.f);
-//    glVertex3f(-50.f, -50.f, -50.f);
-//    glVertex3f( 50.f, -50.f, -50.f);
-//    glVertex3f( 50.f, -50.f,  50.f);
-
-//    glVertex3f(-50.f, 50.f,  50.f);
-//    glVertex3f(-50.f, 50.f, -50.f);
-//    glVertex3f( 50.f, 50.f, -50.f);
-//    glVertex3f( 50.f, 50.f,  50.f);
-    glEnd();
-
-    std::vector<gamelogic::cGameEntity*> towerList = mapper_->getTowerEntities();
+ /*   std::vector<gamelogic::cGameEntity*> towerList = mapper_->getTowerEntities();
     std::vector<gamelogic::cGameEntity*>::iterator iter = towerList.begin();
 
     for (;iter < towerList.end(); iter++)

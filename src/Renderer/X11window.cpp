@@ -1,5 +1,6 @@
 #include "X11window.h"
 #include "GLESv2context.h"
+#include <iostream>
 
 X11Window::X11Window() :
     xDisplay(XOpenDisplay(0)),

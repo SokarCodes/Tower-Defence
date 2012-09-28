@@ -45,6 +45,6 @@ set_target_properties(Tower-Defence PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_
 if(WIN32)
         TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window)
 elseif (UNIX)
-       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window X11 EGL GLESv2 )
+       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system X11 EGL GLESv2 )
 
 endif()
