@@ -11,13 +11,14 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
-#define GLEW_STATIC
-#include <GL/glew.h>
+
 #include "cRenderer.h"
 #include "../common.h"
 
 #include "../GameLogic/cGameEntity.h"
 #include "../GameLogic/entityEnums.h"
+#include "X11window.h"
+#include "GLESv2context.h"
 
 float camX, camY, camZ;
 float rotX, rotY, rotZ;
@@ -61,137 +62,25 @@ cRenderer* cRenderer::getInstance()
 
 cRenderer::cRenderer()
 {
-    try
-    {
-        window_ = new sf::Window(sf::VideoMode(800,600,32), "Tower-Defence experimental build!", sf::Style::Close);
-    }
-    catch (std::bad_alloc&)
-    {
-        window_ = NULL;
-        std::cout << "Renderwindow creation failure!\n";
-        return;
-    }
-
-    // Initialize GLEW
-    glewExperimental = GL_TRUE;
-    glewInit();
-
-    // Create Vertex Array Object
-    GLuint vao;
-    glGenVertexArrays( 1, &vao );
-    glBindVertexArray( vao );
-
-    // Create a Vertex Buffer Object and copy the vertex data to it
-    GLuint vbo;
-    glGenBuffers( 1, &vbo );
-
-    float vertices[] = {
-        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
-        0.5f,  0.5f, 0.0f, 0.6f, 0.0f, // Top-right
-        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 0.7f, 1.0f  // Bottom-left
-    };
-
-    glBindBuffer( GL_ARRAY_BUFFER, vbo );
-    glBufferData( GL_ARRAY_BUFFER, sizeof( vertices ), vertices, GL_STATIC_DRAW );
-
-    // Create an element array
-    GLuint ebo;
-    glGenBuffers( 1, &ebo );
-
-    GLuint elements[] = {
-        0, 1, 2,
-        2, 3, 0
-    };
-
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, ebo );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( elements ), elements, GL_STATIC_DRAW );
-
-    // Create and compile the vertex shader
-    GLuint vertexShader = glCreateShader( GL_VERTEX_SHADER );
-    glShaderSource( vertexShader, 1, &vertexSource, NULL );
-    glCompileShader( vertexShader );
-
-    GLint status;
-    glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &status );
-
-    // Check vertex shader status if compiled correctly
-    if (status == GL_TRUE)
-        std::cout << "Vertex shader compile: OK!\n";
-    else
-    {
-        char buffer[513];
-        glGetShaderInfoLog( vertexShader, 512, NULL, buffer );
-        std::cout << "Vertex shader compile: FAILED!\n";
-        std::cout << "ShaderInfoLog: " << buffer << "\n";
-    }
-
-    // Create and compile the fragment shader
-    GLuint fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
-    glShaderSource( fragmentShader, 1, &fragmentSource, NULL );
-    glCompileShader( fragmentShader );
-
-    glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &status );
-    if (status == GL_TRUE)
-        std::cout << "Fragment shader compile: OK!\n";
-    else
-    {
-        char buffer[513];
-        glGetShaderInfoLog( vertexShader, 512, NULL, buffer );
-        std::cout << "Fragment shader compile: FAILED!\n";
-        std::cout << "ShaderInfoLog: " << buffer << "\n";
-    }
-
-    // Link the vertex and fragment shader into a shader program
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader( shaderProgram, vertexShader );
-    glAttachShader( shaderProgram, fragmentShader );
-    glBindFragDataLocation( shaderProgram, 0, "outColor" );
-    glLinkProgram( shaderProgram );
-    glUseProgram( shaderProgram );
-
-    // Specify the layout of the vertex data
-    GLint posAttrib = glGetAttribLocation( shaderProgram, "position" );
-    glEnableVertexAttribArray( posAttrib );
-    glVertexAttribPointer( posAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof( float ), 0 );
-
-    GLint colAttrib = glGetAttribLocation( shaderProgram, "color" );
-    glEnableVertexAttribArray( colAttrib );
-    glVertexAttribPointer( colAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof( float ), (void*)( 2 * sizeof( float ) ) );
-
-    //    // Set color and depth clear value
-    //    glClearDepth(1.f);
-    //    glClearColor(0.f, 0.f, 0.f, 0.f);
-
-    //    // Enable Z-buffer read and write
-    //    glEnable(GL_DEPTH_TEST);
-    //    glDepthMask(GL_TRUE);
-
-    //    // Setup a perspective projection
-    //    glMatrixMode(GL_PROJECTION);
-    //    glLoadIdentity();
-    //    gluPerspective(90.f, 800/600, 1.f, 2000.f);
-    //    glViewport (0, 0, (GLsizei)800, (GLsizei)600);
-    //    window_->SetActive();
-    //    camY = 300;
-    //    camX = -400;
-    //    camZ = -400.f;
-    //    rotX = 0;
-    //    rotY = 0;
-    //    rotZ = 0;
+    xWindow = new X11Window();
+    renderContext = new GLESv2Context();
+    xWindow->open();
+    renderContext->bindWindow(xWindow);
+    renderContext->init();
 }
 
 void cRenderer::update(float frametime)
 {
+    xWindow->refresh();
     // Clear the screen to black
-    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-    glClear( GL_COLOR_BUFFER_BIT );
+//    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+//    glClear( GL_COLOR_BUFFER_BIT );
 
-    // Draw a rectangle from the 2 triangles using 6 indices
-    glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+//    // Draw a rectangle from the 2 triangles using 6 indices
+//    glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
 
-    // Swap buffers
-    window_->Display();
+//    // Swap buffers
+//    window_->Display();
 
     /*    //window_->PreserveOpenGLStates(true);
 
@@ -275,10 +164,10 @@ void cRenderer::update(float frametime)
     }
 */
 }
-sf::Window* cRenderer::getRenderwindow()
-{
-    return window_;
-}
+//sf::Window* cRenderer::getRenderwindow()
+//{
+//    return window_;
+//}
 
 // Not implemented properly.
 void cRenderer::drawFPS(float spentTime)

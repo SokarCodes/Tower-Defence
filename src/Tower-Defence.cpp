@@ -13,7 +13,7 @@
 #include "GameLogic/cMapper.h"
 #include "GameLogic/entityEnums.h"
 #include "Renderer/cRenderer.h"
-#include "EventHandler/cEventHandler.h"
+//#include "EventHandler/cEventHandler.h"
 #include <SFML/System.hpp>
 
 #include "common.h"
@@ -22,7 +22,7 @@ bool appRunning;
 
 int main(int argc, char** argv)
 {
-    std::cout << "Hello tower defense - experimental branch on bitbucket - v0.1.0!\n";
+    std::cout << "Hello tower defense - experimental branch on github - v0.1.0!\n";
 
     appRunning = true;
 
@@ -37,12 +37,12 @@ int main(int argc, char** argv)
     // Singletons
     renderer::cRenderer *render;
     gamelogic::cMapper *mapper;
-    IOHandling::cEventHandler *InputOutput;
+    //IOHandling::cEventHandler *InputOutput;
 
     try {
         render = renderer::cRenderer::getInstance();
         mapper = gamelogic::cMapper::getInstance();
-        InputOutput = IOHandling::cEventHandler::getInstance();
+        //InputOutput = IOHandling::cEventHandler::getInstance();
     } catch (std::bad_alloc& e) {
         std::cout << "Initial memory allocation for mapper and renderer failed! " << e.what() << "\n";
         return EXIT_FAILURE;
@@ -60,7 +60,7 @@ int main(int argc, char** argv)
         // Update game logic and renderer instance.
         mapper->update(framestartTime);
         render->update(framestartTime);
-        InputOutput->update();
+        //InputOutput->update();
 
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;
@@ -79,7 +79,7 @@ int main(int argc, char** argv)
         }
     }
     // End of gameloop. Destroy mapper.
-    delete InputOutput;
+    //delete InputOutput;
     delete render;
     delete mapper;
 

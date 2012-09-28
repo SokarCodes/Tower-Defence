@@ -17,8 +17,8 @@ file(GLOB RendererSourceFiles ${CMAKE_SOURCE_DIR}/src/Renderer/*.cpp)
 file(GLOB RendererHeaderFiles ${CMAKE_SOURCE_DIR}/src/Renderer/*.h)
 
 # EventHandler
-file(GLOB EventHandlerSourceFiles ${CMAKE_SOURCE_DIR}/src/EventHandler/*.cpp)
-file(GLOB EventHandlerHeaderFiles ${CMAKE_SOURCE_DIR}/src/EventHandler/*.h)
+#file(GLOB EventHandlerSourceFiles ${CMAKE_SOURCE_DIR}/src/EventHandler/*.cpp)
+#file(GLOB EventHandlerHeaderFiles ${CMAKE_SOURCE_DIR}/src/EventHandler/*.h)
 
 # InputHandler
 file(GLOB InputHandlerSourceFiles ${CMAKE_SOURCE_DIR}/src/InputHandler/*.cpp)
@@ -45,6 +45,6 @@ set_target_properties(Tower-Defence PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_
 if(WIN32)
         TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window)
 elseif (UNIX)
-       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window GLEW GL )
+       TARGET_LINK_LIBRARIES(Tower-Defence sfml-system sfml-window X11 EGL GLESv2 )
 
 endif()

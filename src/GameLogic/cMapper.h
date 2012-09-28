@@ -10,7 +10,7 @@
 
 #include <vector>
 #include "entityEnums.h"
-#include <SFML/System/Vector2.hpp>
+#include <SFML/System/Vector3.hpp>
 #include <stack>
 
 namespace gamelogic {
