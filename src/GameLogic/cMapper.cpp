@@ -285,17 +285,6 @@ void cMapper::deleteEntity(cGameEntity *instance, entityInitType type)
 
 }
 
-bool cMapper::entityExists(cGameEntity * ent)
-{
-    std::vector<cGameEntity*>::iterator iter = enemyContainer_.begin();
-    for (;iter < enemyContainer_.end();++iter)
-        if ((*iter) == ent)
-        {
-            return true;
-        }
-    return false;
-}
-
 bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower)
 {
     sf::Vector3f diff = tower->getPosition() - enemy->getPosition();

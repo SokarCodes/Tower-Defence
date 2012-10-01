@@ -80,6 +80,30 @@ void cRenderer::update(float frametime)
 {
     xWindow->refresh();
 
+    // Testing X11 event system. This is going to be refined and moved to eventhandler class.
+    Atom wmDelete=XInternAtom(xWindow->getDisplay(), "WM_DELETE_WINDOW", True);
+    XSetWMProtocols(xWindow->getDisplay(), xWindow->getWindow(), &wmDelete, 1);
+
+    XSelectInput(xWindow->getDisplay(), xWindow->getWindow(), KeyPressMask);
+    XEvent events;
+
+    while (XPending(xWindow->getDisplay()))
+    {
+        XNextEvent(xWindow->getDisplay(), &events);
+        if (events.type == KeyPress)
+        {
+            appRunning = false;
+            std::cout << "App closed!\n";
+        }
+        else if (events.type == ClientMessage)
+        {
+            appRunning = false;
+            std::cout << "App closed by closing the window!\n";
+        }
+    }
+
+    // Event testing ends here.
+
 
  /*   std::vector<gamelogic::cGameEntity*> towerList = mapper_->getTowerEntities();
     std::vector<gamelogic::cGameEntity*>::iterator iter = towerList.begin();

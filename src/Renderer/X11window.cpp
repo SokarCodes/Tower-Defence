@@ -20,8 +20,8 @@ void X11Window::open()
                             , DefaultRootWindow(xDisplay)	// Parent Window
                             , 0                              // X of top-left corner
                             , 0              				// Y of top-left corner
-                            , 1024                          	// requested width
-                            , 768                            // requested height
+                            , 640                          	// requested width
+                            , 480                            // requested height
                             , 0                              // border width
                             , CopyFromParent                 // window depth
                             , CopyFromParent                 // window class - InputOutput / InputOnly / CopyFromParent

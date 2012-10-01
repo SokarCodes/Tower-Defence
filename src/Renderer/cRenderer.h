@@ -53,9 +53,6 @@ private:
     /// Pointer to this singleton class
     static cRenderer* thisPointer_;
 
-    /// Renderwindow
-    //sf::Window *window_;
-
     X11Window *xWindow;
     GLESv2Context *renderContext;
 

@@ -81,22 +81,14 @@ cTowerEntity::~cTowerEntity() {
 
 void cTowerEntity::update(float frametime)
 {
-    if (enemy_)
+    if (enemy_ && enemy_->getState() == ALIVE)
     {
-        if (getMapper()->entityExists(enemy_))
+        if (isInRange())
         {
-            if (isInRange())
+            if ( (frametime - lastShotTime_) >= reloadTimeout_ )
             {
-                if ( (frametime - lastShotTime_) >= reloadTimeout_ && enemy_->getState() == ALIVE )
-                {
-                    lastShotTime_ = frametime;
-                    fire();
-                }
-            }
-            else
-            {
-                enemy_ = 0;
-                acquireTarget();
+                lastShotTime_ = frametime;
+                fire();
             }
         }
         else
@@ -107,6 +99,7 @@ void cTowerEntity::update(float frametime)
     }
     else
     {
+        enemy_ = 0;
         acquireTarget();
     }
     if ((frametime - lastShotTime_) > lifetime_ && lastShotTime_ != 0)
@@ -153,7 +146,7 @@ int cTowerEntity::getRange()
 
 bool cTowerEntity::hasEnemy()
 {
-    return getMapper()->entityExists(enemy_);
+    return enemy_->getState() == ALIVE ? true : false;
 }
 
 double cTowerEntity::distance(sf::Vector3f A, sf::Vector3f B)

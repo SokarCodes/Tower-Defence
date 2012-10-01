@@ -53,9 +53,6 @@ public:
     /// deletes instance of cGameEntity from vector
     void deleteEntity(cGameEntity*, entityInitType);
 
-    /// Check if entity exists
-    bool entityExists(cGameEntity*);
-
     /// Check if entity in fire range
     bool isInRange(cGameEntity*, cGameEntity*);
 
