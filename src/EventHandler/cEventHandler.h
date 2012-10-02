@@ -9,8 +9,10 @@
 #define H_EVENTHANDLER
 
 #include <SFML/System.hpp>
-#include <SFML/Window.hpp>
+#include "X11/Xlib.h"
 
+
+#include "../Renderer/X11window.h"
 #include "../common.h"
 
 namespace renderer {
@@ -19,7 +21,6 @@ class cRenderer;
 
 namespace gamelogic {
 class cMapper;
-class cGameEntity;
 }
 
 namespace IOHandling {
@@ -35,6 +36,9 @@ public:
 
     /// Update method to parse events
     void update();
+
+    /// Check if events in event loop
+    bool hasPendingEvents();
 
 private:
     /// private constructor because singleton. Instance is gotten from getInstance
@@ -52,15 +56,11 @@ private:
     /// GameLogic instance
     gamelogic::cMapper* mapper_;
 
-    /// SFML event instance
-    sf::Event event_;
+    /// Xlib event instance
+    XEvent event_;
 
-    /// SFML input instance
-    const sf::Input& input_;
-
-    bool mouseleftDown_;
-
-    gamelogic::cGameEntity *entity_;
+    /// X11 window instance
+    X11Window* xWindow_;
 
 };
 

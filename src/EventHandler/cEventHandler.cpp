@@ -35,9 +35,7 @@ cEventHandler* cEventHandler::getInstance()
 cEventHandler::cEventHandler() :
     render_(renderer::cRenderer::getInstance()),
     mapper_(gamelogic::cMapper::getInstance()),
-    input_(render_->getRenderwindow()->GetInput()),
-    mouseleftDown_(false),
-    entity_(0)
+    xWindow_(render_->getRenderwindow())
 {
 
 }
@@ -45,176 +43,31 @@ cEventHandler::cEventHandler() :
 void cEventHandler::update()
 {
     sf::Vector3f inputCoord;
+    Atom wmDelete=XInternAtom(xWindow_->getDisplay(), "WM_DELETE_WINDOW", True);
+    XSetWMProtocols(xWindow_->getDisplay(), xWindow_->getWindow(), &wmDelete, 1);
+
+    XSelectInput(xWindow_->getDisplay(), xWindow_->getWindow(), KeyPressMask);
 
     // Event loop checker
-    while (render_->getRenderwindow()->GetEvent(event_))
+    while (XPending(xWindow_->getDisplay()))
     {
-        switch (event_.Type)
+        XNextEvent(xWindow_->getDisplay(), &event_);
+        if (event_.type == KeyPress)
         {
-        // Window closed
-        case sf::Event::Closed:
-            std::cout << "User interrupt close window!\n";
             appRunning = false;
-            render_->getRenderwindow()->Close();
-            break;
-            // Keyboard key pressed
-        case sf::Event::KeyPressed:
-            inputCoord.x = input_.GetMouseX();
-            inputCoord.y = -input_.GetMouseY();
-            inputCoord.z = 0;
-            switch (event_.Key.Code)
-            {
-            case sf::Key::Escape:
-                std::cout << "User interrupt ESC-key!\n";
-                appRunning = false;
-                render_->getRenderwindow()->Close();
-                break;
-            case sf::Key::Z:
-                mapper_->addEnemy(gamelogic::WALKING_ENEMY, inputCoord);
-                break;
-            case sf::Key::X:
-                mapper_->addEnemy(gamelogic::FLYING_ENEMY, inputCoord);
-                break;
-            case sf::Key::C:
-                mapper_->addEnemy(gamelogic::INVISIBLE_ENEMY, inputCoord);
-                break;
-            case sf::Key::V:
-                mapper_->addEnemy(gamelogic::FAST_ENEMY, inputCoord);
-                break;
-            case sf::Key::A:
-                mapper_->addTower(gamelogic::MORTAR_TOWER, inputCoord);
-                break;
-            case sf::Key::S:
-                mapper_->addTower(gamelogic::ARROW_TOWER, inputCoord);
-                break;
-            case sf::Key::D:
-                mapper_->addTower(gamelogic::ICE_TOWER, inputCoord);
-                break;
-            case sf::Key::F:
-                mapper_->addTower(gamelogic::SPECIAL_TOWER, inputCoord);
-                break;
-            case sf::Key::U:
-                rotX += 5;
-                break;
-            case sf::Key::J:
-                rotX -= 5;
-                break;
-            case sf::Key::I:
-                rotY += 5;
-                break;
-            case sf::Key::K:
-                rotY -= 5;
-                break;
-            case sf::Key::O:
-                rotZ += 5;
-                break;
-            case sf::Key::L:
-                rotZ -= 5;
-                break;
-            case sf::Key::Numpad8:
-                camY += 5;
-                break;
-            case sf::Key::Numpad2:
-                camY -= 5;
-                break;
-            case sf::Key::Numpad6:
-                camX += 5;
-                break;
-            case sf::Key::Numpad4:
-                camX -= 5;
-                break;
-            case sf::Key::Numpad7:
-                camZ += 5;
-                break;
-            case sf::Key::Numpad1:
-                camZ -= 5;
-                break;
-            default:
-                std::cout << "No action for key.\n";
-            }
-            break;
-            // Mouse button pressed
-        case sf::Event::MouseButtonPressed:
-            inputCoord.x = input_.GetMouseX();
-            inputCoord.y = -input_.GetMouseY();
-            switch (event_.MouseButton.Button)
-            {
-            case sf::Mouse::Left:
-                mouseleftDown_ = true;
-                if (mapper_->addEnemy(gamelogic::WALKING_ENEMY, inputCoord))
-                    entity_ = gamelogic::cMapper::getInstance()->getTarget(inputCoord, 50);
-                else
-                    std::cout << "Entity could not be added!";
-                std::cout << "Mouse left!\n";
-                break;
-            case sf::Mouse::Right:
-                std::cout << "Mouse right!\n";
-                break;
-            case sf::Mouse::Middle:
-                std::cout << "Mouse middle!\n";
-                break;
-            default:
-                std::cout << "No action for mousebutton.\n";
-            }
-            break;
-        case sf::Event::Resized:
-            break;
-        case sf::Event::LostFocus:
-            break;
-        case sf::Event::GainedFocus:
-            break;
-        case sf::Event::TextEntered:
-            break;
-        case sf::Event::KeyReleased:
-            break;
-        case sf::Event::MouseWheelMoved:
-            switch (event_.MouseWheel.Delta)
-            {
-            case -1:
-                camZ += 5;
-                break;
-            case 1:
-                camZ -= 5;
-                break;
-            }
-            break;
-        case sf::Event::MouseButtonReleased:
-            mouseleftDown_ = false;
-            if (entity_)
-            {
-                std::cout << "Deleting entity!\n";
-                gamelogic::cMapper::getInstance()->deleteEntity(entity_, gamelogic::WALKING_ENEMY);
-                entity_ = 0;
-            }
-            break;
-        case sf::Event::MouseMoved:
-            inputCoord.x = input_.GetMouseX();
-            inputCoord.y = -input_.GetMouseY();
-            if (mouseleftDown_)
-            {
-                if (entity_)
-                {
-                    std::cout << "Setting entity position: " << inputCoord.x << "," << inputCoord.y << ".\n";
-                    entity_->setPosition(inputCoord);
-                }
-                entity_ = gamelogic::cMapper::getInstance()->getTarget(inputCoord, 50);
-            }
-            break;
-        case sf::Event::MouseEntered:
-            break;
-        case sf::Event::MouseLeft:
-            // This event is already handled in mousebuttonPressed
-            break;
-        case sf::Event::Count:
-            break;
-        case sf::Event::JoyButtonPressed:
-            break;
-        case sf::Event::JoyButtonReleased:
-            break;
-        case sf::Event::JoyMoved:
-            break;
+            std::cout << "App closed!\n";
+        }
+        else if (event_.type == ClientMessage)
+        {
+            appRunning = false;
+            std::cout << "App closed by closing the window!\n";
         }
     }
+}
+
+bool cEventHandler::hasPendingEvents()
+{
+    return XPending(xWindow_->getDisplay());
 }
 
 } // IOHandling
