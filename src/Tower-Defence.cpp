@@ -13,12 +13,14 @@
 #include "GameLogic/cMapper.h"
 #include "GameLogic/entityEnums.h"
 #include "Renderer/cRenderer.h"
-//#include "EventHandler/cEventHandler.h"
+#include "EventHandler/cEventHandler.h"
 #include <SFML/System.hpp>
 
 #include "common.h"
 
 bool appRunning;
+
+void print() { ; }
 
 int main(int argc, char** argv)
 {
@@ -37,12 +39,12 @@ int main(int argc, char** argv)
     // Singletons
     renderer::cRenderer *render;
     gamelogic::cMapper *mapper;
-    //IOHandling::cEventHandler *InputOutput;
+    IOHandling::cEventHandler *eventHandler;
 
     try {
         render = renderer::cRenderer::getInstance();
         mapper = gamelogic::cMapper::getInstance();
-        //InputOutput = IOHandling::cEventHandler::getInstance();
+        eventHandler = IOHandling::cEventHandler::getInstance();
     } catch (std::bad_alloc& e) {
         std::cout << "Initial memory allocation for mapper and renderer failed! " << e.what() << "\n";
         return EXIT_FAILURE;
@@ -60,7 +62,8 @@ int main(int argc, char** argv)
         // Update game logic and renderer instance.
         mapper->update(framestartTime);
         render->update(framestartTime);
-        //InputOutput->update();
+        if (eventHandler->hasPendingEvents())
+            eventHandler->update();
 
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;
@@ -79,7 +82,7 @@ int main(int argc, char** argv)
         }
     }
     // End of gameloop. Destroy mapper.
-    //delete InputOutput;
+    delete eventHandler;
     delete render;
     delete mapper;
 
