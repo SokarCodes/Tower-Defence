@@ -37,7 +37,7 @@ public:
     static cRenderer* getInstance();
 
     /// Get renderwindow for inputmapper
-    //sf::Window* getRenderwindow();
+    X11Window* getRenderwindow();
 
     void update(float);
 
@@ -53,8 +53,8 @@ private:
     /// Pointer to this singleton class
     static cRenderer* thisPointer_;
 
-    X11Window *xWindow;
-    GLESv2Context *renderContext;
+    X11Window *xWindow_;
+    GLESv2Context *renderContext_;
 
     /// GameLogic pointer
     static gamelogic::cMapper* mapper_;
