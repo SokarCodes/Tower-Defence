@@ -8,6 +8,7 @@
 #include <iostream>
 #include "cEventHandler.h"
 #include "../Renderer/cRenderer.h"
+#include "../Renderer/X11window.h"
 #include "../GameLogic/cMapper.h"
 #include "../GameLogic/cGameEntity.h"
 #include "../common.h"
@@ -63,11 +64,6 @@ void cEventHandler::update()
             std::cout << "App closed by closing the window!\n";
         }
     }
-}
-
-bool cEventHandler::hasPendingEvents()
-{
-    return XPending(xWindow_->getDisplay());
 }
 
 } // IOHandling

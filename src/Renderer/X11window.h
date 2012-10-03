@@ -3,6 +3,8 @@
 
 #include "X11/Xlib.h"
 
+namespace renderer
+{
 class GLESv2Context;
 
 class X11Window
@@ -20,5 +22,5 @@ private:
     Display *xDisplay;
     Window xWindow;
 };
-
+}
 #endif // CX11WINDOW_H

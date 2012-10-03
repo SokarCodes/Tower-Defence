@@ -3,6 +3,9 @@
 #include <X11/Xlib.h>
 #include <iostream>
 
+namespace renderer
+{
+
 GLESv2Context::GLESv2Context() :
     majorVersion(0),
     minorVersion(0),
@@ -109,3 +112,4 @@ void GLESv2Context::refresh()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+} // namespace renderer

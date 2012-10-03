@@ -2,6 +2,9 @@
 #include "GLESv2context.h"
 #include <iostream>
 
+namespace renderer
+{
+
 X11Window::X11Window() :
     xDisplay(XOpenDisplay(0)),
     xWindow(0)
@@ -47,3 +50,5 @@ void X11Window::refresh()
     eglContext->refresh();
     XFlush(xDisplay);
 }
+
+} // namespace renderer

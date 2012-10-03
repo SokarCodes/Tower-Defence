@@ -62,8 +62,7 @@ int main(int argc, char** argv)
         // Update game logic and renderer instance.
         mapper->update(framestartTime);
         render->update(framestartTime);
-        if (eventHandler->hasPendingEvents())
-            eventHandler->update();
+        eventHandler->update();
 
         // Get time elapsed in game logic update
         difference = clock.GetElapsedTime() - framestartTime;

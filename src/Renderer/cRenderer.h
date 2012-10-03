@@ -20,12 +20,13 @@
 
 //#include "X11window.h"
 //#include "GLESv2context.h"
-class X11Window;
-class GLESv2Context;
 
 #include "../GameLogic/cMapper.h"
 
 namespace renderer {
+
+class X11Window;
+class GLESv2Context;
 
 class cRenderer
 {

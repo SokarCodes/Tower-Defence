@@ -12,11 +12,12 @@
 #include "X11/Xlib.h"
 
 
-#include "../Renderer/X11window.h"
+//#include "../Renderer/X11window.h"
 #include "../common.h"
 
 namespace renderer {
 class cRenderer;
+class X11Window;
 }
 
 namespace gamelogic {
@@ -36,9 +37,6 @@ public:
 
     /// Update method to parse events
     void update();
-
-    /// Check if events in event loop
-    bool hasPendingEvents();
 
 private:
     /// private constructor because singleton. Instance is gotten from getInstance
@@ -60,7 +58,7 @@ private:
     XEvent event_;
 
     /// X11 window instance
-    X11Window* xWindow_;
+    renderer::X11Window* xWindow_;
 
 };
 

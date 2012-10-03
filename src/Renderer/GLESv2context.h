@@ -5,6 +5,9 @@
 #include "GLES2/gl2.h"
 #include "X11window.h"
 
+namespace renderer
+{
+
 class GLESv2Context
 {
 public:
@@ -26,4 +29,5 @@ private:
 
 };
 
+} // namespace renderer
 #endif // CGLESv2Context_H
