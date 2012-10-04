@@ -55,10 +55,39 @@ void cEventHandler::update()
         XNextEvent(xWindow_->getDisplay(), &event_);
         if (event_.type == KeyPress)
         {
-            appRunning = false;
-            std::cout << "App closed!\n";
+            switch (XLookupKeysym(&event_.xkey, 0))
+            {
+            case XK_q:
+                render_->setBGcolor(0.1,0,0,0);
+                break;
+            case XK_w:
+                render_->setBGcolor(0,0.1,0,0);
+                break;
+            case XK_e:
+                render_->setBGcolor(0,0,0.1,0);
+                break;
+            case XK_r:
+                render_->setBGcolor(0,0,0,0.1);
+                break;
+            case XK_a:
+                render_->setBGcolor(-0.1,0,0,0);
+                break;
+            case XK_s:
+                render_->setBGcolor(0,-0.1,0,0);
+                break;
+            case XK_d:
+                render_->setBGcolor(0,0,-0.1,0);
+                break;
+            case XK_f:
+                render_->setBGcolor(0,0,0,-0.1);
+                break;
+            default:
+                appRunning = false;
+                std::cout << "App closed!\n";
+            }
         }
-        else if (event_.type == ClientMessage)
+        // Check for client messages and specific wmDelete to close the window.
+        else if (event_.type == ClientMessage && event_.xclient.data.l[0] == long(wmDelete))
         {
             appRunning = false;
             std::cout << "App closed by closing the window!\n";

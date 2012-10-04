@@ -132,4 +132,9 @@ void cRenderer::drawFPS(float spentTime)
     frametimer << spentTime;
 }
 
+void cRenderer::setBGcolor(float red, float green, float blue, float alpha)
+{
+    renderContext_->setBGcolor(red, green, blue, alpha);
+}
+
 }

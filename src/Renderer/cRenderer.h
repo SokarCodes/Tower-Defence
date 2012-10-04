@@ -8,6 +8,8 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <string>
+
 // Needed for X11 server connection
 #include "X11/Xlib.h"
 
@@ -17,9 +19,6 @@
 // OpenGL ES 2.0 libraries and extension
 #include "GLES2/gl2.h"
 #include "GLES2/gl2ext.h"
-
-//#include "X11window.h"
-//#include "GLESv2context.h"
 
 #include "../GameLogic/cMapper.h"
 
@@ -44,6 +43,9 @@ public:
 
     /// Not implemented properly
     void drawFPS(float spentTime);
+
+    /// Set background color
+    void setBGcolor(float, float, float, float);
 private:
     /// Private constructor because singleton instance is gotten from getInstance()
     cRenderer();

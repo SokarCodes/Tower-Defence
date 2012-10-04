@@ -15,6 +15,8 @@ public:
     void init();
     void bindWindow(X11Window*);
     void refresh();
+    /// Set background color
+    void setBGcolor(float, float, float, float);
 private:
     // EGL variables
     EGLint majorVersion;
@@ -26,6 +28,11 @@ private:
     EGLContext eglContext;
 
     X11Window *xWin;
+
+    float red_;
+    float green_;
+    float blue_;
+    float alpha_;
 
 };
 

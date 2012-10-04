@@ -13,8 +13,11 @@ GLESv2Context::GLESv2Context() :
     eglSurface(0),
     eglConfig(0),
     numConfigs(0),
-    eglContext(0)
-
+    eglContext(0),
+    red_(0),
+    green_(0),
+    blue_(0),
+    alpha_(0)
 {
 }
 
@@ -105,11 +108,28 @@ void GLESv2Context::init()
 
 void GLESv2Context::refresh()
 {
+    glClearColor(red_, green_, blue_, alpha_);
     // Trigger a buffer swap
     eglSwapBuffers(eglDisplay, eglSurface);
 
     // Clear the buffers for the next frame.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void GLESv2Context::setBGcolor(float red, float green, float blue, float alpha)
+{
+    red_ += red;
+    green_ += green;
+    blue_ += blue;
+    alpha_ += alpha;
+    if (red_ > 1)
+        red_ = 0;
+    else if (green_ > 1)
+        green_ = 0;
+    else if (blue_ > 1)
+        blue_ = 0;
+    else if (alpha_ > 1)
+        alpha_ = 0;
 }
 
 } // namespace renderer
