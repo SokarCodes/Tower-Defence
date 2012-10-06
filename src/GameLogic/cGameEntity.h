@@ -31,13 +31,13 @@ public:
     virtual bool hasEnemy() { return false; }
 
     /// Returns towers target enemy.
-    virtual cGameEntity* getEnemy() {return 0;}
+    virtual cGameEntity* getEnemy() const {return 0;}
 
     /// Returns towers last fire time. If enemyEntity, return 0.
     virtual float lastFireTime() {return 0;}
 
     /// Returns enemy state. Overloaded in cEnemyEntity.
-    virtual enemyState getState() { return ALIVE; }
+    virtual enemyState getState() const { return ALIVE; }
 
     /// Virtual update method. Define in base class.
     virtual void update(float) = 0;
@@ -49,7 +49,7 @@ public:
     virtual void setRange(const unsigned int) {}
 
     /// Virtual method to set name of entity. Define in base class.
-    virtual std::string name() = 0;
+    virtual std::string name() const = 0;
 
     /// Initialize all entity variables
     virtual void initializeEntity(entityInitType type, sf::Vector3f position) = 0;

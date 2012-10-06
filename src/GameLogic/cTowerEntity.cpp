@@ -105,7 +105,8 @@ void cTowerEntity::update(float frametime)
     if ((frametime - lastShotTime_) > lifetime_ && lastShotTime_ != 0)
         getMapper()->deleteEntity(this, type_);
 }
-void cTowerEntity::fire() {
+void cTowerEntity::fire()
+{
     // Tower generates new projectile which does the damage if hit.
     // Tower does not care about anything else but calculating distance and launching projectile.
     getMapper()->addProjectile(this, enemy_);
@@ -135,21 +136,22 @@ bool cTowerEntity::isInRange()
         return true;
 }
 
-std::string cTowerEntity::name() {
+std::string cTowerEntity::name() const
+{
     return entityName_;
 }
 
-int cTowerEntity::getRange()
+int cTowerEntity::getRange() const
 {
     return range_;
 }
 
-bool cTowerEntity::hasEnemy()
+bool cTowerEntity::hasEnemy() const
 {
     return enemy_->getState() == ALIVE ? true : false;
 }
 
-double cTowerEntity::distance(sf::Vector3f A, sf::Vector3f B)
+double cTowerEntity::distance(sf::Vector3f A, sf::Vector3f B) const
 {
     sf::Vector3f diff = A-B;
     double distance = sqrt(pow(diff.x,2) + pow(diff.y,2) + pow(diff.z,2));

@@ -40,7 +40,7 @@ Display *X11Window::getDisplay()
     return xDisplay;
 }
 
-Window X11Window::getWindow()
+Window &X11Window::getWindow()
 {
     return xWindow;
 }

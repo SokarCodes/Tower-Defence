@@ -115,12 +115,12 @@ void cEnemyEntity::update(float frametime)
     }
 }
 
-enemyState cEnemyEntity::getState()
+enemyState cEnemyEntity::getState() const
 {
     return state_;
 }
 
-std::string cEnemyEntity::name()
+std::string cEnemyEntity::name() const
 {
     return entityName_;
 }

@@ -308,7 +308,7 @@ void cMapper::dealAOEDamage(sf::Vector3f location, int range, int damage)
         (*iter)->inflictDamage(damage);
 }
 
-double cMapper::distance(sf::Vector3f A, sf::Vector3f B)
+double cMapper::distance(sf::Vector3f A, sf::Vector3f B) const
 {
     sf::Vector3f diff = B-A;
     double distance = sqrt(pow(diff.x,2)+pow(diff.y,2));
@@ -330,12 +330,12 @@ std::vector<cGameEntity*> cMapper::getProjectileEntities()
     return projectileContainer_;
 }
 
-int cMapper::getEnemyCount()
+int cMapper::getEnemyCount() const
 {
     return enemyContainer_.size();
 }
 
-int cMapper::getTowerCount()
+int cMapper::getTowerCount() const
 {
     return towerContainer_.size();
 }

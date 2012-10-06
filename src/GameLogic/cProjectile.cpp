@@ -123,7 +123,7 @@ void cProjectile::update(float frametime)
 
 }
 
-std::string cProjectile::name()
+std::string cProjectile::name() const
 {
     return entityName_;
 }

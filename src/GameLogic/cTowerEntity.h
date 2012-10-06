@@ -30,7 +30,7 @@ public:
     void setRange(const unsigned int);
 
     /// getRange
-    int getRange();
+    int getRange() const;
 
     /// Get tower type
     entityInitType getType();
@@ -39,25 +39,25 @@ public:
     void update(float);
 
     /// Get entity name
-    std::string name();
+    std::string name() const;
 
     /// Initializer after creation
     void initializeEntity(entityInitType type, sf::Vector3f position);
 
     /// Function for checking if tower has enemy.
-    bool hasEnemy();
+    bool hasEnemy() const;
 
     /// Return target enemy.
-    cGameEntity* getEnemy() { return enemy_; }
+    cGameEntity* getEnemy() const { return enemy_; }
 
     /// Return last fire time.
-    float lastFireTime() { return lastShotTime_; }
+    float lastFireTime() const { return lastShotTime_; }
 
     /// Fire angle calculator
     bool isInRange();
 
     /// Calculates distance between two vectors.
-    double distance(sf::Vector3f, sf::Vector3f);
+    double distance(sf::Vector3f, sf::Vector3f) const;
 
 private:
     /// Fire method. Launches projectile towards enemy entity.

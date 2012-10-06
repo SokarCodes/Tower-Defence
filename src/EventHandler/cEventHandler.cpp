@@ -43,7 +43,6 @@ cEventHandler::cEventHandler() :
 
 void cEventHandler::update()
 {
-    sf::Vector3f inputCoord;
     Atom wmDelete=XInternAtom(xWindow_->getDisplay(), "WM_DELETE_WINDOW", True);
     XSetWMProtocols(xWindow_->getDisplay(), xWindow_->getWindow(), &wmDelete, 1);
 

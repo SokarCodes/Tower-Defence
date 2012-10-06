@@ -30,7 +30,7 @@ public:
     void update(float frametime);
 
     /// Return this projectile name. Possibly obsolete.
-    std::string name();
+    std::string name() const;
 
     /// Initializes entity parameters.
     void initializeEntity(entityInitType type, sf::Vector3f position);

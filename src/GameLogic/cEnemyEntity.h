@@ -28,13 +28,13 @@ public:
     void update(float);
 
     /// Return entity name
-    std::string name();
+    std::string name() const;
 
     /// Initializer after creation
     void initializeEntity(entityInitType type, sf::Vector3f position);
 
     /// Returns enemy entity state
-    enemyState getState();
+    enemyState getState() const;
 
 private:
     /// Entity name variable

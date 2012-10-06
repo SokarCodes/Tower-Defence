@@ -60,13 +60,13 @@ public:
     cGameEntity* getTarget(sf::Vector3f, int);
 
     /// Returns number of towers on map
-    int getTowerCount();
+    int getTowerCount() const;
 
     /// Returns number of enemies on map
-    int getEnemyCount();
+    int getEnemyCount() const;
 
     /// Calculates distance between two vectors.
-    double distance(sf::Vector3f, sf::Vector3f);
+    double distance(sf::Vector3f, sf::Vector3f) const;
 
 private:
     /// Private constructor because singleton class pointer is get from getInstance()
