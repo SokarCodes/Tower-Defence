@@ -6,15 +6,9 @@
  */
 
 #include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <cstdlib>
-#include <vector>
-#include <string>
 
 #include "cRenderer.h"
 #include "../common.h"
-
 #include "../GameLogic/cGameEntity.h"
 #include "../GameLogic/entityEnums.h"
 #include "X11window.h"
@@ -66,7 +60,6 @@ cRenderer::cRenderer()
     renderContext_ = new GLESv2Context();
     xWindow_->open();
     renderContext_->bindWindow(xWindow_);
-    renderContext_->init();
 }
 
 cRenderer::~cRenderer()
@@ -127,9 +120,9 @@ X11Window* cRenderer::getRenderwindow()
 // Not implemented properly.
 void cRenderer::drawFPS(float spentTime)
 {
-    std::ostringstream frametimer;
-    frametimer << std::fixed << std::setprecision(1);
-    frametimer << spentTime;
+//    std::ostringstream frametimer;
+//    frametimer << std::fixed << std::setprecision(1);
+//    frametimer << spentTime;
 }
 
 void cRenderer::setBGcolor(float red, float green, float blue, float alpha)

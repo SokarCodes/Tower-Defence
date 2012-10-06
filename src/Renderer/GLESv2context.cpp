@@ -25,6 +25,8 @@ void GLESv2Context::bindWindow(X11Window *window)
 {
     xWin = window;
     xWin->setRendercontext(this);
+    // Initialize this context
+    this->init();
 }
 
 void GLESv2Context::init()
@@ -118,6 +120,7 @@ void GLESv2Context::refresh()
 
 void GLESv2Context::setBGcolor(float red, float green, float blue, float alpha)
 {
+    // This method is here for funzies.
     red_ += red;
     green_ += green;
     blue_ += blue;

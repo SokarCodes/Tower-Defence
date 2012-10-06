@@ -56,7 +56,10 @@ private:
     /// Pointer to this singleton class
     static cRenderer* thisPointer_;
 
+    /// X11Window pointer
     X11Window *xWindow_;
+
+    /// GLESv2 context pointer
     GLESv2Context *renderContext_;
 
     /// GameLogic pointer

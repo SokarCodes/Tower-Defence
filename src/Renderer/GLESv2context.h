@@ -3,21 +3,28 @@
 
 #include "EGL/egl.h"
 #include "GLES2/gl2.h"
-#include "X11window.h"
 
 namespace renderer
 {
+class X11Window;
 
 class GLESv2Context
 {
 public:
     GLESv2Context();
-    void init();
+
+    // Bind rendercontext to X11Window surface
     void bindWindow(X11Window*);
+
+    // Refresh render buffers
     void refresh();
+
     /// Set background color
     void setBGcolor(float, float, float, float);
 private:
+    // Initialize rendering surface
+    void init();
+
     // EGL variables
     EGLint majorVersion;
     EGLint minorVersion;

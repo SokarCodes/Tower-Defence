@@ -6,15 +6,12 @@
  */
 
 #include <iostream>
-#include <cstdlib>
-#include <sstream>
 
 #include "GameLogic/cGameEntity.h"
 #include "GameLogic/cMapper.h"
 #include "GameLogic/entityEnums.h"
 #include "Renderer/cRenderer.h"
 #include "EventHandler/cEventHandler.h"
-#include <SFML/System.hpp>
 
 #include "common.h"
 
