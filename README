@@ -7,6 +7,13 @@ No breakthroughs planned as of yet to game mechanics or logic but hopes are high
 
 Version history. (Not all details covered.) Possible timestamps in <dd.mm.yyyy> format.
 
+v0.1.6
+- 6.9.2012
+- Lots of SFML dependencies removed. Project now using home made X11/GLESv2 renderer.
+- Works only on linux. 
+- Eventhandler now can pump X11 events out of the X11 window context.
+- Background color can be changed using QWER/ASDF keys.
+
 v0.1.5
 - 28.09.2012
 - Began removing sfml-window dependency and started integrating to my own renderer subsystem.
