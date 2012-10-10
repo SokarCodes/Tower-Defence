@@ -14,6 +14,88 @@
 
 namespace gamelogic {
 
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+
+/// This is test code of observer type messaging. Integration possible?
+/*struct IObserver
+{
+    virtual void onNotify(class observableEntity*) = 0;
+};
+
+class observableEntity
+{
+    std::set<IObserver*> observeSet;
+public:
+    void addObserver(IObserver *observable) { observeSet.insert(observable); }
+    void delObserver(IObserver *observable) { observeSet.erase(observable); }
+    virtual char* name() = 0;
+protected:
+    void notify();
+};
+
+void observableEntity::notify()
+{
+    set<IObserver*>::iterator it;
+    for ( it = observeSet.begin(); it != observeSet.end(); it++)
+        (*it)->onNotify(this);
+}
+
+class tower : public IObserver
+{
+    char* name_;
+    void onNotify(observableEntity* entity) { std::cout << name_ << " notified by: " << entity->name() << "\n"; }
+public:
+    tower(char* name) : name_(name) {}
+};
+
+class machineGun : public IObserver
+{
+    char *name_;
+    void onNotify(observableEntity* entity) { std::cout << name_ << " notified by: " << entity->name() << "\n"; }
+public:
+    machineGun(char* name) : name_(name) {}
+};
+
+class enemy : public observableEntity
+{
+public:
+    void Do() { notify(); }
+    char * name() { return "enemy!"; }
+};
+
+int main(void)
+{
+    char name1[] = "AK-47-tower";
+    char name2[] = "M16-tower";
+    char name3[] = "MegaMachiner";
+    tower x(name1);
+    tower x2(name2);
+    enemy y;
+
+    cout << "-------\n";
+    y.addObserver(&x);
+    y.Do();
+    cout << "-------\n";
+    y.addObserver(&x2);
+    y.Do();
+    cout << "-------\n";
+    machineGun z(name3);
+    y.addObserver(&z);
+    y.Do();
+    cout << "-------\n";
+    y.delObserver(&x);
+    y.Do();
+    cout << "-------\n";
+
+    return 0;
+}*/
+
+
+
 class cGameEntity {
 public:
     /// Cause single target damage to a entity.
