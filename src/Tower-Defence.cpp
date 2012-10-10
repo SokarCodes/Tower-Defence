@@ -21,7 +21,11 @@ void print() { ; }
 
 int main(int argc, char** argv)
 {
-    std::cout << "Hello tower defense - experimental branch on github - v0.1.0!\n";
+#if defined(UNIX)
+    std::cout << "Hello tower defense linux version - experimental branch on github - v0.1.6!\n";
+#else
+    std::cout << "Hello tower defense win32 version - experimental branch on github - v0.1.6!\n";
+#endif
 
     appRunning = true;
 

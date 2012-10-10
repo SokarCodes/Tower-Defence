@@ -14,14 +14,13 @@
 
 namespace gamelogic {
 
-#include <iostream>
+/*#include <iostream>
 #include <set>
 
 using namespace std;
 
-
 /// This is test code of observer type messaging. Integration possible?
-/*struct IObserver
+struct IObserver
 {
     virtual void onNotify(class observableEntity*) = 0;
 };
@@ -93,8 +92,6 @@ int main(void)
 
     return 0;
 }*/
-
-
 
 class cGameEntity {
 public:
