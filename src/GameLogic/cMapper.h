@@ -28,15 +28,15 @@ public:
     static cMapper* getInstance();
 
     /// Adds new cTowerEntity to vector as cGameEntity
-    bool addTower(entityInitType, sf::Vector3f position);
+    const bool addTower(entityInitType, sf::Vector3f position);
 
     /// Creates new enemy
-    bool addEnemy(entityInitType, sf::Vector3f position);
+    const bool addEnemy(entityInitType, sf::Vector3f position);
 
-    /// Returns vectors for enemies and towers.
-    std::vector<cGameEntity*> getEnemyEntities();
-    std::vector<cGameEntity*> getTowerEntities();
-    std::vector<cGameEntity*> getProjectileEntities();
+    /// Returns vector references for enemies, towers and projectiles.
+    std::vector<cGameEntity*> &getEnemyEntities();
+    std::vector<cGameEntity*> &getTowerEntities();
+    std::vector<cGameEntity*> &getProjectileEntities();
 
     /// Update method. Calls update methods of all gameEntities.
     void update(float);

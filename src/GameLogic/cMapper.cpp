@@ -107,7 +107,7 @@ cMapper::~cMapper()
     std::cout << "DONE!\n";
 }
 
-bool cMapper::addTower(entityInitType type, sf::Vector3f position)
+const bool cMapper::addTower(entityInitType type, sf::Vector3f position)
 {
     if (!towerStack_.empty())
     {
@@ -140,7 +140,7 @@ bool cMapper::addTower(entityInitType type, sf::Vector3f position)
     }
 }
 
-bool cMapper::addEnemy(entityInitType type, sf::Vector3f position)
+const bool cMapper::addEnemy(entityInitType type, sf::Vector3f position)
 {
     std::cout <<"position: " << position.x << "," << position.y << "," <<position.z << "\n";
     if (!enemyStack_.empty())
@@ -308,17 +308,17 @@ double cMapper::distance(sf::Vector3f A, sf::Vector3f B) const
     return distance;
 }
 
-std::vector<cGameEntity*> cMapper::getEnemyEntities()
+std::vector<cGameEntity*> &cMapper::getEnemyEntities()
 {
     return enemyContainer_;
 }
 
-std::vector<cGameEntity*> cMapper::getTowerEntities()
+std::vector<cGameEntity*> &cMapper::getTowerEntities()
 {
     return towerContainer_;
 }
 
-std::vector<cGameEntity*> cMapper::getProjectileEntities()
+std::vector<cGameEntity*> &cMapper::getProjectileEntities()
 {
     return projectileContainer_;
 }
