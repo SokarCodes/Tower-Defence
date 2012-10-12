@@ -45,25 +45,25 @@ public:
     // This public segment is for derived classes and other more private use.
 
     /// Deals AOE damage according to parameters
-    void dealAOEDamage(sf::Vector3f location, int range, int damage);
+    void dealAOEDamage(sf::Vector3f location, int range, int damage) const;
 
     /// Adds projectile entity to gamelogic
-    bool addProjectile(cGameEntity*, cGameEntity*);
+    bool const addProjectile(cGameEntity*, cGameEntity*);
 
     /// deletes instance of cGameEntity from vector
     void deleteEntity(cGameEntity*, entityInitType);
 
     /// Check if entity in fire range
-    bool isInRange(cGameEntity*, cGameEntity*);
+    bool const isInRange(cGameEntity*, cGameEntity*) const;
 
     /// Returns closest possible target for querying entity.
-    cGameEntity* getTarget(sf::Vector3f, int);
+    cGameEntity* getTarget(sf::Vector3f, int) const;
 
     /// Returns number of towers on map
-    int getTowerCount() const;
+    const int getTowerCount() const;
 
     /// Returns number of enemies on map
-    int getEnemyCount() const;
+    const int getEnemyCount() const;
 
     /// Calculates distance between two vectors.
     double distance(sf::Vector3f, sf::Vector3f) const;

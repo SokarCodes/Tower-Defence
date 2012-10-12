@@ -174,7 +174,7 @@ bool cMapper::addEnemy(entityInitType type, sf::Vector3f position)
     }
 }
 
-bool cMapper::addProjectile(cGameEntity *owner, cGameEntity *target)
+const bool cMapper::addProjectile(cGameEntity *owner, cGameEntity *target)
 {
     if (!projectileStack_.empty())
     {
@@ -205,12 +205,12 @@ void cMapper::update(float frametime) {
         (*iter)->update(frametime);
 }
 
-cGameEntity* cMapper::getTarget(sf::Vector3f position, int range)
+cGameEntity* cMapper::getTarget(sf::Vector3f position, int range) const
 {
     cGameEntity *closestEntity = NULL;
     float closestRange = 999999;
 
-    std::vector<cGameEntity*>::iterator iter;
+    std::vector<cGameEntity*>::const_iterator iter;
 
     for (iter = enemyContainer_.begin();iter < enemyContainer_.end();++iter)
     {
@@ -276,16 +276,9 @@ void cMapper::deleteEntity(cGameEntity *instance, entityInitType type)
     default:
         std::cout << "WARNING: Unable to delete entity. Type given unknown!\n";
     }
-
-
-    // instance is tower if we are this far.
-
-
-
-
 }
 
-bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower)
+const bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower) const
 {
     sf::Vector3f diff = tower->getPosition() - enemy->getPosition();
     double range = sqrt(pow(diff.x,2) + pow(diff.y,2));
@@ -295,10 +288,10 @@ bool cMapper::isInRange(cGameEntity *enemy, cGameEntity *tower)
         return false;
 }
 
-void cMapper::dealAOEDamage(sf::Vector3f location, int range, int damage)
+void cMapper::dealAOEDamage(sf::Vector3f location, int range, int damage) const
 {
     std::vector<cGameEntity*> enemiesInAOE;
-    std::vector<cGameEntity*>::iterator iter = enemyContainer_.begin();
+    std::vector<cGameEntity*>::const_iterator iter = enemyContainer_.begin();
     for (;iter < enemyContainer_.end(); ++iter)
     {
         if (distance(location,(*iter)->getPosition()) <= range)
@@ -330,12 +323,12 @@ std::vector<cGameEntity*> cMapper::getProjectileEntities()
     return projectileContainer_;
 }
 
-int cMapper::getEnemyCount() const
+const int cMapper::getEnemyCount() const
 {
     return enemyContainer_.size();
 }
 
-int cMapper::getTowerCount() const
+const int cMapper::getTowerCount() const
 {
     return towerContainer_.size();
 }
